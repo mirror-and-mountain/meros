@@ -1,7 +1,7 @@
 <?php
 /**
  * Title: Meros Blocks Header
- * Slug: meros-blocks/meros-blocks-header
+ * Slug: meros-theme/meros-blocks-header
  * Categories: Headers
  */
 ?>

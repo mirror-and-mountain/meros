@@ -30,7 +30,7 @@
     "require": {
         "composer/installers": "^2.3",
         "mirror-and-mountain/meros-framework": "^1.0.12",
-        "mirror-and-mountain/meros-dynamic-page": "^1.0.5",
+        "mirror-and-mountain/meros-dynamic-page": "^1.0.6",
         "mirror-and-mountain/meros-dynamic-header": "^1.0.5",
         "mirror-and-mountain/meros-carousel": "^1.1.5",
         "mirror-and-mountain/meros-text-animations": "^1.0.1"
