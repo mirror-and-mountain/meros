@@ -1,0 +1,24 @@
+{
+    "wp_theme_repo": "https://github.com/mirror-and-mountain/meros-blocks.git",
+    "wp_title": "Meros",
+    "wp_admin_user": "admin",
+    "wp_admin_password": "password",
+    "wp_admin_email": "admin@example.com",
+    "wp_db_host": "db",
+    "wp_db_name": "wordpress",
+    "wp_db_user": "dbuser",
+    "wp_db_password": "dbpassword",
+    "wp_db_prefix": "wppx_",
+    "remote_servers": {
+        "production": {
+            "url": "https://mirrorandmountain.dev",
+            "path": "public_html/mirrorandmountain.dev",
+            "ssh": {
+                "host": "429d2e0d7d55068d98e7960945fad646-17866.sites.k-hosting.co.uk",
+                "port": "722",
+                "user": "dedddef1",
+                "key": "LS0tLS1CRUdJTiBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0KYjNCbGJuTnphQzFyWlhrdGRqRUFBQUFBQkc1dmJtVUFBQUFFYm05dVpRQUFBQUFBQUFBQkFBQUFNd0FBQUF0emMyZ3RaVwpReU5UVXhPUUFBQUNDMVNicjhJei9qNXNUd3NaVHVHTHJDN1hEQi9hUHU3T1pzK2J2b1BFNHV1UUFBQUpqUGZmSmN6MzN5ClhBQUFBQXR6YzJndFpXUXlOVFV4T1FBQUFDQzFTYnI4SXovajVzVHdzWlR1R0xyQzdYREIvYVB1N09acytidm9QRTR1dVEKQUFBRUI2dEQzQkFMZE9vUlBmQW1qYTlqcHdZQUR6TzBHUFhhUGYzREZUU1RUdVViVkp1dndqUCtQbXhQQ3hsTzRZdXNMdApjTUg5bys3czVtejV1K2c4VGk2NUFBQUFFblJ0ZDBCTllXTkNiMjlyVUhKdkxteGhiZ0VDQXc9PQotLS0tLUVORCBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0K"
+            }
+        }
+    }
+}

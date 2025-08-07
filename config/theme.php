@@ -25,6 +25,7 @@ return [
 
     // Installed features
     'features' => [
+        'App\\Features\\Test' => 'Test.php',
     ],
 
     // Installed extensions

@@ -50,7 +50,10 @@
         ],
         "create-feature": [
             "MM\\Meros\\Scripts\\Composer::createFeature"
-        ]
+        ],
+        "test-remote": "test-remote.sh",
+        "sync:to": "sync-to-remote.sh",
+        "sync:from": "sync-from-remote.sh"
     },
     "extra": {
         "installer-paths": {

@@ -1,0 +1,8 @@
+{
+    "name": "mirror-and-mountain/meros-feature",
+    "description": "A boilerplate feature for Meros powered Wordpress themes",
+    "type": "project",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "require": {}
+}

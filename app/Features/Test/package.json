@@ -1,0 +1,21 @@
+{
+    "private": true,
+    "scripts": {
+        "start:blocks": "wp-scripts start --webpack-src-dir=blocks/src/ --output-path=blocks/build/",
+        "build:blocks": "wp-scripts build --webpack-src-dir=blocks/src/ --output-path=blocks/build/",
+        "build:assets": "wp-scripts build --config webpack.assets.config.js",
+        "build": "npm run build:blocks && npm run build:assets"
+    },
+    "devDependencies": {
+        "@types/wordpress__block-editor": "^11.5.16",
+        "@wordpress/block-editor": "^14.15.0",
+        "@wordpress/blocks": "^14.9.0",
+        "@wordpress/components": "^29.6.0",
+        "@wordpress/core-data": "^7.20.0",
+        "@wordpress/data": "^10.20.0",
+        "@wordpress/element": "^6.20.0",
+        "@wordpress/hooks": "^4.22.0",
+        "@wordpress/i18n": "^5.20.0",
+        "@wordpress/scripts": "^30.13.0"
+    }
+}
