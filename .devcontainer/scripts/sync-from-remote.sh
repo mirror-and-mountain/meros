@@ -90,7 +90,7 @@ ssh -i "${REMOTE_SSH_KEY_FILE_VALUE}" \
     -o StrictHostKeyChecking=no \
     -p "${REMOTE_SSH_PORT_VALUE}" \
     "${REMOTE_SSH_USER_VALUE}@${REMOTE_SSH_HOST_VALUE}" \
-    "wp db export - --path=\"${REMOTE_PATH_VALUE}\" --add-drop-table --skip-themes" \
+    "wp db export - --path=\"${REMOTE_PATH_VALUE}\" --add-drop-table" \
      > "$TMP_DB_FILE"
 
 echo "Database exported to $TMP_DB_FILE"
