@@ -103,6 +103,7 @@ RUN php -d memory_limit=512M /usr/local/bin/wp core download --allow-root
 
 # Ensure key directories exist in the image for mounting
 RUN mkdir -p /var/www/html/wp-content/themes/
+RUN mkdir -p /var/www/html/wp-content/themes//meros-blocks/
 RUN mkdir -p /var/www/html/wp-content/plugins/
 RUN mkdir -p /var/www/html/wp-content/uploads/
 
