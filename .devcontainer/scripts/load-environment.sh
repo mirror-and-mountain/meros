@@ -142,7 +142,7 @@ for server in "${SERVERS[@]}"; do
       SSH_KEY_FILE="$HOME/.ssh/${server}_key"
 
       rm -f "$SSH_KEY_FILE" || { echo "Error: Failed to remove existing key file $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
-      printf %s "$SSH_KEY_VALUE" | > "$SSH_KEY_FILE" || { echo "Error: Failed to write SSH key to $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
+      printf %s "$SSH_KEY_VALUE" | base64 -d > "$SSH_KEY_FILE" || { echo "Error: Failed to write SSH key to $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
       chmod 600 "$SSH_KEY_FILE" || { echo "Error: Failed to set permissions on $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
 
       echo "Info: SSH key for '${server}' saved to '$SSH_KEY_FILE' with permissions 600."
