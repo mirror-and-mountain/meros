@@ -1,3 +1,5 @@
+/.codespace/keys/*
+!/.codespace/keys/.gitkeep
 /.devcontainer/keys/*
 !/.devcontainer/keys/.gitkeep
 /vendor/
