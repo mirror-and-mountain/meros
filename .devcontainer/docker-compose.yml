@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
       args:
         WP_THEME_NAME: ${WP_THEME_NAME}
-    container_name: meros_theme_dev_app
+    container_name: meros_test_dev_app
     ports:
       - "8000:80"
     depends_on:
@@ -15,7 +15,7 @@ services:
   db:
     image: mysql:8
     restart: always
-    container_name: meros_theme_dev_db
+    container_name: meros_test_dev_db
     environment:
       MYSQL_DATABASE: ${WP_DB_NAME:-wordpress}
       MYSQL_USER: ${WP_DB_USER:-dbuser}

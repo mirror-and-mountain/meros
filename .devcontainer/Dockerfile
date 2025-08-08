@@ -82,7 +82,7 @@ RUN usermod -d /home/www-data www-data
 RUN usermod -d /home/www-data -s /bin/bash www-data
 
 # Add enviromment json
-COPY /.environment.json /home/www-data/config/environment.json
+COPY /environment.json /home/www-data/config/environment.json
 
 # Add keys directory
 COPY /keys /home/www-data/.ssh
@@ -115,6 +115,3 @@ RUN find /var/www/html -type f -exec chmod 664 {} +
 
 # Set the default user to www-data
 USER www-data
-
-# Set the theme working directory
-WORKDIR /var/www/html/wp-content/themes/${WP_THEME_NAME}
