@@ -10,7 +10,7 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ..:/var/www/html/themes/${WP_THEME_NAME:-meros-blocks}
+      - ..:/var/www/html/wp-content/themes/${WP_THEME_NAME:-meros-blocks}
     depends_on:
       - db
 
