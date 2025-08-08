@@ -1,5 +1,4 @@
 # Exclude package managers' config
-.codespace/ export-ignore
 .devcontainer/ export-ignore
 composer.lock export-ignore
 package-lock.json export-ignore
