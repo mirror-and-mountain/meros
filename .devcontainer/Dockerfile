@@ -84,9 +84,15 @@ RUN usermod -d /home/www-data -s /bin/bash www-data
 # Add enviromment json
 COPY /.environment.json /home/www-data/config/environment.json
 
-# Ensure the config directory exists and has the right permissions
+# Add keys directory
+COPY /keys /home/www-data/.ssh
+
+# Ensure the config & keys directories exists and have the right permissions
 RUN chown -R www-data:www-data /home/www-data/config \
     && chmod 755 /home/www-data/config
+
+RUN chown -R www-data:www-data /home/www-data/.ssh \
+    && chmod 755 /home/www-data/.ssh
 
 # Increase PHP upload limit
 RUN echo "upload_max_filesize=256M\npost_max_size=256M" > /usr/local/etc/php/conf.d/uploads.ini

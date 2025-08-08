@@ -1,3 +1,5 @@
+/.devcontainer/keys/*
+!/.devcontainer/keys/.gitkeep
 /vendor/
 /node_modules/
 /plugins/

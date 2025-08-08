@@ -121,20 +121,33 @@ for server in "${SERVERS[@]}"; do
     SSH_KEY_VALUE="$SSH_KEY_FROM_SHELL"
   fi
 
-  # Use the determined SSH_KEY_VALUE to create the file
-  if [ -z "$SSH_KEY_VALUE" ]; then
-    echo "Warning: SSH key for '${server}' (from JSON or shell variable '${SSH_KEY_VAR_NAME}') is empty or not set. No key file will be created."
-    echo "# ${REMOTE_PREFIX}_SSH_KEY_FILE=<MISSING>" >> "$OUTPUT_ENV_FILE"
-  else
-    SSH_KEY_FILE="$HOME/.ssh/${server}_key" # Use lowercase server name for file
-
-    mkdir -p "$HOME/.ssh" || { echo "Error: Failed to create $HOME/.ssh directory for ${server}. Exiting."; exit 1; }
-    rm -f "$SSH_KEY_FILE" || { echo "Error: Failed to remove existing key file $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
-    printf %s "$SSH_KEY_VALUE" | base64 -d > "$SSH_KEY_FILE" || { echo "Error: Failed to decode and write SSH key to $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
+  # Check whether the SSH_KEY_VALUE is a file referenced in json
+  if [ -f "$HOME/.ssh/$SSH_KEY_VALUE" ]; then
+    echo "Info: Using SSH key from file '$HOME/.ssh/$SSH_KEY_VALUE' for ${server}. Renaming to ${server}_key..."
+    
+    SSH_KEY_FILE=$SSH_KEY_VALUE
+    mv "$HOME/.ssh/$SSH_KEY_FILE" "$HOME/.ssh/${server}_key" || { echo "Error: Failed to rename SSH key file for ${server}. Exiting."; exit 1; }
+    SSH_KEY_FILE="$HOME/.ssh/${server}_key"
+    
     chmod 600 "$SSH_KEY_FILE" || { echo "Error: Failed to set permissions on $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
-
+    
     echo "Info: SSH key for '${server}' saved to '$SSH_KEY_FILE' with permissions 600."
     append_env_var "$REMOTE_PREFIX" "SSH_KEY_FILE" "$SSH_KEY_FILE"
+  else
+    # Use the determined SSH_KEY_VALUE to create the file
+    if [ -z "$SSH_KEY_VALUE" ]; then
+      echo "Warning: SSH key for '${server}' (from JSON or shell variable '${SSH_KEY_VAR_NAME}') is empty or not set. No key file will be created."
+      echo "# ${REMOTE_PREFIX}_SSH_KEY_FILE=<MISSING>" >> "$OUTPUT_ENV_FILE"
+    else
+      SSH_KEY_FILE="$HOME/.ssh/${server}_key"
+
+      rm -f "$SSH_KEY_FILE" || { echo "Error: Failed to remove existing key file $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
+      printf %s "$SSH_KEY_VALUE" | > "$SSH_KEY_FILE" || { echo "Error: Failed to write SSH key to $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
+      chmod 600 "$SSH_KEY_FILE" || { echo "Error: Failed to set permissions on $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
+
+      echo "Info: SSH key for '${server}' saved to '$SSH_KEY_FILE' with permissions 600."
+      append_env_var "$REMOTE_PREFIX" "SSH_KEY_FILE" "$SSH_KEY_FILE"
+    fi
   fi
 done
 
