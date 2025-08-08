@@ -7,10 +7,7 @@
   "remoteEnv": {
     "VSCODE_SERVER_HOME": "/home/www-data/.vscode-server"
   },
-  "containerEnv": {
-    "WP_THEME_NAME": "${localWorkspaceFolderBasename}"
-  },
-   "mounts": [
+  "mounts": [
     "source=${localWorkspaceFolder},target=/var/www/html/wp-content/themes/${localWorkspaceFolderBasename},type=bind,consistency=cached"
   ],
   "postCreateCommand": "bash -c 'set -x; load-environment.sh && setup-wp.sh'",

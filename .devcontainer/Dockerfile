@@ -1,5 +1,7 @@
 FROM php:8.2-apache
 
+ARG WP_THEME_NAME
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     unzip \
@@ -103,7 +105,7 @@ RUN php -d memory_limit=512M /usr/local/bin/wp core download --allow-root
 
 # Ensure key directories exist in the image for mounting
 RUN mkdir -p /var/www/html/wp-content/themes/
-RUN mkdir -p /var/www/html/wp-content/themes//meros-blocks/
+RUN mkdir -p /var/www/html/wp-content/themes/${WP_THEME_NAME}/
 RUN mkdir -p /var/www/html/wp-content/plugins/
 RUN mkdir -p /var/www/html/wp-content/uploads/
 
@@ -114,3 +116,5 @@ RUN find /var/www/html -type f -exec chmod 664 {} +
 
 # Set the default user to www-data
 USER www-data
+
+WORKDIR /var/www/html/wp-content/themes/${WP_THEME_NAME}

@@ -4,9 +4,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        WP_THEME_NAME: ${WP_THEME_NAME:-meros-blocks}
     container_name: meros_blocks_dev_app
     ports:
       - "8000:80"
+    volumes:
+      - ..:/var/www/html/themes/${WP_THEME_NAME:-meros-blocks}
     depends_on:
       - db
 
