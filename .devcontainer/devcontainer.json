@@ -1,5 +1,5 @@
 {
-  "name": "MEROS THEME DEV CONTAINER",
+  "name": "MEROS THEME DEV",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/var/www/html/wp-content/themes/${localWorkspaceFolderBasename}",

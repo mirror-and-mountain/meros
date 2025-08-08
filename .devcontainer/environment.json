@@ -1,4 +1,5 @@
 {
+    "wp_theme_name": "meros-blocks",
     "wp_theme_repo": "https://github.com/my-org/my-theme.git",
     "wp_title": "My WordPress Site",
     "wp_admin_user": "admin",

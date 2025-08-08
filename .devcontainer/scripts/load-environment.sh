@@ -52,8 +52,8 @@ echo "" >> "$OUTPUT_ENV_FILE"
 echo "# --- General WP & VSCode Settings ---" >> "$OUTPUT_ENV_FILE"
 
 # Extract all top-level keys and their values
-THEME_NAME="${WP_THEME_NAME:-"meros-blocks"}" # Default to "meros-blocks" if not set
-WP_THEME_REPO=$(echo "$ENVIRONMENT" | jq -r '.wp_theme_repo // "meros-blocks"')
+WP_THEME_NAME=$(echo "$ENVIRONMENT" | jq -r '.wp_theme_name // "meros-blocks"')
+WP_THEME_REPO=$(echo "$ENVIRONMENT" | jq -r '.wp_theme_repo // "https://github.com/mirror-and-mountain/meros-blocks.git"')
 WP_TITLE=$(echo "$ENVIRONMENT" | jq -r '.wp_title // "Meros"')
 WP_ADMIN_USER=$(echo "$ENVIRONMENT" | jq -r '.wp_admin_user // "admin"')
 WP_ADMIN_PASSWORD=$(echo "$ENVIRONMENT" | jq -r '.wp_admin_password // "password"')
@@ -64,7 +64,7 @@ WP_DB_USER=$(echo "$ENVIRONMENT" | jq -r '.wp_db_user // "dbuser"')
 WP_DB_PASSWORD=$(echo "$ENVIRONMENT" | jq -r '.wp_db_password // "dbpassword"')
 WP_DB_PREFIX=$(echo "$ENVIRONMENT" | jq -r '.wp_db_prefix // "wp_"')
 
-append_env_var "WP" "THEME_NAME" "$THEME_NAME"
+append_env_var "WP" "THEME_NAME" "$WP_THEME_NAME"
 append_env_var "WP" "THEME_REPO" "$WP_THEME_REPO"
 append_env_var "WP" "TITLE" "$WP_TITLE"
 append_env_var "WP" "ADMIN_USER" "$WP_ADMIN_USER"

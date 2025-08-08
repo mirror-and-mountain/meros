@@ -1,7 +1,5 @@
 FROM php:8.2-apache
 
-ARG WP_THEME_NAME
-
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     unzip \
