@@ -82,7 +82,7 @@ RUN usermod -d /home/www-data www-data
 RUN usermod -d /home/www-data -s /bin/bash www-data
 
 # Add enviromment json
-COPY /config/environment.json /home/www-data/config/environment.json
+COPY /.environment.json /home/www-data/config/environment.json
 
 # Ensure the config directory exists and has the right permissions
 RUN chown -R www-data:www-data /home/www-data/config \
