@@ -73,13 +73,26 @@ for server in "${SERVERS[@]}"; do
   append_env_var "$REMOTE_PREFIX" "SSH_USER" "$SSH_USER"
 
   # Handling for SSH_KEY
-  SSH_KEY_FROM_JSON=$(echo "$REMOTE_CONFIG" | jq -r --arg s "$server" '.remote_servers[$s].ssh.key // ""')
   SSH_KEY_VAR_NAME="${REMOTE_PREFIX}_SSH_KEY" # e.g., PRODUCTION_SSH_KEY (for shell fallback)
+  SSH_KEY_FROM_JSON=$(echo "$REMOTE_CONFIG" | jq -r --arg s "$server" '.remote_servers[$s].ssh.key // ""')
   SSH_KEY_FROM_SHELL="${!SSH_KEY_VAR_NAME}" # Get value from shell environment
 
   SSH_KEY_VALUE=""
 
-  if [ -n "$SSH_KEY_FROM_JSON" ]; then
+  if [ -n "$SSH_KEY_FROM_SHELL" ]; then
+    echo "Info: Using SSH key from shell environment variable '${SSH_KEY_VAR_NAME}' for ${server}."
+    SSH_KEY_VALUE="$SSH_KEY_FROM_SHELL"
+
+    SSH_KEY_FILE="$HOME/.ssh/${server}_key"
+
+    rm -f "$SSH_KEY_FILE" || { echo "Error: Failed to remove existing key file $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
+    printf %s "$SSH_KEY_VALUE" | base64 -d > "$SSH_KEY_FILE" || { echo "Error: Failed to write SSH key to $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
+    chmod 600 "$SSH_KEY_FILE" || { echo "Error: Failed to set permissions on $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
+
+    echo "Info: SSH key for '${server}' saved to '$SSH_KEY_FILE' with permissions 600."
+    append_env_var "$REMOTE_PREFIX" "SSH_KEY_FILE" "$SSH_KEY_FILE"
+
+  elif [ -n "$SSH_KEY_FROM_JSON" ]; then
     echo "Info: Using SSH key value from remotes.json."
     SSH_KEY_VALUE="$SSH_KEY_FROM_JSON"
 
@@ -97,19 +110,6 @@ for server in "${SERVERS[@]}"; do
       echo "Warning: Couldn't locate "$HOME/.ssh/$SSH_KEY_VALUE". ${server} ssh key value will not be set."
       echo "# ${REMOTE_PREFIX}_SSH_KEY_FILE=<MISSING>" >> "$ENV_FILE"
     fi
-
-  elif [ -n "$SSH_KEY_FROM_SHELL" ]; then
-    echo "Info: Using SSH key from shell environment variable '${SSH_KEY_VAR_NAME}' for ${server}."
-    SSH_KEY_VALUE="$SSH_KEY_FROM_SHELL"
-
-    SSH_KEY_FILE="$HOME/.ssh/${server}_key"
-
-    rm -f "$SSH_KEY_FILE" || { echo "Error: Failed to remove existing key file $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
-    printf %s "$SSH_KEY_VALUE" | base64 -d > "$SSH_KEY_FILE" || { echo "Error: Failed to write SSH key to $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
-    chmod 600 "$SSH_KEY_FILE" || { echo "Error: Failed to set permissions on $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
-
-    echo "Info: SSH key for '${server}' saved to '$SSH_KEY_FILE' with permissions 600."
-    append_env_var "$REMOTE_PREFIX" "SSH_KEY_FILE" "$SSH_KEY_FILE"
   fi
 done
 
