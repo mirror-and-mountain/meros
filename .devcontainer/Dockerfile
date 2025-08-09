@@ -79,15 +79,19 @@ RUN mkdir -p /home/www-data \
 RUN usermod -d /home/www-data www-data
 RUN usermod -d /home/www-data -s /bin/bash www-data
 
-# Add enviromment json
-COPY /environment.json /home/www-data/config/environment.json
+# Add .env and remotes.json
+COPY /remotes/ /home/www-data/config/remotes/
+COPY /.env /home/www-data/config/.env
 
 # Add keys directory
 COPY /keys /home/www-data/.ssh
 
-# Ensure the config & keys directories exists and have the right permissions
+# Ensure the config & keys directories exist and have the right permissions
 RUN chown -R www-data:www-data /home/www-data/config \
     && chmod 755 /home/www-data/config
+
+RUN chown -R www-data:www-data /home/www-data/config/remotes \
+    && chmod 755 /home/www-data/config/remotes
 
 RUN chown -R www-data:www-data /home/www-data/.ssh \
     && chmod 755 /home/www-data/.ssh

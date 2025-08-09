@@ -3,14 +3,14 @@ set -e
 trap 'echo "Error on line $LINENO on host: $(hostname)"; exit 1' ERR
 
 # --- Configuration ---
-ENV_FILE="$HOME/config/.environment.env"
+ENV_FILE="$HOME/config/.env"
 # --- End Configuration ---
 
 # -- Load and Check Environment Variables ---
 if [ -f "$ENV_FILE" ]; then
   source "$ENV_FILE"
 else
-  echo "Error: $ENV_FILE not found. Run load-environment.sh first."
+  echo "Error: $HOME/config/.env couldn't be found. Check your .devcontainer directory and ensure one exists before building. Aborting..."
   exit 1
 fi
 

@@ -12,7 +12,7 @@ if [ -z "$1" ]; then
 fi
 
 # --- Configuration ---
-ENV_FILE="$HOME/config/.environment.env"
+ENV_FILE="$HOME/config/.env"
 VAR_SCRIPT="check-remote-vars.sh" 
 
 REMOTE_SERVER_INPUT="$1"
@@ -21,7 +21,7 @@ if [ -f "$ENV_FILE" ]; then
   echo "Loading environment variables from $ENV_FILE..."
   source "$ENV_FILE"
 else
-  echo "Error: $ENV_FILE not found. Run load-environment.sh first to generate it."
+  echo "Error: $HOME/config/.env couldn't be found. Check your .devcontainer directory and ensure one exists before building. Aborting..."
   exit 1
 fi
 
