@@ -85,7 +85,7 @@ for server in "${SERVERS[@]}"; do
 
     if [ -f "$HOME/.ssh/$SSH_KEY_VALUE" ]; then
       echo "Info: Using SSH key from file '$HOME/.ssh/$SSH_KEY_VALUE' for ${server}. Renaming to ${server}_key..."
-      SSH_KEY_FILE=$SSH_KEY_VALUE
+      SSH_KEY_FILE="$HOME/.ssh/$SSH_KEY_VALUE"
       
       # Ensure permissions are set for usage
       chmod 600 "$SSH_KEY_FILE" || { echo "Error: Failed to set permissions on $SSH_KEY_FILE for ${server}. Exiting."; exit 1; }
