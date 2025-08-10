@@ -48,7 +48,7 @@ echo "" >> "$ENV_FILE"
 echo "# --- Remote Server Settings ---" >> "$ENV_FILE"
 
 # Load remote server environment keys (e.g., "production", "staging")
-readarray -t SERVERS < <(echo "$REMOTE_CONFIG" | jq -r '.remote_servers | keys[]')
+readarray -t SERVERS < <(echo "$REMOTE_CONFIG" | jq -r 'keys[] | select(. != "$schema")')
 
 # Iterate over each remote server environment
 for server in "${SERVERS[@]}"; do
@@ -59,11 +59,11 @@ for server in "${SERVERS[@]}"; do
   REMOTE_PREFIX="${server^^}"
 
   # Extract values using jq
-  URL=$(echo "$REMOTE_CONFIG" | jq -r --arg s "$server" '.remote_servers[$s].url // ""')
-  WP_PATH=$(echo "$REMOTE_CONFIG" | jq -r --arg s "$server" '.remote_servers[$s].path // "public_html"')
-  SSH_HOST=$(echo "$REMOTE_CONFIG" | jq -r --arg s "$server" '.remote_servers[$s].ssh.host // ""')
-  SSH_PORT=$(echo "$REMOTE_CONFIG" | jq -r --arg s "$server" '.remote_servers[$s].ssh.port // "22"')
-  SSH_USER=$(echo "$REMOTE_CONFIG" | jq -r --arg s "$server" '.remote_servers[$s].ssh.user // ""')
+  URL=$(echo "$REMOTE_CONFIG" | jq -r --arg s "$server" '.[$s].url // ""')
+  WP_PATH=$(echo "$REMOTE_CONFIG" | jq -r --arg s "$server" '.[$s].path // "public_html"')
+  SSH_HOST=$(echo "$REMOTE_CONFIG" | jq -r --arg s "$server" '.[$s].ssh.host // ""')
+  SSH_PORT=$(echo "$REMOTE_CONFIG" | jq -r --arg s "$server" '.[$s].ssh.port // "22"')
+  SSH_USER=$(echo "$REMOTE_CONFIG" | jq -r --arg s "$server" '.[$s].ssh.user // ""')
 
   # Append variables to the .env file
   append_env_var "$REMOTE_PREFIX" "URL" "$URL"
@@ -74,7 +74,7 @@ for server in "${SERVERS[@]}"; do
 
   # Handling for SSH_KEY
   SSH_KEY_VAR_NAME="${REMOTE_PREFIX}_SSH_KEY" # e.g., PRODUCTION_SSH_KEY (for shell fallback)
-  SSH_KEY_FROM_JSON=$(echo "$REMOTE_CONFIG" | jq -r --arg s "$server" '.remote_servers[$s].ssh.key // ""')
+  SSH_KEY_FROM_JSON=$(echo "$REMOTE_CONFIG" | jq -r --arg s "$server" '.[$s].ssh.key // ""')
   SSH_KEY_FROM_SHELL="${!SSH_KEY_VAR_NAME}" # Get value from shell environment
 
   SSH_KEY_VALUE=""
@@ -110,6 +110,10 @@ for server in "${SERVERS[@]}"; do
       echo "Warning: Couldn't locate "$HOME/.ssh/$SSH_KEY_VALUE". ${server} ssh key value will not be set."
       echo "# ${REMOTE_PREFIX}_SSH_KEY_FILE=<MISSING>" >> "$ENV_FILE"
     fi
+
+  else 
+    echo "Warning: Couldn't locate SSH key configuration. SSH key value will not be set."
+    echo "# ${REMOTE_PREFIX}_SSH_KEY_FILE=<MISSING>" >> "$ENV_FILE"
   fi
 done
 

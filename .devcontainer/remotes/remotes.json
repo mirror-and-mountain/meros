@@ -1,14 +1,13 @@
 {
-    "remote_servers": {
-        "stage": {
-            "url": "https://example.com",
-            "path": "public_html",
-            "ssh": {
-                "host": "ssh.example.com",
-                "port": "22",
-                "user": "username",
-                "key": "id_rsa"
-            }
+    "$schema": "https://raw.githubusercontent.com/mirror-and-mountain/assets/refs/heads/main/schemas/meros-devcontainer-remotes-schema.json",
+    "stage": {
+        "url": "https://example.com",
+        "path": "public_html",
+        "ssh": {
+            "host": "ssh.example.com",
+            "port": "22",
+            "user": "username",
+            "key": "id_rsa"
         }
     }
 }
