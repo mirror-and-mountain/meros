@@ -46,6 +46,12 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
   && chmod +x wp-cli.phar \
   && mv wp-cli.phar /usr/local/bin/wp
 
+# Setup mariaDB client certificates
+RUN mkdir -p /etc/mysql/conf.d/
+RUN echo '[client]' > /etc/mysql/conf.d/zz-ssl-client.cnf \
+ && echo 'ssl-ca=/usr/local/share/ca-certificates/db_ca.crt' >> /etc/mysql/conf.d/zz-ssl-client.cnf \
+ && echo 'ssl-verify-server-cert=off' >> /etc/mysql/conf.d/zz-ssl-client.cnf
+
 # Add load-environment script to path
 COPY /scripts/load-environment.sh /usr/local/bin/load-environment.sh
 RUN chmod +x /usr/local/bin/load-environment.sh

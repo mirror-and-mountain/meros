@@ -1,16 +1,12 @@
-version: "3.9"
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: ${WP_THEME_NAME:-meros-blocks}_dev_app
-    ports:
-      - "8000:80"
+  cert-gen:
+    image: alpine/openssl:latest
+    container_name: ${WP_THEME_NAME:-meros-blocks}_dev_certs
     volumes:
-      - ..:/var/www/html/wp-content/themes/${WP_THEME_NAME:-meros-blocks}
-    depends_on:
-      - db
+      - ./certs:/certs
+      - ./scripts/generate-certs.sh:/usr/local/bin/generate-certs.sh:ro
+    entrypoint: ["sh", "-c", "cat /usr/local/bin/generate-certs.sh | sh"]
+    restart: "no"
 
   db:
     image: mysql:8
@@ -25,6 +21,25 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+      - ./certs:/etc/mysql/certs:ro
+      - ./certs/mysql_ssl.cnf:/etc/mysql/conf.d/mysql_ssl.cnf:ro
+    depends_on:
+      cert-gen:
+        condition: service_completed_successfully
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${WP_THEME_NAME:-meros-blocks}_dev_app
+    ports:
+      - "8000:80"
+    volumes:
+      - ..:/var/www/html/wp-content/themes/${WP_THEME_NAME:-meros-blocks}
+      - ./certs/ca.pem:/usr/local/share/ca-certificates/db_ca.crt:ro
+    depends_on:
+      db:
+        condition: service_started
 
 volumes:
   db_data:

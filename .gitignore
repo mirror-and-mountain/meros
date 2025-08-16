@@ -1,5 +1,8 @@
 /.devcontainer/keys/*
 !/.devcontainer/keys/.gitkeep
+/.devcontainer/certs/*
+!/.devcontainer/certs/mysql_ssl.cnf
+!/.devcontainer/certs/.gitkeep
 /vendor/
 /node_modules/
 /plugins/

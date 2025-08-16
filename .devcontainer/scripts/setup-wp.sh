@@ -19,7 +19,7 @@ if [ -z "$WP_DB_NAME" ] || [ -z "$WP_DB_USER" ] || [ -z "$WP_DB_PASSWORD" ] || [
   exit 1
 fi
 
-if [ -z "$WP_THEME_NAME" ] [ -z "$WP_TITLE" ] || [ -z "$WP_ADMIN_USER" ] || [ -z "$WP_ADMIN_PASSWORD" ] || [ -z "$WP_ADMIN_EMAIL" ]; then
+if [ -z "$WP_THEME_NAME" ] || [ -z "$WP_TITLE" ] || [ -z "$WP_ADMIN_USER" ] || [ -z "$WP_ADMIN_PASSWORD" ] || [ -z "$WP_ADMIN_EMAIL" ]; then
   echo "Error: Required WordPress environment variables are not set."
   exit 1
 fi
@@ -31,9 +31,10 @@ cd /var/www/html
 # -- Wait for MySQL to be ready ---
 echo "Installing WordPress..."
 echo "Waiting for MySQL to be ready..."
+CA_CERT_PATH="/usr/local/share/ca-certificates/db_ca.crt"
 
 attempts=0
-until mysqladmin ping -h"$WP_DB_HOST" -u"$WP_DB_USER" -p"$WP_DB_PASSWORD" --silent; do
+until mysqladmin ping -h"$WP_DB_HOST" -u"$WP_DB_USER" -p"$WP_DB_PASSWORD" --silent --ssl-ca="$CA_CERT_PATH"; do
   attempts=$((attempts+1))
   if [ "$attempts" -gt 20 ]; then
     echo "MySQL did not become available after multiple attempts"
