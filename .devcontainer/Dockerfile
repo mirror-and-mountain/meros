@@ -103,6 +103,10 @@ RUN chown -R www-data:www-data /home/www-data/.ssh \
 RUN chown -R www-data:www-data /home/www-data/.wp-cli \
     && chmod 755 /home/www-data/.wp-cli
 
+# Set restrictive permissions for the .my.cnf file
+RUN chown www-data:www-data /home/www-data/.my.cnf \
+    && chmod 600 /home/www-data/.my.cnf
+
 # Increase PHP upload limit
 RUN echo "upload_max_filesize=256M\npost_max_size=256M" > /usr/local/etc/php/conf.d/uploads.ini
 
