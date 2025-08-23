@@ -1,10 +1,10 @@
 {
     "$schema": "https://raw.githubusercontent.com/mirror-and-mountain/assets/refs/heads/main/schemas/meros-devcontainer-remotes-schema.json",
     "stage": {
-        "url": "https://example.com",
-        "path": "public_html",
+        "url": "https://stage.mysite.com",
+        "path": "public_html/stage",
         "ssh": {
-            "host": "ssh.example.com",
+            "host": "ssh.mysite.com",
             "port": "22",
             "user": "username",
             "key": "id_rsa"

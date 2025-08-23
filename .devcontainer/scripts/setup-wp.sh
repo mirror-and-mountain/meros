@@ -31,10 +31,9 @@ cd /var/www/html
 # -- Wait for MySQL to be ready ---
 echo "Installing WordPress..."
 echo "Waiting for MySQL to be ready..."
-CA_CERT_PATH="/usr/local/share/ca-certificates/db_ca.crt"
 
 attempts=0
-until mysqladmin ping -h"$WP_DB_HOST" -u"$WP_DB_USER" -p"$WP_DB_PASSWORD" --silent --ssl-ca="$CA_CERT_PATH"; do
+until mysqladmin ping -h"$WP_DB_HOST" -u"$WP_DB_USER" -p"$WP_DB_PASSWORD" --silent; do
   attempts=$((attempts+1))
   if [ "$attempts" -gt 20 ]; then
     echo "MySQL did not become available after multiple attempts"

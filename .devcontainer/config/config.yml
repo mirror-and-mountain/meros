@@ -1,0 +1,7 @@
+# Ensures wp db operations use the mariadb-client defaults
+db check: 
+  defaults: true
+db import:
+  defaults: true
+db export:
+  defaults: true

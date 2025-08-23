@@ -46,12 +46,6 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
   && chmod +x wp-cli.phar \
   && mv wp-cli.phar /usr/local/bin/wp
 
-# Setup mariaDB client certificates
-RUN mkdir -p /etc/mysql/conf.d/
-RUN echo '[client]' > /etc/mysql/conf.d/zz-ssl-client.cnf \
- && echo 'ssl-ca=/usr/local/share/ca-certificates/db_ca.crt' >> /etc/mysql/conf.d/zz-ssl-client.cnf \
- && echo 'ssl-verify-server-cert=off' >> /etc/mysql/conf.d/zz-ssl-client.cnf
-
 # Add load-environment script to path
 COPY /scripts/load-environment.sh /usr/local/bin/load-environment.sh
 RUN chmod +x /usr/local/bin/load-environment.sh
@@ -85,6 +79,10 @@ RUN mkdir -p /home/www-data \
 RUN usermod -d /home/www-data www-data
 RUN usermod -d /home/www-data -s /bin/bash www-data
 
+# Copy MySQL SSL Conf & WP CLI config.yml
+COPY /config/ssl.cnf /home/www-data/.my.cnf
+COPY /config/config.yml /home/www-data/.wp-cli/config.yml
+
 # Add .env and remotes.json
 COPY /remotes/ /home/www-data/config/remotes/
 COPY /.env /home/www-data/config/.env
@@ -101,6 +99,9 @@ RUN chown -R www-data:www-data /home/www-data/config/remotes \
 
 RUN chown -R www-data:www-data /home/www-data/.ssh \
     && chmod 755 /home/www-data/.ssh
+
+RUN chown -R www-data:www-data /home/www-data/.wp-cli \
+    && chmod 755 /home/www-data/.wp-cli
 
 # Increase PHP upload limit
 RUN echo "upload_max_filesize=256M\npost_max_size=256M" > /usr/local/etc/php/conf.d/uploads.ini
