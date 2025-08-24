@@ -29,10 +29,10 @@
     ],
     "require": {
         "composer/installers": "^2.3",
-        "mirror-and-mountain/meros-framework": "^1.0.12",
-        "mirror-and-mountain/meros-dynamic-page": "^1.0.7",
-        "mirror-and-mountain/meros-dynamic-header": "^1.0.5",
-        "mirror-and-mountain/meros-carousel": "^1.1.5",
+        "mirror-and-mountain/meros-framework": "^1.0.20",
+        "mirror-and-mountain/meros-dynamic-page": "^1.0.22",
+        "mirror-and-mountain/meros-dynamic-header": "^1.0.21",
+        "mirror-and-mountain/meros-carousel": "^1.1.10",
         "mirror-and-mountain/meros-text-animations": "^1.0.1"
     },
     "autoload": {
@@ -44,16 +44,7 @@
         "post-autoload-dump": [
             "Roots\\Acorn\\ComposerScripts::postAutoloadDump",
             "MM\\Meros\\Scripts\\Composer::installPluginsAndExtensions"
-        ],
-        "post-install-cmd": [
-            "MM\\Meros\\Scripts\\Composer::makeCreateScriptExecutable"
-        ],
-        "create-feature": [
-            "MM\\Meros\\Scripts\\Composer::createFeature"
-        ],
-        "test-remote": "test-remote.sh",
-        "sync:to": "sync-to-remote.sh",
-        "sync:from": "sync-from-remote.sh"
+        ]
     },
     "extra": {
         "installer-paths": {

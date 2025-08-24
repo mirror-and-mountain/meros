@@ -42,7 +42,7 @@ echo "--- Checking remote server variables for ${REMOTE_SERVER_INPUT} ---"
 echo "--- Remote server variable check passed for ${REMOTE_SERVER_INPUT} ---"
 
 # --- Run Pre-Sync Tests (Optional) ---
-if [ "$RUN_PRE_SYNC_TESTS" = "test" ]; then
+if [ "$RUN_PRE_SYNC_TESTS" = "true" ]; then
   echo "--- Running pre-sync tests for ${REMOTE_SERVER_INPUT} ---"
   # Execute the test script as a child process.
   "$TEST_SCRIPT" "${REMOTE_SERVER_INPUT}" || {
