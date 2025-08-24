@@ -1,0 +1,31 @@
+services:
+
+  db:
+    image: mysql:8
+    restart: always
+    container_name: ${WP_THEME_NAME:-meros-blocks}_dev_db
+    environment:
+      MYSQL_DATABASE: ${WP_DB_NAME:-wordpress}
+      MYSQL_USER: ${WP_DB_USER:-dbuser}
+      MYSQL_PASSWORD: ${WP_DB_PASSWORD:-dbpassword}
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${WP_THEME_NAME:-meros-blocks}_dev_app
+    ports:
+      - "8000:80"
+    volumes:
+      - ..:/var/www/html/wp-content/themes/${WP_THEME_NAME:-meros-blocks}
+    depends_on:
+      db:
+        condition: service_started
+
+volumes:
+  db_data:

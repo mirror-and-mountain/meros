@@ -25,6 +25,7 @@ return [
 
     // Installed features
     'features' => [
+        'App\\Features\\ThemeStyles\\FeatureDefinition' => 'FeatureDefinition.php',
     ],
 
     // Installed extensions
@@ -38,13 +39,13 @@ return [
             'config' => 'MerosDynamicHeader.php',
             'src' => 'plugins/meros-dynamic-header/meros-dynamic-header.php',
         ],
-        'App\\Plugins\\MerosTextAnimations' => [
-            'config' => 'MerosTextAnimations.php',
-            'src' => 'plugins/meros-text-animations/meros-text-animations.php',
-        ],
         'App\\Plugins\\MerosCarousel' => [
             'config' => 'MerosCarousel.php',
             'src' => 'plugins/meros-carousel/meros-carousel.php',
+        ],
+        'App\\Plugins\\MerosTextAnimations' => [
+            'config' => 'MerosTextAnimations.php',
+            'src' => 'plugins/meros-text-animations/meros-text-animations.php',
         ],
     ]
 ];
