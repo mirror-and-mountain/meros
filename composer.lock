@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "63103c66c1f0a14b6d8403fd68cba259",
+    "content-hash": "d9cdb7648a78a0a1dc5e318250f97775",
     "packages": [
         {
             "name": "brick/math",
@@ -3299,16 +3299,16 @@
         },
         {
             "name": "mirror-and-mountain/meros-framework",
-            "version": "v1.0.22",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mirror-and-mountain/meros-framework.git",
-                "reference": "bd0e9ced3c8c160f43bb3a59ef2449ea833908a2"
+                "reference": "f93ed5bb769c415d60736811ca97f58306b7bf05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mirror-and-mountain/meros-framework/zipball/bd0e9ced3c8c160f43bb3a59ef2449ea833908a2",
-                "reference": "bd0e9ced3c8c160f43bb3a59ef2449ea833908a2",
+                "url": "https://api.github.com/repos/mirror-and-mountain/meros-framework/zipball/f93ed5bb769c415d60736811ca97f58306b7bf05",
+                "reference": "f93ed5bb769c415d60736811ca97f58306b7bf05",
                 "shasum": ""
             },
             "require": {
@@ -3339,9 +3339,9 @@
             "description": "A developer-friendly package for creating advanced Wordpress themes.",
             "support": {
                 "issues": "https://github.com/mirror-and-mountain/meros-framework/issues",
-                "source": "https://github.com/mirror-and-mountain/meros-framework/tree/v1.0.22"
+                "source": "https://github.com/mirror-and-mountain/meros-framework/tree/v1.1.1"
             },
-            "time": "2025-08-24T11:26:48+00:00"
+            "time": "2025-08-24T15:54:05+00:00"
         },
         {
             "name": "mirror-and-mountain/meros-text-animations",
@@ -6904,16 +6904,16 @@
     "packages-dev": [
         {
             "name": "mirror-and-mountain/meros-theme-devcontainer",
-            "version": "v0.0.4",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mirror-and-mountain/meros-theme-devcontainer.git",
-                "reference": "3427f3b4525f951a138fe71e27321589ce6ab013"
+                "reference": "8ade3448c461eaea83de63f890892b050465fe53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mirror-and-mountain/meros-theme-devcontainer/zipball/3427f3b4525f951a138fe71e27321589ce6ab013",
-                "reference": "3427f3b4525f951a138fe71e27321589ce6ab013",
+                "url": "https://api.github.com/repos/mirror-and-mountain/meros-theme-devcontainer/zipball/8ade3448c461eaea83de63f890892b050465fe53",
+                "reference": "8ade3448c461eaea83de63f890892b050465fe53",
                 "shasum": ""
             },
             "type": "library",
@@ -6938,9 +6938,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mirror-and-mountain/meros-theme-devcontainer/issues",
-                "source": "https://github.com/mirror-and-mountain/meros-theme-devcontainer/tree/v0.0.4"
+                "source": "https://github.com/mirror-and-mountain/meros-theme-devcontainer/tree/v1.0.2"
             },
-            "time": "2025-08-24T15:21:09+00:00"
+            "time": "2025-08-24T16:06:23+00:00"
         }
     ],
     "aliases": [],
