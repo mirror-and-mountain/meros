@@ -86,7 +86,6 @@ if (isset($_SERVER["HTTP_X_FORWARDED_HOST"]) && isset($_SERVER["HTTP_X_FORWARDED
     --skip-email
 
   echo "WordPress installed successfully."
-  echo "Activating theme: $WP_THEME_NAME"
   
   # Install theme dependencies
   if [ -d "wp-content/themes/$WP_THEME_NAME" ]; then
