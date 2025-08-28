@@ -141,6 +141,11 @@ if [ -n "$THEME_DIR" ]; then
     --exclude='/.gitignore' \
     --exclude '/app/Features/**/assets/src/' \
     --exclude '/app/Features/**/blocks/src/' \
+    --exclude '/app/Features/**/node_modules/' \
+    --exclude '/app/Features/**/composer.json/' \
+    --exclude '/app/Features/**/package.json/' \
+    --exclude '/app/Features/**/package.lock/' \
+    --exclude '/app/Features/**/webpack.assets.config.js/' \
     "wp-content/themes/$THEME_DIR/" \
     "${REMOTE_SSH_USER_VALUE}@${REMOTE_SSH_HOST_VALUE}:$REMOTE_PATH_VALUE/wp-content/themes/$THEME_DIR/" \
     --delete \

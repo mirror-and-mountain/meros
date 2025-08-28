@@ -27,5 +27,19 @@ services:
       db:
         condition: service_started
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    container_name: ${WP_THEME_NAME:-meros-blocks}_dev_phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: rootpassword
+    depends_on:
+      db:
+        condition: service_started
+
 volumes:
   db_data:

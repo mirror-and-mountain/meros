@@ -35,7 +35,7 @@ echo "Waiting for MySQL to be ready..."
 attempts=0
 until mysqladmin ping -h"$WP_DB_HOST" -u"$WP_DB_USER" -p"$WP_DB_PASSWORD" --silent; do
   attempts=$((attempts+1))
-  if [ "$attempts" -gt 20 ]; then
+  if [ "$attempts" -gt 25 ]; then
     echo "MySQL did not become available after multiple attempts"
     exit 1
   fi
@@ -92,7 +92,7 @@ if (isset($_SERVER["HTTP_X_FORWARDED_HOST"]) && isset($_SERVER["HTTP_X_FORWARDED
     echo "Installing theme dependencies..."
     cd "wp-content/themes/$WP_THEME_NAME"
     if [ -f "composer.json" ]; then
-      composer install --no-dev --optimize-autoloader
+      composer install --no-dev
     else
       echo "No composer.json found in theme directory, skipping composer install."
     fi
