@@ -139,6 +139,7 @@ if [ -n "$THEME_DIR" ]; then
     --exclude='/package-lock.json' \
     --exclude='/.gitattributes' \
     --exclude='/.gitignore' \
+    --exclude '/storage/logs/laravel.log' \
     --exclude '/app/Features/**/assets/src/' \
     --exclude '/app/Features/**/blocks/src/' \
     --exclude '/app/Features/**/node_modules/' \
