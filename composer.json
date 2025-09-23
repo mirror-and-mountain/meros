@@ -32,7 +32,7 @@
         "mirror-and-mountain/meros-framework": "^1.1.4",
         "mirror-and-mountain/meros-dynamic-page": "^1.1.0",
         "mirror-and-mountain/meros-dynamic-header": "^1.0.21",
-        "mirror-and-mountain/meros-carousel": "^1.1.11",
+        "mirror-and-mountain/meros-carousel": "^1.1.12",
         "mirror-and-mountain/meros-text-animations": "^1.0.1"
     },
     "autoload": {
