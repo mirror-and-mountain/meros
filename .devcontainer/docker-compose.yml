@@ -2,7 +2,7 @@ services:
 
   db:
     image: mysql:8
-    restart: always
+    restart: "no"
     container_name: ${WP_THEME_NAME:-meros-blocks}_dev_db
     environment:
       MYSQL_DATABASE: ${WP_DB_NAME:-wordpress}
@@ -13,25 +13,24 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-    restart: "no"
 
   app:
     build:
       context: .
       dockerfile: Dockerfile
+    restart: "no"
     container_name: ${WP_THEME_NAME:-meros-blocks}_dev_app
     ports:
       - "8000:80"
     volumes:
       - ..:/var/www/html/wp-content/themes/${WP_THEME_NAME:-meros-blocks}
-    restart: "no"
     depends_on:
       db:
         condition: service_started
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    restart: always
+    restart: "no"
     container_name: ${WP_THEME_NAME:-meros-blocks}_dev_phpmyadmin
     ports:
       - "8080:80"
@@ -39,7 +38,6 @@ services:
       PMA_HOST: db
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: rootpassword
-    restart: "no"
     depends_on:
       db:
         condition: service_started
