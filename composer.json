@@ -29,11 +29,12 @@
     ],
     "require": {
         "composer/installers": "^2.3",
-        "mirror-and-mountain/meros-framework": "^1.1.4",
+        "mirror-and-mountain/meros-framework": "^1.1.7",
         "mirror-and-mountain/meros-dynamic-page": "^1.1.0",
         "mirror-and-mountain/meros-dynamic-header": "^1.1.0",
         "mirror-and-mountain/meros-carousel": "^1.1.12",
-        "mirror-and-mountain/meros-text-animations": "^1.0.1"
+        "mirror-and-mountain/meros-text-animations": "^1.0.1",
+        "mirror-and-mountain/meros-forms": "^0.0.3"
     },
     "autoload": {
         "psr-4": {

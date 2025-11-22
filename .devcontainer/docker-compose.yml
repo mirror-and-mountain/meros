@@ -13,6 +13,7 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+    restart: "no"
 
   app:
     build:
@@ -23,6 +24,7 @@ services:
       - "8000:80"
     volumes:
       - ..:/var/www/html/wp-content/themes/${WP_THEME_NAME:-meros-blocks}
+    restart: "no"
     depends_on:
       db:
         condition: service_started
@@ -37,6 +39,7 @@ services:
       PMA_HOST: db
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: rootpassword
+    restart: "no"
     depends_on:
       db:
         condition: service_started

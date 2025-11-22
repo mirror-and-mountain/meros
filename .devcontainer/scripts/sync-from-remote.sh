@@ -3,9 +3,6 @@ set -e
 trap 'echo "Error on line $LINENO on host: $(hostname)"; exit 1' ERR
 
 # --- Get Parameters from Command Line ---
-# Argument 1: REMOTE_SERVER name (e.g., "production", "staging")
-# Argument 2 (Optional): Flag to run pre-sync tests (e.g., "test")
-
 if [ -z "$1" ]; then
   echo "Usage: composer run sync:from-remote -- <REMOTE_SERVER> [run_tests_flag]"
   echo "Example: composer run sync:from-remote -- production"
@@ -20,48 +17,51 @@ VAR_SCRIPT="check-remote-vars.sh"
 LOCAL_PATH="/var/www/html"
 # --- End Configuration ---
 
-# Navigate to Wordpress root directory
 cd "$LOCAL_PATH" || {
   echo "Error: Could not change directory to $LOCAL_PATH."
   exit 1
 }
 
 REMOTE_SERVER_INPUT="$1"
-RUN_PRE_SYNC_TESTS="${2:-false}" # Default to 'false' if second arg is not provided
-
-# Convert user input to uppercase
+RUN_PRE_SYNC_TESTS="${2:-false}"
 REMOTE_SERVER="${REMOTE_SERVER_INPUT^^}"
-# --- End Configuration ---
 
 # --- Load and check env file ---
 if [ -f "$ENV_FILE" ]; then
   echo "Loading environment variables from $ENV_FILE..."
   source "$ENV_FILE"
 else
-  echo "Error: $HOME/config/.env couldn't be found. Check your .devcontainer directory and ensure one exists before building. Aborting..."
+  echo "Error: $HOME/config/.env couldn't be found. Aborting..."
   exit 1
+fi
+
+# --- Prepare local skip plugins param ---
+if [ -n "$LOCAL_SKIP_PLUGINS" ]; then
+  echo "Using LOCAL_SKIP_PLUGINS: $LOCAL_SKIP_PLUGINS"
+  WP_SKIP_PLUGINS_PARAM="--skip-plugins=$(echo "$LOCAL_SKIP_PLUGINS" | tr -d '[:space:]')"
+else
+  WP_SKIP_PLUGINS_PARAM=""
+  echo "No LOCAL_SKIP_PLUGINS defined; continuing without skip flag."
 fi
 
 # --- Run VAR Check Tests ---
 echo "--- Checking remote server variables for ${REMOTE_SERVER_INPUT} ---"
-  # Execute the test script as a child process.
-  source "$VAR_SCRIPT" "${REMOTE_SERVER}" || {
-    echo "Error: Pre-sync remote server variable check failed for ${REMOTE_SERVER_INPUT}. Aborting sync."
-    exit 1
-  }
+source "$VAR_SCRIPT" "${REMOTE_SERVER}" || {
+  echo "Error: Pre-sync remote server variable check failed for ${REMOTE_SERVER_INPUT}. Aborting sync."
+  exit 1
+}
 echo "--- Remote server variable check passed for ${REMOTE_SERVER_INPUT} ---"
 
-# --- Run Pre-Sync Tests (Optional) ---
+# --- Optional pre-sync tests ---
 if [ "$RUN_PRE_SYNC_TESTS" = "true" ]; then
   echo "--- Running pre-sync tests for ${REMOTE_SERVER_INPUT} ---"
-  # Execute the test script as a child process.
   "$TEST_SCRIPT" "${REMOTE_SERVER_INPUT}" || {
     echo "Error: Pre-sync tests failed for ${REMOTE_SERVER_INPUT}. Aborting sync."
     exit 1
   }
   echo "--- Pre-sync tests passed for ${REMOTE_SERVER_INPUT} ---"
 else
-  echo "Pre-sync tests skipped (to run, add 'test' as the second argument: e.g., 'composer run sync-remote -- production test')."
+  echo "Pre-sync tests skipped (add 'test' as second argument to enable)."
 fi
 
 # --- Configure Site URL ---
@@ -97,13 +97,16 @@ echo "Database exported to $TMP_DB_FILE"
 
 # Import database into local environment
 echo "Importing database into local environment..."
-wp db import "$TMP_DB_FILE" || { echo "Error: Local DB import failed. Ensure local DB connection is configured."; exit 1; }
+wp db import "$TMP_DB_FILE" $WP_SKIP_PLUGINS_PARAM || {
+  echo "Error: Local DB import failed. Ensure local DB connection is configured."
+  exit 1
+}
 
 # Run search-replace to update URLs in the database
 echo "Running search-replace to update URLs..."
-wp search-replace "$REMOTE_URL_VALUE" "$LOCAL_WP_URL" --skip-columns=guid
+wp search-replace "$REMOTE_URL_VALUE" "$LOCAL_WP_URL" --skip-columns=guid $WP_SKIP_PLUGINS_PARAM
 
-# Sync uploads and plugins from remote
+# --- Sync uploads and plugins ---
 echo "Syncing uploads from REMOTE..."
 rsync -avz \
     -e "ssh -p $REMOTE_SSH_PORT_VALUE -i $REMOTE_SSH_KEY_FILE_VALUE -o StrictHostKeyChecking=no" \
@@ -118,28 +121,36 @@ rsync -avz \
     "wp-content/plugins/" \
     --delete
 
+# --- Clean up active_plugins option ---
+echo "Deactivating local-only skip plugins..."
+if [ -n "$LOCAL_SKIP_PLUGINS" ]; then
+  IFS=',' read -ra PLUGINS <<< "$LOCAL_SKIP_PLUGINS"
+  for plugin in "${PLUGINS[@]}"; do
+    plugin_slug=$(echo "$plugin" | xargs) # trim spaces
+    echo "→ Deactivating $plugin_slug locally..."
+    wp plugin deactivate "$plugin_slug" --quiet || echo "Warning: $plugin_slug not found or already inactive."
+  done
+else
+  echo "No LOCAL_SKIP_PLUGINS defined; skipping plugin cleanup."
+fi
+
+# --- Cleanup ---
 rm -rf $TMP_DIR
 
 echo "Sync from REMOTE complete."
-# --- End Sync Operations ---
 
+# --- Final environment clean-up ---
 echo "Cleaning up environment..."
-# Fix site URLs
-wp option update home "$LOCAL_WP_URL"
-wp option update siteurl "$LOCAL_WP_URL"
+wp option update home "$LOCAL_WP_URL" $WP_SKIP_PLUGINS_PARAM
+wp option update siteurl "$LOCAL_WP_URL" $WP_SKIP_PLUGINS_PARAM
 
-# Flush rewrite rules
-wp option update permalink_structure '/%postname%/'
-wp rewrite flush --hard
+wp option update permalink_structure '/%postname%/' $WP_SKIP_PLUGINS_PARAM
+wp rewrite flush --hard $WP_SKIP_PLUGINS_PARAM
 
-# Clear transients and caches
-wp transient delete --all
-wp cache flush || echo "No object cache available, skipping..."
+wp transient delete --all $WP_SKIP_PLUGINS_PARAM
+wp cache flush $WP_SKIP_PLUGINS_PARAM || echo "No object cache available, skipping..."
 
-echo "Environment clean-up complete."
-echo "Checking .htaccess file."
-
-# Create .htaccess file if it doesn't exist
+# Ensure .htaccess exists
 HTACCESS_PATH=".htaccess"
 if [ ! -f "$HTACCESS_PATH" ]; then
   echo "Creating .htaccess file at $HTACCESS_PATH"
@@ -160,3 +171,4 @@ else
 fi
 
 echo "Sync from $REMOTE_SERVER complete."
+# --- End Sync Operations ---

@@ -31,6 +31,7 @@ return [
     // Installed extensions
     'extensions' => [
         'App\\Extensions\\MerosDynamicPage' => 'MerosDynamicPage.php',
+        'App\\Extensions\\MerosForms' => 'MerosForms.php',
     ],
 
     // Installed plugins

@@ -28,23 +28,20 @@ cd "$LOCAL_PATH" || {
 REMOTE_SERVER_INPUT="$1"
 RUN_PRE_SYNC_TESTS="${2:-false}" # Default to 'false' if second arg is not provided
 
-# Convert user input to uppercase
+# Convert user input to uppercase (for env var lookup)
 REMOTE_SERVER="${REMOTE_SERVER_INPUT^^}"
-# --- End Configuration ---
 
 # --- Run VAR Check Tests ---
 echo "--- Checking remote server variables for ${REMOTE_SERVER_INPUT} ---"
-  # Execute the test script as a child process.
-  source "$VAR_SCRIPT" "${REMOTE_SERVER}" || {
-    echo "Error: Pre-sync remote server variable check failed for ${REMOTE_SERVER_INPUT}. Aborting sync."
-    exit 1
-  }
+source "$VAR_SCRIPT" "${REMOTE_SERVER}" || {
+  echo "Error: Pre-sync remote server variable check failed for ${REMOTE_SERVER_INPUT}. Aborting sync."
+  exit 1
+}
 echo "--- Remote server variable check passed for ${REMOTE_SERVER_INPUT} ---"
 
 # --- Run Pre-Sync Tests (Optional) ---
 if [ "$RUN_PRE_SYNC_TESTS" = "true" ]; then
   echo "--- Running pre-sync tests for ${REMOTE_SERVER_INPUT} ---"
-  # Execute the test script as a child process.
   "$TEST_SCRIPT" "${REMOTE_SERVER_INPUT}" || {
     echo "Error: Pre-sync tests failed for ${REMOTE_SERVER_INPUT}. Aborting sync."
     exit 1
@@ -65,6 +62,18 @@ fi
 
 echo "Detected local WordPress URL: $LOCAL_WP_URL"
 
+# --- Determine skip plugins ---
+SKIP_PLUGINS_VAR="${REMOTE_SERVER}_SKIP_PLUGINS"
+SKIP_PLUGINS_VALUE="${!SKIP_PLUGINS_VAR:-}"
+
+if [ -n "$SKIP_PLUGINS_VALUE" ]; then
+  WP_SKIP_PLUGINS_PARAM="--skip-plugins=$(echo "$SKIP_PLUGINS_VALUE" | tr -d '[:space:]')"
+  echo "Detected skip plugins for $REMOTE_SERVER: $SKIP_PLUGINS_VALUE"
+else
+  WP_SKIP_PLUGINS_PARAM=""
+  echo "No skip plugins configured for $REMOTE_SERVER."
+fi
+
 # --- Create Temp Directory for DB ---
 echo "Creating temporary directory..."
 TMP_DIR="tmp"
@@ -82,36 +91,36 @@ scp -P "$REMOTE_SSH_PORT_VALUE" \
     -i "$REMOTE_SSH_KEY_FILE_VALUE" \
     -o StrictHostKeyChecking=no "$TMP_DB_FILE" "${REMOTE_SSH_USER_VALUE}@${REMOTE_SSH_HOST_VALUE}:$REMOTE_PATH_VALUE/dev-db.sql"
 
-# Import database on remote server
+# --- Import database on remote server ---
 echo "Importing database on remote server..."
 ssh -i "${REMOTE_SSH_KEY_FILE_VALUE}" \
     -o StrictHostKeyChecking=no \
     -p "${REMOTE_SSH_PORT_VALUE}" \
-    "${REMOTE_SSH_USER_VALUE}@${REMOTE_SSH_HOST_VALUE}" bash <<EOF
+    "${REMOTE_SSH_USER_VALUE}@${REMOTE_SSH_HOST_VALUE}" bash -s <<EOF
   set -e
   cd "$REMOTE_PATH_VALUE"
 
   echo "Importing database..."
-  wp db import dev-db.sql --path=. --quiet
+  wp db import dev-db.sql --path=. --quiet $WP_SKIP_PLUGINS_PARAM
 
   echo "Running search-replace for URLs..."
-  wp search-replace '$LOCAL_WP_URL' '$REMOTE_URL_VALUE' --path=. --skip-columns=guid --quiet
+  wp search-replace '$LOCAL_WP_URL' '$REMOTE_URL_VALUE' --path=. --skip-columns=guid --quiet $WP_SKIP_PLUGINS_PARAM
 
   echo "Updating siteurl and home..."
-  wp option update siteurl '$REMOTE_URL_VALUE' --path=. --quiet
-  wp option update home '$REMOTE_URL_VALUE' --path=. --quiet
+  wp option update siteurl '$REMOTE_URL_VALUE' --path=. --quiet $WP_SKIP_PLUGINS_PARAM
+  wp option update home '$REMOTE_URL_VALUE' --path=. --quiet $WP_SKIP_PLUGINS_PARAM
 
   echo "Flushing rewrite rules..."
-  wp rewrite flush --hard --path=. --quiet
+  wp rewrite flush --hard --path=. --quiet $WP_SKIP_PLUGINS_PARAM
 
   echo "Clearing transients and cache..."
-  wp transient delete --all --path=. --quiet
-  wp cache flush --path=. --quiet || echo "No object cache to flush."
+  wp transient delete --all --path=. --quiet $WP_SKIP_PLUGINS_PARAM
+  wp cache flush --path=. --quiet $WP_SKIP_PLUGINS_PARAM || echo "No object cache to flush."
 
   rm -f dev-db.sql
 EOF
 
-# Sync uploads and plugins to remote
+# --- Sync uploads and plugins to remote ---
 echo "Syncing uploads to REMOTE..."
 rsync -avz \
   -e "ssh -p "$REMOTE_SSH_PORT_VALUE" -i $REMOTE_SSH_KEY_FILE_VALUE -o StrictHostKeyChecking=no" \
@@ -126,6 +135,58 @@ rsync -avz \
   "${REMOTE_SSH_USER_VALUE}@${REMOTE_SSH_HOST_VALUE}:$REMOTE_PATH_VALUE/wp-content/plugins/" \
   --delete
 
+# --- Clean up active_plugins ---
+if [ -n "$LOCAL_SKIP_PLUGINS" ]; then
+  echo "Ensuring include plugins are activated on remote..."
+  ssh -i "${REMOTE_SSH_KEY_FILE_VALUE}" \
+      -o StrictHostKeyChecking=no \
+      -p "${REMOTE_SSH_PORT_VALUE}" \
+      "${REMOTE_SSH_USER_VALUE}@${REMOTE_SSH_HOST_VALUE}" bash -s <<EOF
+    set -e
+    cd "$REMOTE_PATH_VALUE"
+
+    INCLUDE_LIST="${LOCAL_SKIP_PLUGINS//,/ }"
+    SKIP_LIST="${SKIP_PLUGINS_VALUE//,/ }"
+
+    for slug in \$INCLUDE_LIST; do
+      # Only activate if not in SKIP_LIST
+      if ! [[ " \$SKIP_LIST " =~ " \$slug " ]]; then
+        echo "Activating plugin: \$slug"
+        wp plugin activate "\$slug" --quiet || echo "Warning: Could not activate plugin \$slug"
+      else
+        echo "Skipping activation for plugin (in skip list): \$slug"
+      fi
+    done
+    echo "Include plugins activated on remote."
+EOF
+fi
+
+if [ -n "$SKIP_PLUGINS_VALUE" ]; then
+  echo "Ensuring skip plugins are deactivated on remote..."
+  ssh -i "${REMOTE_SSH_KEY_FILE_VALUE}" \
+      -o StrictHostKeyChecking=no \
+      -p "${REMOTE_SSH_PORT_VALUE}" \
+      "${REMOTE_SSH_USER_VALUE}@${REMOTE_SSH_HOST_VALUE}" bash -s <<EOF
+    set -e
+    cd "$REMOTE_PATH_VALUE"
+
+    ACTIVE_PLUGINS_JSON=\$(wp option get active_plugins --format=json)
+    SKIP_LIST="${SKIP_PLUGINS_VALUE//,/ }"
+
+    for slug in $SKIP_LIST; do
+      ACTIVE_PLUGINS_JSON=$(echo "$ACTIVE_PLUGINS_JSON" | sed -E "s#\"$slug/[^\"/]*\",?##g" | sed -E 's#,\s*,#,#g' | sed -E 's#\[\s*,#\[#g' | sed -E 's#,\s*\]#]#g')
+    done
+
+    if [ -n "\$ACTIVE_PLUGINS_JSON" ] && [ "\$ACTIVE_PLUGINS_JSON" != "null" ]; then
+      wp option update active_plugins "\$ACTIVE_PLUGINS_JSON" --format=json --quiet
+      echo "Cleaned active_plugins on remote."
+    else
+      echo "Warning: No active plugins found or unexpected null result."
+    fi
+EOF
+fi
+
+# --- Sync theme ---
 if [ -n "$THEME_DIR" ]; then
   echo "Syncing theme to REMOTE..."
   rsync -avz \
@@ -153,7 +214,8 @@ if [ -n "$THEME_DIR" ]; then
     --delete-excluded
 fi
 
-rm -rf "$TMP_DB_DIR"
+# --- Clean up ---
+rm -rf "$TMP_DB_FILE"
 
 echo "Sync to $REMOTE_SERVER complete."
 # --- End Sync Operations ---
