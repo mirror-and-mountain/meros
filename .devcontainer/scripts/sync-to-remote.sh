@@ -104,7 +104,7 @@ ssh -i "${REMOTE_SSH_KEY_FILE_VALUE}" \
   wp db import dev-db.sql --path=. --quiet $WP_SKIP_PLUGINS_PARAM
 
   echo "Running search-replace for URLs..."
-  wp search-replace '$LOCAL_WP_URL' '$REMOTE_URL_VALUE' --path=. --skip-columns=guid --quiet $WP_SKIP_PLUGINS_PARAM
+  wp search-replace '$LOCAL_WP_URL' '$REMOTE_URL_VALUE' --path=. --quiet $WP_SKIP_PLUGINS_PARAM
 
   echo "Updating siteurl and home..."
   wp option update siteurl '$REMOTE_URL_VALUE' --path=. --quiet $WP_SKIP_PLUGINS_PARAM

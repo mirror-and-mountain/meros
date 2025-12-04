@@ -104,7 +104,7 @@ wp db import "$TMP_DB_FILE" $WP_SKIP_PLUGINS_PARAM || {
 
 # Run search-replace to update URLs in the database
 echo "Running search-replace to update URLs..."
-wp search-replace "$REMOTE_URL_VALUE" "$LOCAL_WP_URL" --skip-columns=guid $WP_SKIP_PLUGINS_PARAM
+wp search-replace "$REMOTE_URL_VALUE" "$LOCAL_WP_URL" $WP_SKIP_PLUGINS_PARAM
 
 # --- Sync uploads and plugins ---
 echo "Syncing uploads from REMOTE..."
