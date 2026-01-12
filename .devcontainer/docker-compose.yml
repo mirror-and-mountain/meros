@@ -1,46 +1,38 @@
 services:
-
   db:
-    image: mysql:8
-    restart: "no"
-    container_name: ${WP_THEME_NAME:-meros-blocks}_dev_db
+    image: mariadb:10.11
+    container_name: ${THEME_SLUG:-meros-wp}_dev_db
     environment:
-      MYSQL_DATABASE: ${WP_DB_NAME:-wordpress}
-      MYSQL_USER: ${WP_DB_USER:-dbuser}
-      MYSQL_PASSWORD: ${WP_DB_PASSWORD:-dbpassword}
-      MYSQL_ROOT_PASSWORD: rootpassword
-    ports:
-      - "3306:3306"
+      MARIADB_DATABASE: ${DB_NAME:-wordpress}
+      MARIADB_USER: ${DB_USER:-dbuser}
+      MARIADB_PASSWORD: ${DB_PASSWORD:-dbpassword}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
 
-  app:
+  wordpress:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: "no"
-    container_name: ${WP_THEME_NAME:-meros-blocks}_dev_app
+    container_name: ${THEME_SLUG:-meros-wp}_dev_wordpress
     ports:
-      - "8000:80"
-    volumes:
-      - ..:/var/www/html/wp-content/themes/${WP_THEME_NAME:-meros-blocks}
+      - ${WP_PORT:-8000}:80
     depends_on:
       db:
-        condition: service_started
+        condition: service_healthy
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    restart: "no"
-    container_name: ${WP_THEME_NAME:-meros-blocks}_dev_phpmyadmin
+    container_name: ${THEME_SLUG:-meros-wp}_dev_phpmyadmin
     ports:
-      - "8080:80"
+      - ${PHPMYADMIN_PORT:-9000}:80
     environment:
       PMA_HOST: db
-      PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: rootpassword
-    depends_on:
-      db:
-        condition: service_started
 
 volumes:
   db_data:

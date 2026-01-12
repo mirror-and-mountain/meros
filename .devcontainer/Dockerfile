@@ -19,6 +19,9 @@ RUN apt-get update && apt-get install -y \
     gnupg \
     ca-certificates \
     rsync \
+    libmagickwand-dev \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Github-CLI
@@ -46,61 +49,35 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
   && chmod +x wp-cli.phar \
   && mv wp-cli.phar /usr/local/bin/wp
 
-# Add load-environment script to path
-COPY /scripts/load-environment.sh /usr/local/bin/load-environment.sh
-RUN chmod +x /usr/local/bin/load-environment.sh
-
-# Add setup-wp script to path
-COPY /scripts/setup-wp.sh /usr/local/bin/setup-wp.sh
-RUN chmod +x /usr/local/bin/setup-wp.sh
-
-# Add test-remote script to path
-COPY /scripts/test-remote.sh /usr/local/bin/test-remote.sh
-RUN chmod +x /usr/local/bin/test-remote.sh
-
-# Add check-remote-vars script to path
-COPY /scripts/check-remote-vars.sh /usr/local/bin/check-remote-vars.sh
-RUN chmod +x /usr/local/bin/check-remote-vars.sh
-
-# Add sync-from-remote script to path
-COPY /scripts/sync-from-remote.sh /usr/local/bin/sync-from-remote.sh
-RUN chmod +x /usr/local/bin/sync-from-remote.sh
-
-# Add sync-to-remote script to path
-COPY /scripts/sync-to-remote.sh /usr/local/bin/sync-to-remote.sh
-RUN chmod +x /usr/local/bin/sync-to-remote.sh
-
 # Create a home directory for www-data
 RUN mkdir -p /home/www-data \
     && chown www-data:www-data /home/www-data \
     && chmod 755 /home/www-data
 
-# Modify the www-data user entry to point its HOME to /home/www-data
+# Create home subdirectories
+RUN mkdir -p /home/www-data/bin
+RUN mkdir -p /home/www-data/keys
+RUN mkdir -p /home/www-data/.wp-cli
+
+# Point HOME to /home/www-data
 RUN usermod -d /home/www-data www-data
 RUN usermod -d /home/www-data -s /bin/bash www-data
 
-# Copy MySQL SSL Conf & WP CLI config.yml
-COPY /config/ssl.cnf /home/www-data/.my.cnf
-COPY /config/config.yml /home/www-data/.wp-cli/config.yml
+# Ensure subdirectory permissions
+RUN chown -R www-data:www-data /home/www-data/bin \
+    && chmod 755 /home/www-data/bin
 
-# Add .env and remotes.json
-COPY /remotes.json /home/www-data/config/remotes.json
-COPY /.env /home/www-data/config/.env
-
-# Add keys directory
-COPY /keys /home/www-data/.ssh
-
-# Ensure the config & keys directories exist and have the right permissions
-RUN chown -R www-data:www-data /home/www-data/config \
-    && chmod 755 /home/www-data/config
-
-RUN chown -R www-data:www-data /home/www-data/.ssh \
-    && chmod 755 /home/www-data/.ssh
+RUN chown -R www-data:www-data /home/www-data/keys \
+    && chmod 755 /home/www-data/keys
 
 RUN chown -R www-data:www-data /home/www-data/.wp-cli \
     && chmod 755 /home/www-data/.wp-cli
 
-# Set restrictive permissions for the .my.cnf file
+# Copy MySQL SSL Conf & WP CLI config.yml
+COPY /config/wpcli.config.yml /home/www-data/.wp-cli/config.yml
+COPY /config/mariadb.my.cnf /home/www-data/.my.cnf
+
+# Set .my.cnf file permissions
 RUN chown www-data:www-data /home/www-data/.my.cnf \
     && chmod 600 /home/www-data/.my.cnf
 
@@ -122,6 +99,9 @@ RUN mkdir -p /var/www/html/wp-content/uploads/
 RUN chown -R www-data:www-data /var/www/html
 RUN find /var/www/html -type d -exec chmod 775 {} +
 RUN find /var/www/html -type f -exec chmod 664 {} +
+
+#Set the meros environment variable
+ENV MEROS_ENVIRONMENT=true
 
 # Set the default user to www-data
 USER www-data

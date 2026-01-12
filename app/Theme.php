@@ -8,6 +8,6 @@ class Theme extends ThemeManager
 {
     protected function configure(): void
     {
-        $this->use_unified_settings_pages = true;
+        
     }
 }

@@ -1,16 +1,17 @@
 {
-  "name": "MEROS THEME DEV",
+  "name": "MEROS WP",
   "dockerComposeFile": "docker-compose.yml",
-  "service": "app",
+  "service": "wordpress",
   "workspaceFolder": "/var/www/html/wp-content/themes/${localWorkspaceFolderBasename}",
   "remoteUser": "www-data",
   "remoteEnv": {
     "VSCODE_SERVER_HOME": "/home/www-data/.vscode-server"
   },
   "mounts": [
-    "source=${localWorkspaceFolder},target=/var/www/html/wp-content/themes/${localWorkspaceFolderBasename},type=bind,consistency=cached"
+    "source=${localWorkspaceFolder},target=/var/www/html/wp-content/themes/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+    "source=${localWorkspaceFolder}/.devcontainer/keys,target=/home/www-data/keys,type=bind,consistency=cached"
   ],
-  "postCreateCommand": "bash -c 'set -x; load-environment.sh && setup-wp.sh'",
+  "postCreateCommand": "set -x && cd /var/www/html/wp-content/themes/${localWorkspaceFolderBasename} && composer install",
   "forwardPorts": [
     80
   ],
@@ -23,9 +24,103 @@
         "bmewburn.vscode-intelephense-client",
         "laravel.vscode-laravel",
         "wordpresstoolbox.wordpress-toolbox",
-        "neilbrayfield.php-docblocker",
-        "bradlc.vscode-tailwindcss"
-      ]
+        "neilbrayfield.php-docblocker"
+      ],
+      "settings": {
+        "php-docblocker.alignReturn": true,
+        "intelephense.environment.phpVersion": "8.4.0",
+        "intelephense.format.braces": "k&r",
+        "intelephense.completion.parameterCase": "camel",
+        "intelephense.completion.propertyCase": "camel",
+        "intelephense.stubs": [
+          "apache",
+          "bcmath",
+          "bz2",
+          "calendar",
+          "com_dotnet",
+          "Core",
+          "ctype",
+          "curl",
+          "date",
+          "dba",
+          "dom",
+          "enchant",
+          "exif",
+          "FFI",
+          "fileinfo",
+          "filter",
+          "fpm",
+          "ftp",
+          "gd",
+          "gettext",
+          "gmp",
+          "hash",
+          "iconv",
+          "imap",
+          "intl",
+          "json",
+          "ldap",
+          "libxml",
+          "mbstring",
+          "meta",
+          "mysqli",
+          "oci8",
+          "odbc",
+          "openssl",
+          "pcntl",
+          "pcre",
+          "PDO",
+          "pgsql",
+          "Phar",
+          "posix",
+          "pspell",
+          "random",
+          "readline",
+          "Reflection",
+          "session",
+          "shmop",
+          "SimpleXML",
+          "snmp",
+          "soap",
+          "sockets",
+          "sodium",
+          "SPL",
+          "sqlite3",
+          "standard",
+          "superglobals",
+          "sysvmsg",
+          "sysvsem",
+          "sysvshm",
+          "tidy",
+          "tokenizer",
+          "uri",
+          "xml",
+          "xmlreader",
+          "xmlrpc",
+          "xmlwriter",
+          "xsl",
+          "Zend OPcache",
+          "zip",
+          "zlib",
+          "wordpress"
+        ],
+        "sqltools.connections": [
+          {
+            "mysqlOptions": {
+              "authProtocol": "default",
+              "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "db",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "wordpress",
+            "database": "wordpress",
+            "username": "dbuser",
+            "password": "dbpassword"
+          }
+        ]
+      }
     }
   }
 }
