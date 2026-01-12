@@ -23,12 +23,8 @@ return [
      */
 
     // Installed features
-    'features' => [
-        'App\\Features\\MerosSwiper\\FeatureDefinition',
-    ],
+    'features' => [],
 
     // Installed extensions
-    'extensions' => [
-        'MM\\Meros\\DynamicPage\\MerosDynamicPage',
-    ]
+    'extensions' => []
 ];
