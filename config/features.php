@@ -23,8 +23,12 @@ return [
      */
 
     // Installed features
-    'features' => [],
+    'features' => [
+    ],
 
     // Installed extensions
-    'extensions' => []
+    'extensions' => [
+        'MM\\Meros\\DynamicPage\\MerosDynamicPage',
+        'MM\\Meros\\MerosBlocks\\MerosBlocks',
+    ]
 ];
