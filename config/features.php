@@ -29,6 +29,6 @@ return [
     // Installed extensions
     'extensions' => [
         'MM\\Meros\\DynamicPage\\MerosDynamicPage',
-        'MM\\Meros\\MerosBlocks\\MerosBlocks',
+        'MM\\Meros\\Blocks\\MerosBlocks',
     ]
 ];

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40e84fcc2852985de2a36616de2dde01",
+    "content-hash": "7b1ada0c09d009f71a08fb0f28cdaaf7",
     "packages": [
         {
             "name": "brick/math",
@@ -2974,28 +2974,28 @@
         },
         {
             "name": "mirror-and-mountain/meros-blocks",
-            "version": "v0.0.2",
+            "version": "v0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mirror-and-mountain/meros-blocks.git",
-                "reference": "bb9d2661910dc37665359a8d3aab60b8748dc777"
+                "reference": "f1c30c5bf5e537a84efc6c019ce1d2184bc42f02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mirror-and-mountain/meros-blocks/zipball/bb9d2661910dc37665359a8d3aab60b8748dc777",
-                "reference": "bb9d2661910dc37665359a8d3aab60b8748dc777",
+                "url": "https://api.github.com/repos/mirror-and-mountain/meros-blocks/zipball/f1c30c5bf5e537a84efc6c019ce1d2184bc42f02",
+                "reference": "f1c30c5bf5e537a84efc6c019ce1d2184bc42f02",
                 "shasum": ""
             },
             "type": "library",
             "extra": {
                 "meros": {
                     "loader": "MerosBlocks",
-                    "namespace": "MM\\Meros\\MerosBlocks"
+                    "namespace": "MM\\Meros\\Blocks"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "MM\\Meros\\MerosBlocks\\": "src/"
+                    "MM\\Meros\\Blocks\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3011,9 +3011,9 @@
             "description": "A collection of blocks and editor features for Meros powered WordPress themes.",
             "support": {
                 "issues": "https://github.com/mirror-and-mountain/meros-blocks/issues",
-                "source": "https://github.com/mirror-and-mountain/meros-blocks/tree/v0.0.2"
+                "source": "https://github.com/mirror-and-mountain/meros-blocks/tree/v0.0.3"
             },
-            "time": "2026-01-12T16:18:24+00:00"
+            "time": "2026-01-12T16:44:01+00:00"
         },
         {
             "name": "mirror-and-mountain/meros-dynamic-page",

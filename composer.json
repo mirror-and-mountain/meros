@@ -20,7 +20,7 @@
     "require": {
         "mirror-and-mountain/meros-framework": "^2.0.0",
         "mirror-and-mountain/meros-dynamic-page": "^2.0.0",
-        "mirror-and-mountain/meros-blocks": "^0.0.2"
+        "mirror-and-mountain/meros-blocks": "^0.0.3"
     },
     "autoload": {
         "psr-4": {
