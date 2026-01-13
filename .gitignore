@@ -1,6 +1,7 @@
 /.devcontainer/keys/*
 !/.devcontainer/keys/.gitkeep
 /.devcontainer/_package/templates
+/config/environments.php
 /vendor/
 /node_modules/
 /plugins/
