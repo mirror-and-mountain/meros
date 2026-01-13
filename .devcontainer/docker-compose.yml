@@ -1,4 +1,22 @@
 services:
+  traefik:
+      image: traefik:v3.0
+      container_name: ${THEME_SLUG:-meros-wp}_dev_traefik
+      command:
+        - "--api.dashboard=true"
+        - "--providers.docker=true"
+        - "--providers.docker.exposedbydefault=false"
+        - "--providers.file.directory=/certs"
+        - "--entrypoints.web.address=:80"
+        - "--entrypoints.websecure.address=:443"
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+        - ./certs:/certs
+      restart: unless-stopped
+
   db:
     image: mariadb:10.11
     container_name: ${THEME_SLUG:-meros-wp}_dev_db
@@ -20,8 +38,12 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: ${THEME_SLUG:-meros-wp}_dev_wordpress
-    ports:
-      - ${WP_PORT:-8000}:80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wp.rule=Host(`${LOCAL_DOMAIN}`)"
+      - "traefik.http.routers.wp.entrypoints=websecure"
+      - "traefik.http.routers.wp.tls=true"
+      - "traefik.http.services.wp.loadbalancer.server.port=80"
     depends_on:
       db:
         condition: service_healthy
@@ -29,8 +51,12 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: ${THEME_SLUG:-meros-wp}_dev_phpmyadmin
-    ports:
-      - ${PHPMYADMIN_PORT:-9000}:80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wp.rule=Host(`pma.${LOCAL_DOMAIN}`)"
+      - "traefik.http.routers.pma.entrypoints=websecure"
+      - "traefik.http.routers.pma.tls=true"
+      - "traefik.http.services.pma.loadbalancer.server.port=80"
     environment:
       PMA_HOST: db
 

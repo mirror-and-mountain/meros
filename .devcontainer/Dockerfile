@@ -33,6 +33,11 @@ RUN mkdir -p -m 755 /etc/apt/keyrings \
  && apt-get update && apt-get install -y gh \
  && rm -rf /var/lib/apt/lists/*
 
+ # Install mkcert
+RUN curl -L https://github.com/FiloSottile/mkcert/releases/latest/download/mkcert-linux-amd64 \
+    -o /usr/local/bin/mkcert \
+ && chmod +x /usr/local/bin/mkcert
+
 # Install PHP extensions
 RUN docker-php-ext-install mysqli pdo pdo_mysql zip
 
