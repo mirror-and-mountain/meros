@@ -18,9 +18,7 @@
         }
     ],
     "require": {
-        "mirror-and-mountain/meros-framework": "^2.0.0",
-        "mirror-and-mountain/meros-dynamic-page": "^2.0.0",
-        "mirror-and-mountain/meros-blocks": "^0.0.3"
+        "mirror-and-mountain/meros-framework": "^2.3.5"
     },
     "autoload": {
         "psr-4": {
@@ -30,7 +28,7 @@
     "scripts": {
         "post-autoload-dump": [
             "Roots\\Acorn\\ComposerScripts::postAutoloadDump",
-            "MM\\Meros\\Scripts\\Composer::postAutoloadDump"
+            "MM\\Meros\\Scripts\\ComposerScripts::postAutoloadDump"
         ]
     },
     "minimum-stability": "stable",
