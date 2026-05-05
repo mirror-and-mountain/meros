@@ -20,9 +20,9 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// node_modules/@alpinejs/csp/dist/module.cjs.js
+// node_modules/alpinejs/dist/module.cjs.js
 var require_module_cjs = __commonJS({
-  "node_modules/@alpinejs/csp/dist/module.cjs.js"(exports, module) {
+  "node_modules/alpinejs/dist/module.cjs.js"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -1813,6 +1813,13 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     function setRawEvaluator(newEvaluator) {
       theRawEvaluatorFunction = newEvaluator;
     }
+    function normalEvaluator(el, expression) {
+      let overriddenMagics = {};
+      injectMagics(overriddenMagics, el);
+      let dataStack = [overriddenMagics, ...closestDataStack(el)];
+      let evaluator = typeof expression === "function" ? generateEvaluatorFromFunction(dataStack, expression) : generateEvaluatorFromString(dataStack, expression, el);
+      return tryCatch.bind(null, el, expression, evaluator);
+    }
     function generateEvaluatorFromFunction(dataStack, func) {
       return (receiver = () => {
       }, { scope: scope2 = {}, params = [], context } = {}) => {
@@ -1822,6 +1829,53 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         }
         let result = func.apply(mergeProxies([scope2, ...dataStack]), params);
         runIfTypeOfFunction(receiver, result);
+      };
+    }
+    var evaluatorMemo = {};
+    function generateFunctionFromString(expression, el) {
+      if (evaluatorMemo[expression]) {
+        return evaluatorMemo[expression];
+      }
+      let AsyncFunction = Object.getPrototypeOf(async function() {
+      }).constructor;
+      let rightSideSafeExpression = /^[\n\s]*if.*\(.*\)/.test(expression.trim()) || /^(let|const)\s/.test(expression.trim()) ? `(async()=>{ ${expression} })()` : expression;
+      const safeAsyncFunction = () => {
+        try {
+          let func2 = new AsyncFunction(
+            ["__self", "scope"],
+            `with (scope) { __self.result = ${rightSideSafeExpression} }; __self.finished = true; return __self.result;`
+          );
+          Object.defineProperty(func2, "name", {
+            value: `[Alpine] ${expression}`
+          });
+          return func2;
+        } catch (error2) {
+          handleError(error2, el, expression);
+          return Promise.resolve();
+        }
+      };
+      let func = safeAsyncFunction();
+      evaluatorMemo[expression] = func;
+      return func;
+    }
+    function generateEvaluatorFromString(dataStack, expression, el) {
+      let func = generateFunctionFromString(expression, el);
+      return (receiver = () => {
+      }, { scope: scope2 = {}, params = [], context } = {}) => {
+        func.result = void 0;
+        func.finished = false;
+        let completeScope = mergeProxies([scope2, ...dataStack]);
+        if (typeof func === "function") {
+          let promise = func.call(context, func, completeScope).catch((error2) => handleError(error2, el, expression));
+          if (func.finished) {
+            runIfTypeOfFunction(receiver, func.result, completeScope, params, el);
+            func.result = void 0;
+          } else {
+            promise.then((result) => {
+              runIfTypeOfFunction(receiver, result, completeScope, params, el);
+            }).catch((error2) => handleError(error2, el, expression)).finally(() => func.result = void 0);
+          }
+        }
       };
     }
     function runIfTypeOfFunction(receiver, value, scope2, params, el) {
@@ -1840,6 +1894,36 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     }
     function evaluateRaw(...args) {
       return theRawEvaluatorFunction(...args);
+    }
+    function normalRawEvaluator(el, expression, extras = {}) {
+      var _a, _b;
+      let overriddenMagics = {};
+      injectMagics(overriddenMagics, el);
+      let dataStack = [overriddenMagics, ...closestDataStack(el)];
+      let scope2 = mergeProxies([(_a = extras.scope) != null ? _a : {}, ...dataStack]);
+      let params = (_b = extras.params) != null ? _b : [];
+      if (expression.includes("await")) {
+        let AsyncFunction = Object.getPrototypeOf(async function() {
+        }).constructor;
+        let rightSideSafeExpression = /^[\n\s]*if.*\(.*\)/.test(expression.trim()) || /^(let|const)\s/.test(expression.trim()) ? `(async()=>{ ${expression} })()` : expression;
+        let func = new AsyncFunction(
+          ["scope"],
+          `with (scope) { let __result = ${rightSideSafeExpression}; return __result }`
+        );
+        let result = func.call(extras.context, scope2);
+        return result;
+      } else {
+        let rightSideSafeExpression = /^[\n\s]*if.*\(.*\)/.test(expression.trim()) || /^(let|const)\s/.test(expression.trim()) ? `(()=>{ ${expression} })()` : expression;
+        let func = new Function(
+          ["scope"],
+          `with (scope) { let __result = ${rightSideSafeExpression}; return __result }`
+        );
+        let result = func.call(extras.context, scope2);
+        if (typeof result === "function" && shouldAutoEvaluateFunctions) {
+          return result.apply(scope2, params);
+        }
+        return result;
+      }
     }
     var prefixAsString = "x-";
     function prefix(subject = "") {
@@ -1987,8 +2071,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     var directiveOrder = [
       "ignore",
       "ref",
-      "data",
       "id",
+      "data",
       "anchor",
       "bind",
       "init",
@@ -2922,7 +3006,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       get transaction() {
         return transaction;
       },
-      version: "3.15.9",
+      version: "3.15.12",
       flushAndStopDeferringMutations,
       dontAutoEvaluateFunctions,
       disableEffectScheduling,
@@ -2981,838 +3065,6 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       bind: bind2
     };
     var alpine_default = Alpine25;
-    var safemap = /* @__PURE__ */ new WeakMap();
-    var globals = /* @__PURE__ */ new Set();
-    Object.getOwnPropertyNames(globalThis).forEach((key) => {
-      if (key === "styleMedia")
-        return;
-      globals.add(globalThis[key]);
-    });
-    var Token = class {
-      constructor(type, value, start22, end) {
-        this.type = type;
-        this.value = value;
-        this.start = start22;
-        this.end = end;
-      }
-    };
-    var Tokenizer = class {
-      constructor(input) {
-        this.input = input;
-        this.position = 0;
-        this.tokens = [];
-      }
-      tokenize() {
-        while (this.position < this.input.length) {
-          this.skipWhitespace();
-          if (this.position >= this.input.length)
-            break;
-          const char = this.input[this.position];
-          if (this.isDigit(char)) {
-            this.readNumber();
-          } else if (this.isAlpha(char) || char === "_" || char === "$") {
-            this.readIdentifierOrKeyword();
-          } else if (char === '"' || char === "'") {
-            this.readString();
-          } else if (char === "/" && this.peek() === "/") {
-            this.skipLineComment();
-          } else {
-            this.readOperatorOrPunctuation();
-          }
-        }
-        this.tokens.push(new Token("EOF", null, this.position, this.position));
-        return this.tokens;
-      }
-      skipWhitespace() {
-        while (this.position < this.input.length && /\s/.test(this.input[this.position])) {
-          this.position++;
-        }
-      }
-      skipLineComment() {
-        while (this.position < this.input.length && this.input[this.position] !== "\n") {
-          this.position++;
-        }
-      }
-      isDigit(char) {
-        return /[0-9]/.test(char);
-      }
-      isAlpha(char) {
-        return /[a-zA-Z]/.test(char);
-      }
-      isAlphaNumeric(char) {
-        return /[a-zA-Z0-9_$]/.test(char);
-      }
-      peek(offset = 1) {
-        return this.input[this.position + offset] || "";
-      }
-      readNumber() {
-        const start22 = this.position;
-        let hasDecimal = false;
-        while (this.position < this.input.length) {
-          const char = this.input[this.position];
-          if (this.isDigit(char)) {
-            this.position++;
-          } else if (char === "." && !hasDecimal) {
-            hasDecimal = true;
-            this.position++;
-          } else {
-            break;
-          }
-        }
-        const value = this.input.slice(start22, this.position);
-        this.tokens.push(new Token("NUMBER", parseFloat(value), start22, this.position));
-      }
-      readIdentifierOrKeyword() {
-        const start22 = this.position;
-        while (this.position < this.input.length && this.isAlphaNumeric(this.input[this.position])) {
-          this.position++;
-        }
-        const value = this.input.slice(start22, this.position);
-        const keywords = ["true", "false", "null", "undefined", "new", "typeof", "void", "delete", "in", "instanceof"];
-        if (keywords.includes(value)) {
-          if (value === "true" || value === "false") {
-            this.tokens.push(new Token("BOOLEAN", value === "true", start22, this.position));
-          } else if (value === "null") {
-            this.tokens.push(new Token("NULL", null, start22, this.position));
-          } else if (value === "undefined") {
-            this.tokens.push(new Token("UNDEFINED", void 0, start22, this.position));
-          } else {
-            this.tokens.push(new Token("KEYWORD", value, start22, this.position));
-          }
-        } else {
-          this.tokens.push(new Token("IDENTIFIER", value, start22, this.position));
-        }
-      }
-      readString() {
-        const start22 = this.position;
-        const quote = this.input[this.position];
-        this.position++;
-        let value = "";
-        let escaped = false;
-        while (this.position < this.input.length) {
-          const char = this.input[this.position];
-          if (escaped) {
-            switch (char) {
-              case "n":
-                value += "\n";
-                break;
-              case "t":
-                value += "	";
-                break;
-              case "r":
-                value += "\r";
-                break;
-              case "\\":
-                value += "\\";
-                break;
-              case quote:
-                value += quote;
-                break;
-              default:
-                value += char;
-            }
-            escaped = false;
-          } else if (char === "\\") {
-            escaped = true;
-          } else if (char === quote) {
-            this.position++;
-            this.tokens.push(new Token("STRING", value, start22, this.position));
-            return;
-          } else {
-            value += char;
-          }
-          this.position++;
-        }
-        throw new Error(`Unterminated string starting at position ${start22}`);
-      }
-      readOperatorOrPunctuation() {
-        const start22 = this.position;
-        const char = this.input[this.position];
-        const next = this.peek();
-        const nextNext = this.peek(2);
-        if (char === "=" && next === "=" && nextNext === "=") {
-          this.position += 3;
-          this.tokens.push(new Token("OPERATOR", "===", start22, this.position));
-        } else if (char === "!" && next === "=" && nextNext === "=") {
-          this.position += 3;
-          this.tokens.push(new Token("OPERATOR", "!==", start22, this.position));
-        } else if (char === "=" && next === "=") {
-          this.position += 2;
-          this.tokens.push(new Token("OPERATOR", "==", start22, this.position));
-        } else if (char === "!" && next === "=") {
-          this.position += 2;
-          this.tokens.push(new Token("OPERATOR", "!=", start22, this.position));
-        } else if (char === "<" && next === "=") {
-          this.position += 2;
-          this.tokens.push(new Token("OPERATOR", "<=", start22, this.position));
-        } else if (char === ">" && next === "=") {
-          this.position += 2;
-          this.tokens.push(new Token("OPERATOR", ">=", start22, this.position));
-        } else if (char === "&" && next === "&") {
-          this.position += 2;
-          this.tokens.push(new Token("OPERATOR", "&&", start22, this.position));
-        } else if (char === "|" && next === "|") {
-          this.position += 2;
-          this.tokens.push(new Token("OPERATOR", "||", start22, this.position));
-        } else if (char === "+" && next === "+") {
-          this.position += 2;
-          this.tokens.push(new Token("OPERATOR", "++", start22, this.position));
-        } else if (char === "-" && next === "-") {
-          this.position += 2;
-          this.tokens.push(new Token("OPERATOR", "--", start22, this.position));
-        } else {
-          this.position++;
-          const type = "()[]{},.;:?".includes(char) ? "PUNCTUATION" : "OPERATOR";
-          this.tokens.push(new Token(type, char, start22, this.position));
-        }
-      }
-    };
-    var Parser = class {
-      constructor(tokens) {
-        this.tokens = tokens;
-        this.position = 0;
-      }
-      parse() {
-        if (this.isAtEnd()) {
-          throw new Error("Empty expression");
-        }
-        const expr = this.parseExpression();
-        this.match("PUNCTUATION", ";");
-        if (!this.isAtEnd()) {
-          throw new Error(`Unexpected token: ${this.current().value}`);
-        }
-        return expr;
-      }
-      parseExpression() {
-        return this.parseAssignment();
-      }
-      parseAssignment() {
-        const expr = this.parseTernary();
-        if (this.match("OPERATOR", "=")) {
-          const value = this.parseAssignment();
-          if (expr.type === "Identifier" || expr.type === "MemberExpression") {
-            return {
-              type: "AssignmentExpression",
-              left: expr,
-              operator: "=",
-              right: value
-            };
-          }
-          throw new Error("Invalid assignment target");
-        }
-        return expr;
-      }
-      parseTernary() {
-        const expr = this.parseLogicalOr();
-        if (this.match("PUNCTUATION", "?")) {
-          const consequent = this.parseExpression();
-          this.consume("PUNCTUATION", ":");
-          const alternate = this.parseExpression();
-          return {
-            type: "ConditionalExpression",
-            test: expr,
-            consequent,
-            alternate
-          };
-        }
-        return expr;
-      }
-      parseLogicalOr() {
-        let expr = this.parseLogicalAnd();
-        while (this.match("OPERATOR", "||")) {
-          const operator = this.previous().value;
-          const right = this.parseLogicalAnd();
-          expr = {
-            type: "BinaryExpression",
-            operator,
-            left: expr,
-            right
-          };
-        }
-        return expr;
-      }
-      parseLogicalAnd() {
-        let expr = this.parseEquality();
-        while (this.match("OPERATOR", "&&")) {
-          const operator = this.previous().value;
-          const right = this.parseEquality();
-          expr = {
-            type: "BinaryExpression",
-            operator,
-            left: expr,
-            right
-          };
-        }
-        return expr;
-      }
-      parseEquality() {
-        let expr = this.parseRelational();
-        while (this.match("OPERATOR", "==", "!=", "===", "!==")) {
-          const operator = this.previous().value;
-          const right = this.parseRelational();
-          expr = {
-            type: "BinaryExpression",
-            operator,
-            left: expr,
-            right
-          };
-        }
-        return expr;
-      }
-      parseRelational() {
-        let expr = this.parseAdditive();
-        while (this.match("OPERATOR", "<", ">", "<=", ">=")) {
-          const operator = this.previous().value;
-          const right = this.parseAdditive();
-          expr = {
-            type: "BinaryExpression",
-            operator,
-            left: expr,
-            right
-          };
-        }
-        return expr;
-      }
-      parseAdditive() {
-        let expr = this.parseMultiplicative();
-        while (this.match("OPERATOR", "+", "-")) {
-          const operator = this.previous().value;
-          const right = this.parseMultiplicative();
-          expr = {
-            type: "BinaryExpression",
-            operator,
-            left: expr,
-            right
-          };
-        }
-        return expr;
-      }
-      parseMultiplicative() {
-        let expr = this.parseUnary();
-        while (this.match("OPERATOR", "*", "/", "%")) {
-          const operator = this.previous().value;
-          const right = this.parseUnary();
-          expr = {
-            type: "BinaryExpression",
-            operator,
-            left: expr,
-            right
-          };
-        }
-        return expr;
-      }
-      parseUnary() {
-        if (this.match("OPERATOR", "++", "--")) {
-          const operator = this.previous().value;
-          const argument = this.parseUnary();
-          return {
-            type: "UpdateExpression",
-            operator,
-            argument,
-            prefix: true
-          };
-        }
-        if (this.match("OPERATOR", "!", "-", "+")) {
-          const operator = this.previous().value;
-          const argument = this.parseUnary();
-          return {
-            type: "UnaryExpression",
-            operator,
-            argument,
-            prefix: true
-          };
-        }
-        return this.parsePostfix();
-      }
-      parsePostfix() {
-        let expr = this.parseMember();
-        if (this.match("OPERATOR", "++", "--")) {
-          const operator = this.previous().value;
-          return {
-            type: "UpdateExpression",
-            operator,
-            argument: expr,
-            prefix: false
-          };
-        }
-        return expr;
-      }
-      parseMember() {
-        let expr = this.parsePrimary();
-        while (true) {
-          if (this.match("PUNCTUATION", ".")) {
-            const property = this.consume("IDENTIFIER");
-            expr = {
-              type: "MemberExpression",
-              object: expr,
-              property: { type: "Identifier", name: property.value },
-              computed: false
-            };
-          } else if (this.match("PUNCTUATION", "[")) {
-            const property = this.parseExpression();
-            this.consume("PUNCTUATION", "]");
-            expr = {
-              type: "MemberExpression",
-              object: expr,
-              property,
-              computed: true
-            };
-          } else if (this.match("PUNCTUATION", "(")) {
-            const args = this.parseArguments();
-            expr = {
-              type: "CallExpression",
-              callee: expr,
-              arguments: args
-            };
-          } else {
-            break;
-          }
-        }
-        return expr;
-      }
-      parseArguments() {
-        const args = [];
-        if (!this.check("PUNCTUATION", ")")) {
-          do {
-            args.push(this.parseExpression());
-          } while (this.match("PUNCTUATION", ","));
-        }
-        this.consume("PUNCTUATION", ")");
-        return args;
-      }
-      parsePrimary() {
-        if (this.match("NUMBER")) {
-          return { type: "Literal", value: this.previous().value };
-        }
-        if (this.match("STRING")) {
-          return { type: "Literal", value: this.previous().value };
-        }
-        if (this.match("BOOLEAN")) {
-          return { type: "Literal", value: this.previous().value };
-        }
-        if (this.match("NULL")) {
-          return { type: "Literal", value: null };
-        }
-        if (this.match("UNDEFINED")) {
-          return { type: "Literal", value: void 0 };
-        }
-        if (this.match("IDENTIFIER")) {
-          return { type: "Identifier", name: this.previous().value };
-        }
-        if (this.match("PUNCTUATION", "(")) {
-          const expr = this.parseExpression();
-          this.consume("PUNCTUATION", ")");
-          return expr;
-        }
-        if (this.match("PUNCTUATION", "[")) {
-          return this.parseArrayLiteral();
-        }
-        if (this.match("PUNCTUATION", "{")) {
-          return this.parseObjectLiteral();
-        }
-        throw new Error(`Unexpected token: ${this.current().type} "${this.current().value}"`);
-      }
-      parseArrayLiteral() {
-        const elements = [];
-        while (!this.check("PUNCTUATION", "]") && !this.isAtEnd()) {
-          elements.push(this.parseExpression());
-          if (this.match("PUNCTUATION", ",")) {
-            if (this.check("PUNCTUATION", "]")) {
-              break;
-            }
-          } else {
-            break;
-          }
-        }
-        this.consume("PUNCTUATION", "]");
-        return {
-          type: "ArrayExpression",
-          elements
-        };
-      }
-      parseObjectLiteral() {
-        const properties2 = [];
-        while (!this.check("PUNCTUATION", "}") && !this.isAtEnd()) {
-          let key;
-          let computed = false;
-          if (this.match("STRING")) {
-            key = { type: "Literal", value: this.previous().value };
-          } else if (this.match("IDENTIFIER")) {
-            const name = this.previous().value;
-            key = { type: "Identifier", name };
-          } else if (this.match("PUNCTUATION", "[")) {
-            key = this.parseExpression();
-            computed = true;
-            this.consume("PUNCTUATION", "]");
-          } else {
-            throw new Error("Expected property key");
-          }
-          this.consume("PUNCTUATION", ":");
-          const value = this.parseExpression();
-          properties2.push({
-            type: "Property",
-            key,
-            value,
-            computed,
-            shorthand: false
-          });
-          if (this.match("PUNCTUATION", ",")) {
-            if (this.check("PUNCTUATION", "}")) {
-              break;
-            }
-          } else {
-            break;
-          }
-        }
-        this.consume("PUNCTUATION", "}");
-        return {
-          type: "ObjectExpression",
-          properties: properties2
-        };
-      }
-      match(...args) {
-        for (let i = 0; i < args.length; i++) {
-          const arg = args[i];
-          if (i === 0 && args.length > 1) {
-            const type = arg;
-            for (let j = 1; j < args.length; j++) {
-              if (this.check(type, args[j])) {
-                this.advance();
-                return true;
-              }
-            }
-            return false;
-          } else if (args.length === 1) {
-            if (this.checkType(arg)) {
-              this.advance();
-              return true;
-            }
-            return false;
-          }
-        }
-        return false;
-      }
-      check(type, value) {
-        if (this.isAtEnd())
-          return false;
-        if (value !== void 0) {
-          return this.current().type === type && this.current().value === value;
-        }
-        return this.current().type === type;
-      }
-      checkType(type) {
-        if (this.isAtEnd())
-          return false;
-        return this.current().type === type;
-      }
-      advance() {
-        if (!this.isAtEnd())
-          this.position++;
-        return this.previous();
-      }
-      isAtEnd() {
-        return this.current().type === "EOF";
-      }
-      current() {
-        return this.tokens[this.position];
-      }
-      previous() {
-        return this.tokens[this.position - 1];
-      }
-      consume(type, value) {
-        if (value !== void 0) {
-          if (this.check(type, value))
-            return this.advance();
-          throw new Error(`Expected ${type} "${value}" but got ${this.current().type} "${this.current().value}"`);
-        }
-        if (this.check(type))
-          return this.advance();
-        throw new Error(`Expected ${type} but got ${this.current().type} "${this.current().value}"`);
-      }
-    };
-    var Evaluator = class {
-      evaluate({ node, scope: scope2 = {}, context = null, forceBindingRootScopeToFunctions = true }) {
-        switch (node.type) {
-          case "Literal":
-            return node.value;
-          case "Identifier":
-            if (node.name in scope2) {
-              const value2 = scope2[node.name];
-              this.checkForDangerousValues(value2);
-              if (typeof value2 === "function") {
-                return value2.bind(scope2);
-              }
-              return value2;
-            }
-            throw new Error(`Undefined variable: ${node.name}`);
-          case "MemberExpression":
-            const object = this.evaluate({ node: node.object, scope: scope2, context, forceBindingRootScopeToFunctions });
-            if (object == null) {
-              throw new Error("Cannot read property of null or undefined");
-            }
-            let property;
-            if (node.computed) {
-              property = this.evaluate({ node: node.property, scope: scope2, context, forceBindingRootScopeToFunctions });
-            } else {
-              property = node.property.name;
-            }
-            this.checkForDangerousKeywords(property);
-            let memberValue = object[property];
-            this.checkForDangerousValues(memberValue);
-            if (typeof memberValue === "function") {
-              if (forceBindingRootScopeToFunctions) {
-                return memberValue.bind(scope2);
-              } else {
-                return memberValue.bind(object);
-              }
-            }
-            return memberValue;
-          case "CallExpression":
-            const args = node.arguments.map((arg) => this.evaluate({ node: arg, scope: scope2, context, forceBindingRootScopeToFunctions }));
-            let returnValue;
-            if (node.callee.type === "MemberExpression") {
-              const obj = this.evaluate({ node: node.callee.object, scope: scope2, context, forceBindingRootScopeToFunctions });
-              let prop;
-              if (node.callee.computed) {
-                prop = this.evaluate({ node: node.callee.property, scope: scope2, context, forceBindingRootScopeToFunctions });
-              } else {
-                prop = node.callee.property.name;
-              }
-              this.checkForDangerousKeywords(prop);
-              let func = obj[prop];
-              if (typeof func !== "function") {
-                throw new Error("Value is not a function");
-              }
-              returnValue = func.apply(obj, args);
-            } else {
-              if (node.callee.type === "Identifier") {
-                const name = node.callee.name;
-                let func;
-                if (name in scope2) {
-                  func = scope2[name];
-                } else {
-                  throw new Error(`Undefined variable: ${name}`);
-                }
-                if (typeof func !== "function") {
-                  throw new Error("Value is not a function");
-                }
-                const thisContext = context !== null ? context : scope2;
-                returnValue = func.apply(thisContext, args);
-              } else {
-                const callee = this.evaluate({ node: node.callee, scope: scope2, context, forceBindingRootScopeToFunctions });
-                if (typeof callee !== "function") {
-                  throw new Error("Value is not a function");
-                }
-                returnValue = callee.apply(context, args);
-              }
-            }
-            this.checkForDangerousValues(returnValue);
-            return returnValue;
-          case "UnaryExpression":
-            const argument = this.evaluate({ node: node.argument, scope: scope2, context, forceBindingRootScopeToFunctions });
-            switch (node.operator) {
-              case "!":
-                return !argument;
-              case "-":
-                return -argument;
-              case "+":
-                return +argument;
-              default:
-                throw new Error(`Unknown unary operator: ${node.operator}`);
-            }
-          case "UpdateExpression":
-            if (node.argument.type === "Identifier") {
-              const name = node.argument.name;
-              if (!(name in scope2)) {
-                throw new Error(`Undefined variable: ${name}`);
-              }
-              const oldValue = scope2[name];
-              if (node.operator === "++") {
-                scope2[name] = oldValue + 1;
-              } else if (node.operator === "--") {
-                scope2[name] = oldValue - 1;
-              }
-              return node.prefix ? scope2[name] : oldValue;
-            } else if (node.argument.type === "MemberExpression") {
-              const obj = this.evaluate({ node: node.argument.object, scope: scope2, context, forceBindingRootScopeToFunctions });
-              const prop = node.argument.computed ? this.evaluate({ node: node.argument.property, scope: scope2, context, forceBindingRootScopeToFunctions }) : node.argument.property.name;
-              const oldValue = obj[prop];
-              if (node.operator === "++") {
-                obj[prop] = oldValue + 1;
-              } else if (node.operator === "--") {
-                obj[prop] = oldValue - 1;
-              }
-              return node.prefix ? obj[prop] : oldValue;
-            }
-            throw new Error("Invalid update expression target");
-          case "BinaryExpression":
-            const left = this.evaluate({ node: node.left, scope: scope2, context, forceBindingRootScopeToFunctions });
-            const right = this.evaluate({ node: node.right, scope: scope2, context, forceBindingRootScopeToFunctions });
-            switch (node.operator) {
-              case "+":
-                return left + right;
-              case "-":
-                return left - right;
-              case "*":
-                return left * right;
-              case "/":
-                return left / right;
-              case "%":
-                return left % right;
-              case "==":
-                return left == right;
-              case "!=":
-                return left != right;
-              case "===":
-                return left === right;
-              case "!==":
-                return left !== right;
-              case "<":
-                return left < right;
-              case ">":
-                return left > right;
-              case "<=":
-                return left <= right;
-              case ">=":
-                return left >= right;
-              case "&&":
-                return left && right;
-              case "||":
-                return left || right;
-              default:
-                throw new Error(`Unknown binary operator: ${node.operator}`);
-            }
-          case "ConditionalExpression":
-            const test = this.evaluate({ node: node.test, scope: scope2, context, forceBindingRootScopeToFunctions });
-            return test ? this.evaluate({ node: node.consequent, scope: scope2, context, forceBindingRootScopeToFunctions }) : this.evaluate({ node: node.alternate, scope: scope2, context, forceBindingRootScopeToFunctions });
-          case "AssignmentExpression":
-            const value = this.evaluate({ node: node.right, scope: scope2, context, forceBindingRootScopeToFunctions });
-            if (node.left.type === "Identifier") {
-              scope2[node.left.name] = value;
-              return value;
-            } else if (node.left.type === "MemberExpression") {
-              throw new Error("Property assignments are prohibited in the CSP build");
-            }
-            throw new Error("Invalid assignment target");
-          case "ArrayExpression":
-            return node.elements.map((el) => this.evaluate({ node: el, scope: scope2, context, forceBindingRootScopeToFunctions }));
-          case "ObjectExpression":
-            const result = {};
-            for (const prop of node.properties) {
-              const key = prop.computed ? this.evaluate({ node: prop.key, scope: scope2, context, forceBindingRootScopeToFunctions }) : prop.key.type === "Identifier" ? prop.key.name : this.evaluate({ node: prop.key, scope: scope2, context, forceBindingRootScopeToFunctions });
-              const value2 = this.evaluate({ node: prop.value, scope: scope2, context, forceBindingRootScopeToFunctions });
-              result[key] = value2;
-            }
-            return result;
-          default:
-            throw new Error(`Unknown node type: ${node.type}`);
-        }
-      }
-      checkForDangerousKeywords(keyword) {
-        let blacklist = [
-          "constructor",
-          "prototype",
-          "__proto__",
-          "__defineGetter__",
-          "__defineSetter__",
-          "insertAdjacentHTML"
-        ];
-        if (blacklist.includes(keyword)) {
-          throw new Error(`Accessing "${keyword}" is prohibited in the CSP build`);
-        }
-      }
-      checkForDangerousValues(prop) {
-        if (prop === null) {
-          return;
-        }
-        if (typeof prop !== "object" && typeof prop !== "function") {
-          return;
-        }
-        if (safemap.has(prop)) {
-          return;
-        }
-        if (prop instanceof HTMLIFrameElement || prop instanceof HTMLScriptElement) {
-          throw new Error("Accessing iframes and scripts is prohibited in the CSP build");
-        }
-        if (globals.has(prop)) {
-          throw new Error("Accessing global variables is prohibited in the CSP build");
-        }
-        safemap.set(prop, true);
-        return true;
-      }
-    };
-    function generateRuntimeFunction(expression) {
-      try {
-        const tokenizer = new Tokenizer(expression);
-        const tokens = tokenizer.tokenize();
-        const parser = new Parser(tokens);
-        const ast = parser.parse();
-        const evaluator = new Evaluator();
-        return function(options = {}) {
-          const { scope: scope2 = {}, context = null, forceBindingRootScopeToFunctions = false } = options;
-          return evaluator.evaluate({ node: ast, scope: scope2, context, forceBindingRootScopeToFunctions });
-        };
-      } catch (error2) {
-        throw new Error(`CSP Parser Error: ${error2.message}`);
-      }
-    }
-    function cspRawEvaluator(el, expression, extras = {}) {
-      var _a, _b;
-      let dataStack = generateDataStack(el);
-      let scope2 = mergeProxies([(_a = extras.scope) != null ? _a : {}, ...dataStack]);
-      let params = (_b = extras.params) != null ? _b : [];
-      let evaluate2 = generateRuntimeFunction(expression);
-      let result = evaluate2({
-        scope: scope2,
-        forceBindingRootScopeToFunctions: true
-      });
-      if (typeof result === "function" && shouldAutoEvaluateFunctions) {
-        return result.apply(scope2, params);
-      }
-      return result;
-    }
-    function cspEvaluator(el, expression) {
-      let dataStack = generateDataStack(el);
-      if (typeof expression === "function") {
-        return generateEvaluatorFromFunction(dataStack, expression);
-      }
-      let evaluator = generateEvaluator(el, expression, dataStack);
-      return tryCatch.bind(null, el, expression, evaluator);
-    }
-    function generateDataStack(el) {
-      let overriddenMagics = {};
-      injectMagics(overriddenMagics, el);
-      return [overriddenMagics, ...closestDataStack(el)];
-    }
-    function generateEvaluator(el, expression, dataStack) {
-      if (el instanceof HTMLIFrameElement) {
-        throw new Error("Evaluating expressions on an iframe is prohibited in the CSP build");
-      }
-      if (el instanceof HTMLScriptElement) {
-        throw new Error("Evaluating expressions on a script is prohibited in the CSP build");
-      }
-      return (receiver = () => {
-      }, { scope: scope2 = {}, params = [] } = {}) => {
-        let completeScope = mergeProxies([scope2, ...dataStack]);
-        let evaluate2 = generateRuntimeFunction(expression);
-        let returnValue = evaluate2({
-          scope: completeScope,
-          forceBindingRootScopeToFunctions: true
-        });
-        if (shouldAutoEvaluateFunctions && typeof returnValue === "function") {
-          let nextReturnValue = returnValue.apply(returnValue, params);
-          if (nextReturnValue instanceof Promise) {
-            nextReturnValue.then((i) => receiver(i));
-          } else {
-            receiver(nextReturnValue);
-          }
-        } else if (typeof returnValue === "object" && returnValue instanceof Promise) {
-          returnValue.then((i) => receiver(i));
-        } else {
-          receiver(returnValue);
-        }
-      };
-    }
     var import_reactivity10 = __toESM2(require_reactivity());
     magic("nextTick", () => nextTick);
     magic("dispatch", (el) => dispatch3.bind(dispatch3, el));
@@ -3959,8 +3211,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         }
       };
       mutateDom(() => {
-        placeInDom(clone2, target, modifiers);
         skipDuringClone(() => {
+          placeInDom(clone2, target, modifiers);
           initTree(clone2);
         })();
       });
@@ -4557,7 +3809,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       evaluateItems((items) => {
         if (isNumeric3(items))
           items = Array.from({ length: items }, (_, i) => i + 1);
-        if (items === void 0)
+        if (items === void 0 || items === null)
           items = [];
         if (items instanceof Set)
           items = Array.from(items);
@@ -4607,6 +3859,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
               }
               return;
             }
+            if (templateEl.content.children.length > 1)
+              warn("x-for templates require a single root element, additional elements will be ignored.", templateEl);
             let clone2 = document.importNode(templateEl.content, true).firstElementChild;
             let reactiveScope = reactive(scope2);
             addScopeToNode(clone2, reactiveScope, templateEl);
@@ -4664,20 +3918,22 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       return scopeVariables;
     }
     function isNumeric3(subject) {
-      return !Array.isArray(subject) && !isNaN(subject);
+      return typeof subject !== "object" && !isNaN(subject);
     }
     function isObject2(subject) {
       return typeof subject === "object" && !Array.isArray(subject);
     }
     function handler3() {
     }
-    handler3.inline = skipDuringClone((el, { expression }, { cleanup }) => {
+    handler3.inline = (el, { expression }, { cleanup }) => {
       let root = closestRoot(el);
+      if (!root)
+        return;
       if (!root._x_refs)
         root._x_refs = {};
       root._x_refs[expression] = el;
       cleanup(() => delete root._x_refs[expression]);
-    });
+    };
     directive2("ref", handler3);
     directive2("if", (el, { expression }, { effect: effect3, cleanup }) => {
       if (el.tagName.toLowerCase() !== "template")
@@ -4745,11 +4001,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     function warnMissingPluginDirective(name, directiveName, slug) {
       directive2(directiveName, (el) => warn(`You can't use [x-${directiveName}] without first installing the "${name}" plugin here: https://alpinejs.dev/plugins/${slug}`, el));
     }
-    directive2("html", (el, { expression }) => {
-      handleError(new Error("Using the x-html directive is prohibited in the CSP build"), el);
-    });
-    alpine_default.setEvaluator(cspEvaluator);
-    alpine_default.setRawEvaluator(cspRawEvaluator);
+    alpine_default.setEvaluator(normalEvaluator);
+    alpine_default.setRawEvaluator(normalRawEvaluator);
     alpine_default.setReactivityEngine({ reactive: import_reactivity10.reactive, effect: import_reactivity10.effect, release: import_reactivity10.stop, raw: import_reactivity10.toRaw });
     var src_default2 = alpine_default;
     var module_default2 = src_default2;
@@ -6480,7 +5733,13 @@ var require_module_cjs3 = __commonJS({
       let overflow = document.documentElement.style.overflow;
       let paddingRight = document.documentElement.style.paddingRight;
       let scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      let scrollbarGutter = window.getComputedStyle(document.documentElement).scrollbarGutter;
       document.documentElement.style.overflow = "hidden";
+      if (scrollbarGutter && scrollbarGutter !== "auto") {
+        return () => {
+          document.documentElement.style.overflow = overflow;
+        };
+      }
       document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
       return () => {
         document.documentElement.style.overflow = overflow;
@@ -7595,9 +6854,13 @@ var require_module_cjs5 = __commonJS({
           el._x_sort_key = evaluate(expression);
           return;
         }
+        let handleSelector = "[x-sort\\:handle],[wire\\:sort\\:handle]";
         let preferences = {
           hideGhost: !modifiers.includes("ghost"),
-          useHandles: !!el.querySelector("[x-sort\\:handle],[wire\\:sort\\:handle]"),
+          useHandles: !!el.querySelector(handleSelector) || Array.from(el.querySelectorAll("template:not(svg template)")).some((tmpl) => {
+            var _a;
+            return (_a = tmpl.content) == null ? void 0 : _a.querySelector(handleSelector);
+          }),
           group: getGroupName(el, modifiers)
         };
         let handleSort = generateSortHandler(expression, evaluate);
@@ -8995,14 +8258,14 @@ var require_module_cjs7 = __commonJS({
       });
       Alpine25.directive("anchor", Alpine25.skipDuringClone(
         (el, { expression, modifiers, value }, { evaluate: evaluate2, effect, cleanup }) => {
-          let { placement, offsetValue, unstyled } = getOptions(modifiers);
+          let { placement, offsetValue, unstyled, strategy, allowFlip } = getOptions(modifiers);
           el._x_anchor = Alpine25.reactive({ x: 0, y: 0 });
           let previousReference = null;
           let release = null;
-          let effector = effect(() => {
+          effect(() => {
             let reference = evaluate2(expression);
             if (!reference)
-              throw "Alpine: no element provided to x-anchor...";
+              return;
             if (previousReference !== reference) {
               if (release)
                 release();
@@ -9011,9 +8274,10 @@ var require_module_cjs7 = __commonJS({
                 let previousValue;
                 computePosition2(reference, el, {
                   placement,
-                  middleware: [flip(), shift({ padding: 5 }), offset(offsetValue)]
+                  strategy,
+                  middleware: [allowFlip && flip(), shift({ padding: 5 }), offset(offsetValue)]
                 }).then(({ x, y }) => {
-                  unstyled || setStyles(el, x, y);
+                  unstyled || setStyles(el, x, y, strategy);
                   if (JSON.stringify({ x, y }) !== previousValue) {
                     el._x_anchor.x = x;
                     el._x_anchor.y = y;
@@ -9025,24 +8289,23 @@ var require_module_cjs7 = __commonJS({
             }
           });
           cleanup(() => {
-            effector();
             if (release)
               release();
           });
         },
         (el, { expression, modifiers, value }, { cleanup, evaluate: evaluate2 }) => {
-          let { placement, offsetValue, unstyled } = getOptions(modifiers);
+          let { placement, offsetValue, unstyled, strategy } = getOptions(modifiers);
           if (el._x_anchor) {
-            unstyled || setStyles(el, el._x_anchor.x, el._x_anchor.y);
+            unstyled || setStyles(el, el._x_anchor.x, el._x_anchor.y, strategy);
           }
         }
       ));
     }
-    function setStyles(el, x, y) {
+    function setStyles(el, x, y, strategy = "absolute") {
       Object.assign(el.style, {
         left: x + "px",
         top: y + "px",
-        position: "absolute"
+        position: strategy
       });
     }
     function getOptions(modifiers) {
@@ -9054,7 +8317,9 @@ var require_module_cjs7 = __commonJS({
         offsetValue = modifiers[idx + 1] !== void 0 ? Number(modifiers[idx + 1]) : offsetValue;
       }
       let unstyled = modifiers.includes("no-style");
-      return { placement, offsetValue, unstyled };
+      let allowFlip = !modifiers.includes("noflip");
+      let strategy = modifiers.includes("fixed") ? "fixed" : "absolute";
+      return { placement, offsetValue, unstyled, strategy, allowFlip };
     }
     var module_default2 = src_default2;
   }
@@ -10817,6 +10082,8 @@ var MessageInterceptor = class {
   };
   onSuccess = () => {
   };
+  onSkipped = () => {
+  };
   onFinish = () => {
   };
   onSync = () => {
@@ -10845,6 +10112,7 @@ var MessageInterceptor = class {
       onError: (callback2) => this.onError = callback2,
       onStream: (callback2) => this.onStream = callback2,
       onSuccess: (callback2) => this.onSuccess = callback2,
+      onSkipped: (callback2) => this.onSkipped = callback2,
       onFinish: (callback2) => this.onFinish = callback2
     });
   }
@@ -11091,6 +10359,7 @@ var Message = class {
   pendingReturnsMeta = {};
   interceptors = [];
   cancelled = false;
+  skipped = false;
   request = null;
   _scope = null;
   get scope() {
@@ -11162,6 +10431,12 @@ var Message = class {
   }
   isCancelled() {
     return this.cancelled;
+  }
+  markSkipped() {
+    this.skipped = true;
+  }
+  isSkipped() {
+    return this.skipped;
   }
   isAsync() {
     return Array.from(this.actions).every((action) => action.isAsync());
@@ -11236,6 +10511,10 @@ var Message = class {
   }
   invokeOnFinish() {
     this.interceptors.forEach((interceptor) => interceptor.onFinish());
+  }
+  invokeOnSkipped() {
+    this.interceptors.forEach((interceptor) => interceptor.onSkipped());
+    Array.from(this.actions).forEach((action) => action.invokeOnFinish());
   }
   rejectActionPromises({ status, body, json, errors }) {
     Array.from(this.actions).forEach((action) => {
@@ -11499,6 +10778,10 @@ var interceptors = new InterceptorRegistry();
 var messageBus = new MessageBus();
 var actionInterceptors = [];
 var partitionInterceptors = [];
+var sessionExpired = false;
+function sessionIsExpired() {
+  return sessionExpired;
+}
 function setNextActionOrigin(origin) {
   outstandingActionOrigin = origin;
 }
@@ -11765,6 +11048,9 @@ function sendMessages() {
         if (preventDefault)
           return;
         if (response.status === 419) {
+          if (sessionExpired)
+            return;
+          sessionExpired = true;
           confirm(
             "This page has expired.\nWould you like to refresh the page?"
           ) && window.location.reload();
@@ -11796,6 +11082,16 @@ function sendMessages() {
           messageResponsePayloads.forEach((payload) => {
             if (message.isCancelled())
               return;
+            if (payload.skip) {
+              if (payload.id === message.component.id) {
+                message.responsePayload = payload;
+                message.markSkipped();
+                message.invokeOnSkipped();
+                message.resolveActionPromises([], []);
+                message.invokeOnFinish();
+              }
+              return;
+            }
             let { snapshot: snapshotEncoded, effects } = payload;
             let snapshot = JSON.parse(snapshotEncoded);
             if (snapshot.memo.id === message.component.id) {
@@ -11964,7 +11260,7 @@ function getErrorsObject(component) {
         state.clientErrors = null;
         component.__lastErrorsSnapshot = component.snapshot;
       }
-      return state.clientErrors ?? component.snapshot.memo.errors;
+      return state.clientErrors ??= component.snapshot.memo.errors;
     },
     keys() {
       return Object.keys(this.messages());
@@ -12444,7 +11740,7 @@ wireProperty("$js", (component) => {
   let fn = component.addJsAction.bind(component);
   let jsActions = component.getJsActions();
   Object.keys(jsActions).forEach((name) => {
-    fn[name] = component.getJsAction(name);
+    fn[name] = jsActions[name];
   });
   return new Proxy(fn, {
     set(target, property, value) {
@@ -12782,7 +12078,11 @@ var Component = class {
     return this.jsActions[name].bind(this.$wire);
   }
   getJsActions() {
-    return this.jsActions;
+    let actions = {};
+    for (let key of Object.keys(this.jsActions)) {
+      actions[key] = this.getJsAction(key);
+    }
+    return actions;
   }
   toJSON() {
     return {
@@ -13359,7 +12659,9 @@ function whenThisLinkIsPressed(el, callback) {
     callback((whenReleased) => {
       let handler = (e2) => {
         e2.preventDefault();
-        whenReleased();
+        requestAnimationFrame(() => {
+          whenReleased();
+        });
         el.removeEventListener("mouseup", handler);
       };
       el.addEventListener("mouseup", handler);
@@ -14335,6 +13637,8 @@ on("effect", ({ component, effects }) => {
 function registerListeners(component, listeners2) {
   listeners2.forEach((name) => {
     let handler = (e) => {
+      if (component.isLazy && !component.hasBeenLazyLoaded)
+        return;
       if (e.__livewire)
         e.__livewire.receivedBy.push(component);
       component.$wire.call("__dispatch", name, e.detail || {});
@@ -14342,6 +13646,8 @@ function registerListeners(component, listeners2) {
     window.addEventListener(name, handler);
     component.addCleanup(() => window.removeEventListener(name, handler));
     component.el.addEventListener(name, (e) => {
+      if (component.isLazy && !component.hasBeenLazyLoaded)
+        return;
       if (!e.__livewire)
         return;
       if (e.bubbles)
@@ -14541,7 +13847,7 @@ on("effect", ({ component, effects }) => {
   if (xjs) {
     xjs.forEach(({ expression, params }) => {
       params = Object.values(params);
-      evaluateExpression(component.el, expression, { scope: component.jsActions, params });
+      evaluateExpression(component.el, expression, { scope: component.getJsActions(), params });
     });
   }
 });
@@ -14553,11 +13859,14 @@ var import_alpinejs10 = __toESM(require_module_cjs());
 var defaultName = "match-element";
 globalDirective("transition", ({ el, directive: directive2, cleanup }) => {
 });
-function setTransitionNames(root) {
+function setTransitionNames(root, options = {}) {
   root.querySelectorAll("[wire\\:transition]").forEach((el) => {
-    if (!el.style.viewTransitionName) {
-      el.style.viewTransitionName = el.getAttribute("wire:transition") || defaultName;
-    }
+    if (el.style.viewTransitionName)
+      return;
+    let name = el.getAttribute("wire:transition");
+    if (!name && options.type)
+      return;
+    el.style.viewTransitionName = name || defaultName;
   });
 }
 function clearTransitionNames(root) {
@@ -14575,7 +13884,7 @@ async function transitionDomMutation(fromEl, toEl, callback, options = {}) {
   }
   if (document.querySelector("dialog:modal"))
     return callback();
-  setTransitionNames(fromEl);
+  setTransitionNames(fromEl, options);
   let style = document.createElement("style");
   style.textContent = `
         @media (prefers-reduced-motion: reduce) {
@@ -14597,7 +13906,7 @@ async function transitionDomMutation(fromEl, toEl, callback, options = {}) {
   document.head.appendChild(style);
   let update = () => {
     callback();
-    setTransitionNames(fromEl);
+    setTransitionNames(fromEl, options);
   };
   let transitionConfig = { update };
   if (options.type) {
@@ -15465,8 +14774,13 @@ import_alpinejs16.default.interceptInit((el) => {
       import_alpinejs16.default.bind(el, {
         [attribute]() {
           setNextActionOrigin({ el, directive: directive2 });
-          let params = [this.$item, this.$position];
-          let scope = { $item: this.$item, $position: this.$position };
+          let sortableChildren = Array.from(el.children).filter(
+            (child) => child.hasAttribute("x-sort:item") || child.hasAttribute("wire:sort:item")
+          );
+          let itemPosition = sortableChildren.findIndex((child) => child._x_sort_key === this.$item);
+          let position = itemPosition !== -1 ? itemPosition : this.$position;
+          let params = [this.$item, position];
+          let scope = { $item: this.$item, $position: position };
           let sortId = el.getAttribute("wire:sort:group-id");
           if (sortId !== null) {
             params.push(sortId);
@@ -15984,6 +15298,7 @@ directive("poll", ({ el, directive: directive2, component }) => {
   pauseWhile(() => theDirectiveHasVisible(directive2) && theElementIsNotInTheViewport(el));
   pauseWhile(() => theDirectiveIsOffTheElement(el));
   pauseWhile(() => livewireIsOffline());
+  pauseWhile(() => sessionIsExpired());
   stopWhen(() => theElementIsDisconnected(el));
 });
 function triggerComponentRequest(el, directive2, component) {
@@ -16194,4 +15509,4 @@ focus-trap/dist/focus-trap.js:
   *)
   (*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE *)
 */
-//# sourceMappingURL=livewire.csp.esm.js.map
+//# sourceMappingURL=livewire.esm.js.map

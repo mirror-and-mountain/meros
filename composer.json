@@ -18,7 +18,8 @@
         }
     ],
     "require": {
-        "mirror-and-mountain/meros-framework": "^2.3.5"
+        "mirror-and-mountain/meros-framework": "^0.0.4",
+        "mirror-and-mountain/meros-crm": "^0.0.4"
     },
     "autoload": {
         "psr-4": {

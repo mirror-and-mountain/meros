@@ -1,3 +1,7 @@
+# --- STAGE 1: Get Composer ---
+FROM docker.io/library/composer:latest AS composer
+
+# --- STAGE 2: Main Application ---
 FROM php:8.4-apache
 
 # Install system dependencies
@@ -12,8 +16,6 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     libzip-dev \
-    npm \
-    nodejs \
     jq \
     sudo \
     gnupg \
@@ -33,21 +35,25 @@ RUN mkdir -p -m 755 /etc/apt/keyrings \
  && apt-get update && apt-get install -y gh \
  && rm -rf /var/lib/apt/lists/*
 
- # Install mkcert
-RUN curl -L https://github.com/FiloSottile/mkcert/releases/latest/download/mkcert-linux-amd64 \
-    -o /usr/local/bin/mkcert \
- && chmod +x /usr/local/bin/mkcert
-
 # Install PHP extensions
 RUN docker-php-ext-install mysqli pdo pdo_mysql zip
+
+# Change Apache to listen on port 8080
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf \
+ && sed -i 's/:80/:8080/g' /etc/apache2/sites-enabled/000-default.conf
 
 # Enable Apache mod_rewrite and FollowSymLinks
 RUN a2enmod rewrite \
  && sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf \
  && sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/Options Indexes FollowSymLinks/Options FollowSymLinks/' /etc/apache2/apache2.conf
 
+# Install Node.js 20 LTS
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # Install WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
@@ -95,7 +101,7 @@ WORKDIR /var/www/html
 # Increase PHP memory limit and download wordpress core
 RUN php -d memory_limit=512M /usr/local/bin/wp core download --allow-root
 
-# Ensure key directories exist in the image for mounting
+# Ensure WordPress directories exist in the image for mounting
 RUN mkdir -p /var/www/html/wp-content/themes/
 RUN mkdir -p /var/www/html/wp-content/plugins/
 RUN mkdir -p /var/www/html/wp-content/uploads/

@@ -11,10 +11,8 @@
     "source=${localWorkspaceFolder},target=/var/www/html/wp-content/themes/${localWorkspaceFolderBasename},type=bind,consistency=cached",
     "source=${localWorkspaceFolder}/.devcontainer/keys,target=/home/www-data/keys,type=bind,consistency=cached"
   ],
-  "postCreateCommand": "set -x && cd /var/www/html/wp-content/themes/${localWorkspaceFolderBasename} && composer install",
-  "forwardPorts": [
-    80
-  ],
+  "postCreateCommand": "set -x && cd /var/www/html/wp-content/themes/${localWorkspaceFolderBasename} && sleep 5 && composer install",
+  "forwardPorts": [9000, 8000],
   "features": {},
   "customizations": {
     "vscode": {
@@ -23,11 +21,9 @@
         "mtxr.sqltools-driver-mysql",
         "bmewburn.vscode-intelephense-client",
         "laravel.vscode-laravel",
-        "wordpresstoolbox.wordpress-toolbox",
-        "neilbrayfield.php-docblocker"
+        "wordpresstoolbox.wordpress-toolbox"
       ],
       "settings": {
-        "php-docblocker.alignReturn": true,
         "intelephense.environment.phpVersion": "8.4.0",
         "intelephense.format.braces": "k&r",
         "intelephense.completion.parameterCase": "camel",

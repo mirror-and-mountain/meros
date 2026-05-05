@@ -18,7 +18,7 @@ return [
      */
     'packages' => [
         // 'MM\\Meros\\Blocks\\ServiceProvider',
-        // 'MM\\Meros\\Crm\\ServiceProvider',
+        'MM\\Meros\\Crm\\ServiceProvider',
     ]
 ];
 

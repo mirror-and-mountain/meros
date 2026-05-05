@@ -21,7 +21,7 @@ services:
       dockerfile: Dockerfile
     container_name: ${THEME_SLUG:-meros-wp}_dev_wordpress
     ports:
-      - ${WP_PORT:-8000}:80
+      - ${WP_PORT:-8000}:8080
     depends_on:
       db:
         condition: service_healthy
@@ -31,8 +31,12 @@ services:
     container_name: ${THEME_SLUG:-meros-wp}_dev_phpmyadmin
     ports:
       - ${PHPMYADMIN_PORT:-9000}:80
+    volumes:
+      - ./phpmyadmin.inc.php:/etc/phpmyadmin/config.user.inc.php:ro
     environment:
       PMA_HOST: db
+      PMA_USER: ${DB_USER:-dbuser}
+      PMA_PASSWORD: ${DB_PASSWORD:-dbpassword}
 
 volumes:
   db_data:
