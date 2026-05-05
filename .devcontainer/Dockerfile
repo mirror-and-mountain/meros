@@ -1,8 +1,4 @@
-# --- STAGE 1: Get Composer ---
-FROM docker.io/library/composer:latest AS composer
-
-# --- STAGE 2: Main Application ---
-FROM php:8.4-apache
+FROM docker.io/php:8.4-apache
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -26,7 +22,15 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable imagick \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Github-CLI
+# Install PHP extensions
+RUN docker-php-ext-install mysqli pdo pdo_mysql zip
+
+# Enable Apache mod_rewrite and FollowSymLinks
+RUN a2enmod rewrite \
+ && sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf \
+ && sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/Options Indexes FollowSymLinks/Options FollowSymLinks/' /etc/apache2/apache2.conf
+
+# Install Github-CLI - For Codespaces
 RUN mkdir -p -m 755 /etc/apt/keyrings \
  && curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
       | gpg --dearmor -o /etc/apt/keyrings/githubcli-archive-keyring.gpg \
@@ -35,25 +39,13 @@ RUN mkdir -p -m 755 /etc/apt/keyrings \
  && apt-get update && apt-get install -y gh \
  && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions
-RUN docker-php-ext-install mysqli pdo pdo_mysql zip
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Change Apache to listen on port 8080
-RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf \
- && sed -i 's/:80/:8080/g' /etc/apache2/sites-enabled/000-default.conf
-
-# Enable Apache mod_rewrite and FollowSymLinks
-RUN a2enmod rewrite \
- && sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf \
- && sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/Options Indexes FollowSymLinks/Options FollowSymLinks/' /etc/apache2/apache2.conf
-
-# Install Node.js 20 LTS
+# Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
-
-# Install Composer
-COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # Install WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
@@ -74,7 +66,7 @@ RUN mkdir -p /home/www-data/.wp-cli
 RUN usermod -d /home/www-data www-data
 RUN usermod -d /home/www-data -s /bin/bash www-data
 
-# Ensure subdirectory permissions
+# Ensure home subdirectory permissions
 RUN chown -R www-data:www-data /home/www-data/bin \
     && chmod 755 /home/www-data/bin
 

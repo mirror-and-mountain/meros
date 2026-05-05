@@ -1,6 +1,6 @@
 services:
   db:
-    image: mariadb:10.11
+    image: docker.io/mariadb:10.11
     container_name: ${THEME_SLUG:-meros-wp}_dev_db
     environment:
       MARIADB_DATABASE: ${DB_NAME:-wordpress}
@@ -9,6 +9,7 @@ services:
       MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
     volumes:
       - db_data:/var/lib/mysql
+      - ./config/phpmyadmin-init.sql:/docker-entrypoint-initdb.d/10-phpmyadmin-init.sql:ro
     healthcheck:
       test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
       interval: 5s
@@ -20,24 +21,19 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: ${THEME_SLUG:-meros-wp}_dev_wordpress
-    userns_mode: keep-id
     ports:
-      - ${WP_PORT:-8000}:8080
+      - ${WP_PORT:-8000}:80
     depends_on:
       db:
         condition: service_healthy
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: docker.io/phpmyadmin
     container_name: ${THEME_SLUG:-meros-wp}_dev_phpmyadmin
     ports:
       - ${PHPMYADMIN_PORT:-9000}:80
-    volumes:
-      - ./phpmyadmin.inc.php:/etc/phpmyadmin/config.user.inc.php:ro,Z
     environment:
       PMA_HOST: db
-      PMA_USER: ${DB_USER:-dbuser}
-      PMA_PASSWORD: ${DB_PASSWORD:-dbpassword}
 
 volumes:
   db_data:

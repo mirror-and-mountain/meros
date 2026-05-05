@@ -5,13 +5,12 @@
   "workspaceFolder": "/var/www/html/wp-content/themes/${localWorkspaceFolderBasename}",
   "remoteUser": "www-data",
   "containerUser": "www-data",
-  "updateRemoteUserUID": true,
   "remoteEnv": {
     "VSCODE_SERVER_HOME": "/home/www-data/.vscode-server"
   },
   "mounts": [
-    "source=${localWorkspaceFolder},target=/var/www/html/wp-content/themes/${localWorkspaceFolderBasename},type=bind,consistency=cached,Z",
-    "source=${localWorkspaceFolder}/.devcontainer/keys,target=/home/www-data/keys,type=bind,consistency=cached,Z"
+    "source=${localWorkspaceFolder},target=/var/www/html/wp-content/themes/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+    "source=${localWorkspaceFolder}/.devcontainer/keys,target=/home/www-data/keys,type=bind,consistency=cached"
   ],
   "postCreateCommand": "set -x && cd /var/www/html/wp-content/themes/${localWorkspaceFolderBasename} && sleep 5 && composer install",
   "forwardPorts": [9000, 8000],
