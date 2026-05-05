@@ -9,7 +9,6 @@ services:
       MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
     volumes:
       - db_data:/var/lib/mysql
-      - ./config/phpmyadmin-init.sql:/docker-entrypoint-initdb.d/10-phpmyadmin-init.sql:ro
     healthcheck:
       test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
       interval: 5s
