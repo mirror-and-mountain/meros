@@ -25,12 +25,16 @@ RUN apt-get update && apt-get install -y \
 # Install PHP extensions
 RUN docker-php-ext-install mysqli pdo pdo_mysql zip
 
+# Change Apache to listen on port 8080 (Crucial for non-root)
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf \
+ && sed -i 's/:80/:8080/g' /etc/apache2/sites-enabled/000-default.conf
+
 # Enable Apache mod_rewrite and FollowSymLinks
 RUN a2enmod rewrite \
  && sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf \
  && sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/Options Indexes FollowSymLinks/Options FollowSymLinks/' /etc/apache2/apache2.conf
 
-# Install Github-CLI - For Codespaces
+# Install Github-CLI
 RUN mkdir -p -m 755 /etc/apt/keyrings \
  && curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
       | gpg --dearmor -o /etc/apt/keyrings/githubcli-archive-keyring.gpg \
@@ -52,29 +56,27 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
   && chmod +x wp-cli.phar \
   && mv wp-cli.phar /usr/local/bin/wp
 
-# Create a home directory for www-data
-RUN mkdir -p /home/www-data \
-    && chown www-data:www-data /home/www-data \
-    && chmod 755 /home/www-data
+# --- USER CONFIGURATION START ---
+# Define default UID/GID 
+# Used for Podman setups to ensure www-data matches host user permissions. Not needed for Docker Desktop.
+ARG USER_UID=1000
+ARG USER_GID=1000
+
+# Modify the EXISTING www-data user to match the ARG UID/GID
+# This is cleaner than creating a new user and avoids conflicts with the base image
+RUN usermod -u ${USER_UID} www-data \
+ && groupmod -g ${USER_GID} www-data \
+ && mkdir -p /home/www-data \
+ && chown www-data:www-data /home/www-data \
+ && chmod 755 /home/www-data \
+ && usermod -d /home/www-data -s /bin/bash www-data
 
 # Create home subdirectories
-RUN mkdir -p /home/www-data/bin
-RUN mkdir -p /home/www-data/keys
-RUN mkdir -p /home/www-data/.wp-cli
-
-# Point HOME to /home/www-data
-RUN usermod -d /home/www-data www-data
-RUN usermod -d /home/www-data -s /bin/bash www-data
-
-# Ensure home subdirectory permissions
-RUN chown -R www-data:www-data /home/www-data/bin \
-    && chmod 755 /home/www-data/bin
-
-RUN chown -R www-data:www-data /home/www-data/keys \
-    && chmod 755 /home/www-data/keys
-
-RUN chown -R www-data:www-data /home/www-data/.wp-cli \
-    && chmod 755 /home/www-data/.wp-cli
+RUN mkdir -p /home/www-data/bin \
+ && mkdir -p /home/www-data/keys \
+ && mkdir -p /home/www-data/.wp-cli \
+ && chown -R www-data:www-data /home/www-data \
+ && chmod -R 755 /home/www-data
 
 # Copy MySQL SSL Conf & WP CLI config.yml
 COPY /config/wpcli.config.yml /home/www-data/.wp-cli/config.yml
@@ -82,7 +84,10 @@ COPY /config/mariadb.my.cnf /home/www-data/.my.cnf
 
 # Set .my.cnf file permissions
 RUN chown www-data:www-data /home/www-data/.my.cnf \
-    && chmod 600 /home/www-data/.my.cnf
+ && chmod 600 /home/www-data/.my.cnf
+
+# Allow www-data to use sudo (Needed for WP-CLI scripts)
+RUN echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Increase PHP upload limit
 RUN echo "upload_max_filesize=256M\npost_max_size=256M" > /usr/local/etc/php/conf.d/uploads.ini
@@ -94,14 +99,16 @@ WORKDIR /var/www/html
 RUN php -d memory_limit=512M /usr/local/bin/wp core download --allow-root
 
 # Ensure WordPress directories exist in the image for mounting
-RUN mkdir -p /var/www/html/wp-content/themes/
-RUN mkdir -p /var/www/html/wp-content/plugins/
-RUN mkdir -p /var/www/html/wp-content/uploads/
+RUN mkdir -p /var/www/html/wp-content/themes/ \
+ && mkdir -p /var/www/html/wp-content/plugins/ \
+ && mkdir -p /var/www/html/wp-content/uploads/
 
-# Ensure /var/www/html ownership for web server operations
-RUN chown -R www-data:www-data /var/www/html
-RUN find /var/www/html -type d -exec chmod 775 {} +
-RUN find /var/www/html -type f -exec chmod 664 {} +
+# Ensure /var/www/html ownership and permissions
+# 777 on mounted dirs ensures write access regardless of UID timing
+RUN chmod -R 777 /var/www/html/wp-content/themes/ \
+ && chmod -R 777 /var/www/html/wp-content/plugins/ \
+ && chmod -R 777 /var/www/html/wp-content/uploads/ \
+ && chown -R www-data:www-data /var/www/html
 
 #Set the meros environment variable
 ENV MEROS_ENVIRONMENT=true

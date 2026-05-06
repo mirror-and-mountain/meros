@@ -19,9 +19,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        USER_UID: ${LOCAL_USER_ID:-1000}
+        USER_GID: ${LOCAL_GROUP_ID:-1000}
     container_name: ${THEME_SLUG:-meros-wp}_dev_wordpress
     ports:
-      - ${WP_PORT:-8000}:80
+      - ${WP_PORT:-8000}:8080
     depends_on:
       db:
         condition: service_healthy

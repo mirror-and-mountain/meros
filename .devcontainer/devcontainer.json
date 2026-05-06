@@ -4,7 +4,6 @@
   "service": "wordpress",
   "workspaceFolder": "/var/www/html/wp-content/themes/${localWorkspaceFolderBasename}",
   "remoteUser": "www-data",
-  "containerUser": "www-data",
   "remoteEnv": {
     "VSCODE_SERVER_HOME": "/home/www-data/.vscode-server"
   },
