@@ -28,6 +28,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      mailpit:
+        condition: service_started
 
   phpmyadmin:
     image: docker.io/phpmyadmin
@@ -36,6 +38,13 @@ services:
       - ${PHPMYADMIN_PORT:-9000}:80
     environment:
       PMA_HOST: db
+
+  mailpit:
+    image: docker.io/axllent/mailpit:latest
+    container_name: ${THEME_SLUG:-meros-wp}_dev_mailpit
+    ports:
+      - ${MAILPIT_SMTP_PORT:-1025}:1025
+      - ${MAILPIT_UI_PORT:-8025}:8025
 
 volumes:
   db_data:

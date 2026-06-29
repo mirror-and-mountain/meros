@@ -4,6 +4,10 @@
     "settings": {
         "appearanceTools": true,
         "useRootPaddingAwareAlignments": true,
+        "layout": {
+            "contentSize": "var(--wp--preset--layout--content-size)",
+            "wideSize": "var(--wp--preset--layout--wide-size)"
+        },
         "typography": {
             "fontFamilies": [
                 {

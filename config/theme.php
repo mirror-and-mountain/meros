@@ -17,7 +17,7 @@ return [
      * an existing one is removed.
      */
     'packages' => [
-        // 'MM\\Meros\\Blocks\\ServiceProvider',
+        'MM\\Meros\\Blocks\\ServiceProvider',
         'MM\\Meros\\Crm\\ServiceProvider',
     ]
 ];

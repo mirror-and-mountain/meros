@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "530379c937f41b141481c2f0203b3581",
+    "content-hash": "14172e8f423206850f5d87b284e8686b",
     "packages": [
         {
             "name": "brick/math",
@@ -980,16 +980,16 @@
         },
         {
             "name": "illuminate/auth",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/auth.git",
-                "reference": "9eee0c6ab1846cc2f4112b368b2b10eb0d025480"
+                "reference": "b12c4b821ea31b52613d36df7eaf3c20a183f972"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/auth/zipball/9eee0c6ab1846cc2f4112b368b2b10eb0d025480",
-                "reference": "9eee0c6ab1846cc2f4112b368b2b10eb0d025480",
+                "url": "https://api.github.com/repos/illuminate/auth/zipball/b12c4b821ea31b52613d36df7eaf3c20a183f972",
+                "reference": "b12c4b821ea31b52613d36df7eaf3c20a183f972",
                 "shasum": ""
             },
             "require": {
@@ -1034,20 +1034,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-16T13:57:03+00:00"
+            "time": "2026-04-30T11:53:04+00:00"
         },
         {
             "name": "illuminate/bus",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/bus.git",
-                "reference": "eb81f4c87dc379c45e5c59fe1a3dd38e25fe8c80"
+                "reference": "ae2248ca6ba6b08873cd8d3f22768dac578f61fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/bus/zipball/eb81f4c87dc379c45e5c59fe1a3dd38e25fe8c80",
-                "reference": "eb81f4c87dc379c45e5c59fe1a3dd38e25fe8c80",
+                "url": "https://api.github.com/repos/illuminate/bus/zipball/ae2248ca6ba6b08873cd8d3f22768dac578f61fb",
+                "reference": "ae2248ca6ba6b08873cd8d3f22768dac578f61fb",
                 "shasum": ""
             },
             "require": {
@@ -1087,20 +1087,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-22T13:52:54+00:00"
+            "time": "2026-04-28T11:04:57+00:00"
         },
         {
             "name": "illuminate/cache",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/cache.git",
-                "reference": "c8343d30bb2af1ed2591e2869a8f7c51bd60dd60"
+                "reference": "db29a353d343579b793eb3281e070e87c5eacbd4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/cache/zipball/c8343d30bb2af1ed2591e2869a8f7c51bd60dd60",
-                "reference": "c8343d30bb2af1ed2591e2869a8f7c51bd60dd60",
+                "url": "https://api.github.com/repos/illuminate/cache/zipball/db29a353d343579b793eb3281e070e87c5eacbd4",
+                "reference": "db29a353d343579b793eb3281e070e87c5eacbd4",
                 "shasum": ""
             },
             "require": {
@@ -1149,20 +1149,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-27T13:59:53+00:00"
+            "time": "2026-04-30T11:50:37+00:00"
         },
         {
             "name": "illuminate/collections",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
-                "reference": "36cfc25fc23ca18714fc8ee6abc947ee99c18462"
+                "reference": "17b082d0c66fb030f22d5bdd62ba652c045ff522"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/collections/zipball/36cfc25fc23ca18714fc8ee6abc947ee99c18462",
-                "reference": "36cfc25fc23ca18714fc8ee6abc947ee99c18462",
+                "url": "https://api.github.com/repos/illuminate/collections/zipball/17b082d0c66fb030f22d5bdd62ba652c045ff522",
+                "reference": "17b082d0c66fb030f22d5bdd62ba652c045ff522",
                 "shasum": ""
             },
             "require": {
@@ -1171,7 +1171,8 @@
                 "illuminate/macroable": "^13.0",
                 "php": "^8.3",
                 "symfony/polyfill-php84": "^1.33",
-                "symfony/polyfill-php85": "^1.33"
+                "symfony/polyfill-php85": "^1.33",
+                "symfony/polyfill-php86": "^1.36"
             },
             "suggest": {
                 "illuminate/http": "Required to convert collections to API resources (^13.0).",
@@ -1208,11 +1209,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-27T18:16:57+00:00"
+            "time": "2026-04-28T17:17:15+00:00"
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -1258,7 +1259,7 @@
         },
         {
             "name": "illuminate/config",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/config.git",
@@ -1306,16 +1307,16 @@
         },
         {
             "name": "illuminate/console",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/console.git",
-                "reference": "0d720c6999b75bd3b74d5bdbdda8ae1cd9534579"
+                "reference": "d3a80fa33836685675247b502d5686f8cd8fc034"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/console/zipball/0d720c6999b75bd3b74d5bdbdda8ae1cd9534579",
-                "reference": "0d720c6999b75bd3b74d5bdbdda8ae1cd9534579",
+                "url": "https://api.github.com/repos/illuminate/console/zipball/d3a80fa33836685675247b502d5686f8cd8fc034",
+                "reference": "d3a80fa33836685675247b502d5686f8cd8fc034",
                 "shasum": ""
             },
             "require": {
@@ -1367,11 +1368,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-15T12:59:03+00:00"
+            "time": "2026-04-29T09:35:06+00:00"
         },
         {
             "name": "illuminate/container",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -1433,16 +1434,16 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "a5f08426a807faac42616f733113ba263779f2dd"
+                "reference": "ce6f5561f88743639c76835ad82cfe39b468bdc8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/a5f08426a807faac42616f733113ba263779f2dd",
-                "reference": "a5f08426a807faac42616f733113ba263779f2dd",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/ce6f5561f88743639c76835ad82cfe39b468bdc8",
+                "reference": "ce6f5561f88743639c76835ad82cfe39b468bdc8",
                 "shasum": ""
             },
             "require": {
@@ -1477,11 +1478,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-24T14:55:56+00:00"
+            "time": "2026-04-28T17:16:27+00:00"
         },
         {
             "name": "illuminate/cookie",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/cookie.git",
@@ -1534,16 +1535,16 @@
         },
         {
             "name": "illuminate/database",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "29efb21135ec7c28a71c61c9c4350e36601f206e"
+                "reference": "b04b338f22d4625e78d1427d3eb68758c17a97eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/29efb21135ec7c28a71c61c9c4350e36601f206e",
-                "reference": "29efb21135ec7c28a71c61c9c4350e36601f206e",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/b04b338f22d4625e78d1427d3eb68758c17a97eb",
+                "reference": "b04b338f22d4625e78d1427d3eb68758c17a97eb",
                 "shasum": ""
             },
             "require": {
@@ -1556,7 +1557,8 @@
                 "illuminate/support": "^13.0",
                 "laravel/serializable-closure": "^2.0.10",
                 "php": "^8.3",
-                "symfony/polyfill-php85": "^1.33"
+                "symfony/polyfill-php84": "^1.34",
+                "symfony/polyfill-php85": "^1.34"
             },
             "suggest": {
                 "ext-filter": "Required to use the Postgres database driver.",
@@ -1601,11 +1603,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-27T15:25:58+00:00"
+            "time": "2026-05-04T12:35:50+00:00"
         },
         {
             "name": "illuminate/encryption",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/encryption.git",
@@ -1656,7 +1658,7 @@
         },
         {
             "name": "illuminate/events",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/events.git",
@@ -1711,16 +1713,16 @@
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
-                "reference": "f057eeab92e11e1c63165efdd909a758f856b185"
+                "reference": "bc6d4e2b0482b86521b29ae95fdc74d8909521ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/filesystem/zipball/f057eeab92e11e1c63165efdd909a758f856b185",
-                "reference": "f057eeab92e11e1c63165efdd909a758f856b185",
+                "url": "https://api.github.com/repos/illuminate/filesystem/zipball/bc6d4e2b0482b86521b29ae95fdc74d8909521ac",
+                "reference": "bc6d4e2b0482b86521b29ae95fdc74d8909521ac",
                 "shasum": ""
             },
             "require": {
@@ -1774,11 +1776,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-14T17:44:49+00:00"
+            "time": "2026-04-29T09:35:06+00:00"
         },
         {
             "name": "illuminate/hashing",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/hashing.git",
@@ -1826,7 +1828,7 @@
         },
         {
             "name": "illuminate/http",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/http.git",
@@ -1887,16 +1889,16 @@
         },
         {
             "name": "illuminate/log",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/log.git",
-                "reference": "33f2297f586b7b3adcefe74f42b3cfae17585f6e"
+                "reference": "df59aab77e92aeebe5495e8590fd434b6354e92c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/log/zipball/33f2297f586b7b3adcefe74f42b3cfae17585f6e",
-                "reference": "33f2297f586b7b3adcefe74f42b3cfae17585f6e",
+                "url": "https://api.github.com/repos/illuminate/log/zipball/df59aab77e92aeebe5495e8590fd434b6354e92c",
+                "reference": "df59aab77e92aeebe5495e8590fd434b6354e92c",
                 "shasum": ""
             },
             "require": {
@@ -1936,20 +1938,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-27T13:44:52+00:00"
+            "time": "2026-05-01T20:09:57+00:00"
         },
         {
             "name": "illuminate/macroable",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
-                "reference": "f108cb3a8680f26e23c6ce7367c64525412d85b0"
+                "reference": "59b5b5f3cf290a91db8cf6cd3d35ff56978bc057"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/macroable/zipball/f108cb3a8680f26e23c6ce7367c64525412d85b0",
-                "reference": "f108cb3a8680f26e23c6ce7367c64525412d85b0",
+                "url": "https://api.github.com/repos/illuminate/macroable/zipball/59b5b5f3cf290a91db8cf6cd3d35ff56978bc057",
+                "reference": "59b5b5f3cf290a91db8cf6cd3d35ff56978bc057",
                 "shasum": ""
             },
             "require": {
@@ -1982,11 +1984,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-03-28T19:16:13+00:00"
+            "time": "2026-04-29T09:35:06+00:00"
         },
         {
             "name": "illuminate/pagination",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pagination.git",
@@ -2036,7 +2038,7 @@
         },
         {
             "name": "illuminate/pipeline",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pipeline.git",
@@ -2088,16 +2090,16 @@
         },
         {
             "name": "illuminate/queue",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/queue.git",
-                "reference": "30f7ff3f8f15503574b98d70b06a9c2c25882411"
+                "reference": "44221c3c4f97a10c74f2510e575e19d0076ddfa1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/queue/zipball/30f7ff3f8f15503574b98d70b06a9c2c25882411",
-                "reference": "30f7ff3f8f15503574b98d70b06a9c2c25882411",
+                "url": "https://api.github.com/repos/illuminate/queue/zipball/44221c3c4f97a10c74f2510e575e19d0076ddfa1",
+                "reference": "44221c3c4f97a10c74f2510e575e19d0076ddfa1",
                 "shasum": ""
             },
             "require": {
@@ -2151,11 +2153,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-27T14:00:47+00:00"
+            "time": "2026-05-04T13:05:26+00:00"
         },
         {
             "name": "illuminate/reflection",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/reflection.git",
@@ -2206,16 +2208,16 @@
         },
         {
             "name": "illuminate/routing",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/routing.git",
-                "reference": "89d0195f4b8de38067ca232af1306c1b76d32f9e"
+                "reference": "ec1f8484d192788c3e0583c317ba49642b372ae5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/routing/zipball/89d0195f4b8de38067ca232af1306c1b76d32f9e",
-                "reference": "89d0195f4b8de38067ca232af1306c1b76d32f9e",
+                "url": "https://api.github.com/repos/illuminate/routing/zipball/ec1f8484d192788c3e0583c317ba49642b372ae5",
+                "reference": "ec1f8484d192788c3e0583c317ba49642b372ae5",
                 "shasum": ""
             },
             "require": {
@@ -2268,11 +2270,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-27T13:44:06+00:00"
+            "time": "2026-04-30T11:47:20+00:00"
         },
         {
             "name": "illuminate/session",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/session.git",
@@ -2329,16 +2331,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "cc0d9d484ddd83fa54a0495cf15e7606e6a6f4b1"
+                "reference": "ff687db22aefef516efd3ea21d01664af332da38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/cc0d9d484ddd83fa54a0495cf15e7606e6a6f4b1",
-                "reference": "cc0d9d484ddd83fa54a0495cf15e7606e6a6f4b1",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/ff687db22aefef516efd3ea21d01664af332da38",
+                "reference": "ff687db22aefef516efd3ea21d01664af332da38",
                 "shasum": ""
             },
             "require": {
@@ -2404,20 +2406,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-27T13:46:05+00:00"
+            "time": "2026-05-04T12:34:54+00:00"
         },
         {
             "name": "illuminate/testing",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/testing.git",
-                "reference": "6f9abdfa235b655338966a37e9989ef6be06aaff"
+                "reference": "70eb209e32cdeadf1a83708d00d3c3a7bc9db3d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/testing/zipball/6f9abdfa235b655338966a37e9989ef6be06aaff",
-                "reference": "6f9abdfa235b655338966a37e9989ef6be06aaff",
+                "url": "https://api.github.com/repos/illuminate/testing/zipball/70eb209e32cdeadf1a83708d00d3c3a7bc9db3d8",
+                "reference": "70eb209e32cdeadf1a83708d00d3c3a7bc9db3d8",
                 "shasum": ""
             },
             "require": {
@@ -2463,20 +2465,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-23T14:34:29+00:00"
+            "time": "2026-05-01T20:12:29+00:00"
         },
         {
             "name": "illuminate/translation",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/translation.git",
-                "reference": "5e92eb1966dc926214d8e51713dcaadc9cea9808"
+                "reference": "4bec60c49c3109df0365d2fc16ac46eade14023b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/translation/zipball/5e92eb1966dc926214d8e51713dcaadc9cea9808",
-                "reference": "5e92eb1966dc926214d8e51713dcaadc9cea9808",
+                "url": "https://api.github.com/repos/illuminate/translation/zipball/4bec60c49c3109df0365d2fc16ac46eade14023b",
+                "reference": "4bec60c49c3109df0365d2fc16ac46eade14023b",
                 "shasum": ""
             },
             "require": {
@@ -2514,20 +2516,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-14T18:18:24+00:00"
+            "time": "2026-05-01T20:10:36+00:00"
         },
         {
             "name": "illuminate/validation",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/validation.git",
-                "reference": "0d0de8e0edd46013dcbc9e32f9f51c60baa2fa71"
+                "reference": "d39f1ef62a61e6be23523fd2722b7abb74b31b6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/validation/zipball/0d0de8e0edd46013dcbc9e32f9f51c60baa2fa71",
-                "reference": "0d0de8e0edd46013dcbc9e32f9f51c60baa2fa71",
+                "url": "https://api.github.com/repos/illuminate/validation/zipball/d39f1ef62a61e6be23523fd2722b7abb74b31b6b",
+                "reference": "d39f1ef62a61e6be23523fd2722b7abb74b31b6b",
                 "shasum": ""
             },
             "require": {
@@ -2576,20 +2578,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-17T13:34:02+00:00"
+            "time": "2026-05-01T20:10:49+00:00"
         },
         {
             "name": "illuminate/view",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/view.git",
-                "reference": "0d4f8c4b535971b449a7ac9b806a94197cb5b84a"
+                "reference": "3eb161912c82807af60bf6c2f672c5e2b81ac65a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/view/zipball/0d4f8c4b535971b449a7ac9b806a94197cb5b84a",
-                "reference": "0d4f8c4b535971b449a7ac9b806a94197cb5b84a",
+                "url": "https://api.github.com/repos/illuminate/view/zipball/3eb161912c82807af60bf6c2f672c5e2b81ac65a",
+                "reference": "3eb161912c82807af60bf6c2f672c5e2b81ac65a",
                 "shasum": ""
             },
             "require": {
@@ -2630,7 +2632,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-14T18:18:24+00:00"
+            "time": "2026-04-28T11:51:23+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -3015,6 +3017,48 @@
                 }
             ],
             "time": "2026-05-01T00:46:07+00:00"
+        },
+        {
+            "name": "mirror-and-mountain/meros-blocks",
+            "version": "v0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mirror-and-mountain/meros-blocks.git",
+                "reference": "d4303d6ce22f25731d0c285686e20a989c900596"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mirror-and-mountain/meros-blocks/zipball/d4303d6ce22f25731d0c285686e20a989c900596",
+                "reference": "d4303d6ce22f25731d0c285686e20a989c900596",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "meros": {
+                    "provider": "MM\\Meros\\Blocks\\ServiceProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MM\\Meros\\Blocks\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "tmw-mm",
+                    "email": "toby@mirrorandmountain.com"
+                }
+            ],
+            "description": "A collection of blocks and editor features for Meros powered WordPress themes.",
+            "support": {
+                "issues": "https://github.com/mirror-and-mountain/meros-blocks/issues",
+                "source": "https://github.com/mirror-and-mountain/meros-blocks/tree/v0.0.1"
+            },
+            "time": "2026-05-07T15:46:30+00:00"
         },
         {
             "name": "mirror-and-mountain/meros-crm",
@@ -4417,16 +4461,16 @@
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v3.6.0",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "63afe740e99a13ba87ec199bb07bbdee937a5b62"
+                "reference": "50f59d1f3ca46d41ac911f97a78626b6756af35b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/63afe740e99a13ba87ec199bb07bbdee937a5b62",
-                "reference": "63afe740e99a13ba87ec199bb07bbdee937a5b62",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/50f59d1f3ca46d41ac911f97a78626b6756af35b",
+                "reference": "50f59d1f3ca46d41ac911f97a78626b6756af35b",
                 "shasum": ""
             },
             "require": {
@@ -4439,7 +4483,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.6-dev"
+                    "dev-main": "3.7-dev"
                 }
             },
             "autoload": {
@@ -4464,7 +4508,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.6.0"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -4476,11 +4520,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-25T14:21:43+00:00"
+            "time": "2026-04-13T15:52:40+00:00"
         },
         {
             "name": "symfony/error-handler",
@@ -4651,16 +4699,16 @@
         },
         {
             "name": "symfony/event-dispatcher-contracts",
-            "version": "v3.6.0",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher-contracts.git",
-                "reference": "59eb412e93815df44f05f342958efa9f46b1e586"
+                "reference": "ccba7060602b7fed0b03c85bf025257f76d9ef32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher-contracts/zipball/59eb412e93815df44f05f342958efa9f46b1e586",
-                "reference": "59eb412e93815df44f05f342958efa9f46b1e586",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher-contracts/zipball/ccba7060602b7fed0b03c85bf025257f76d9ef32",
+                "reference": "ccba7060602b7fed0b03c85bf025257f76d9ef32",
                 "shasum": ""
             },
             "require": {
@@ -4674,7 +4722,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.6-dev"
+                    "dev-main": "3.7-dev"
                 }
             },
             "autoload": {
@@ -4707,7 +4755,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/event-dispatcher-contracts/tree/v3.6.0"
+                "source": "https://github.com/symfony/event-dispatcher-contracts/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -4719,11 +4767,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-25T14:21:43+00:00"
+            "time": "2026-01-05T13:30:16+00:00"
         },
         {
             "name": "symfony/finder",
@@ -4875,16 +4927,16 @@
         },
         {
             "name": "symfony/http-kernel",
-            "version": "v8.0.8",
+            "version": "v8.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "1770f6818d83b2fddc12185025b93f39a90cb628"
+                "reference": "fb3f65b3d4ca2dad31c80d323819a762ca31d6ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/1770f6818d83b2fddc12185025b93f39a90cb628",
-                "reference": "1770f6818d83b2fddc12185025b93f39a90cb628",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/fb3f65b3d4ca2dad31c80d323819a762ca31d6ac",
+                "reference": "fb3f65b3d4ca2dad31c80d323819a762ca31d6ac",
                 "shasum": ""
             },
             "require": {
@@ -4955,7 +5007,7 @@
             "description": "Provides a structured process for converting a Request into a Response",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-kernel/tree/v8.0.8"
+                "source": "https://github.com/symfony/http-kernel/tree/v8.0.10"
             },
             "funding": [
                 {
@@ -4975,7 +5027,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-31T21:14:05+00:00"
+            "time": "2026-05-06T12:27:31+00:00"
         },
         {
             "name": "symfony/mime",
@@ -5730,6 +5782,86 @@
             "time": "2026-04-26T13:10:57+00:00"
         },
         {
+            "name": "symfony/polyfill-php86",
+            "version": "v1.37.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php86.git",
+                "reference": "33d8fc5a705481e21fe3a81212b26f9b1f61749c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php86/zipball/33d8fc5a705481e21fe3a81212b26f9b1f61749c",
+                "reference": "33d8fc5a705481e21fe3a81212b26f9b1f61749c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php86\\": ""
+                },
+                "classmap": [
+                    "Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 8.6+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-php86/tree/v1.37.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-04-26T13:13:48+00:00"
+        },
+        {
             "name": "symfony/polyfill-uuid",
             "version": "v1.37.0",
             "source": {
@@ -5959,16 +6091,16 @@
         },
         {
             "name": "symfony/service-contracts",
-            "version": "v3.6.1",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/service-contracts.git",
-                "reference": "45112560a3ba2d715666a509a0bc9521d10b6c43"
+                "reference": "d25d82433a80eba6aa0e6c24b61d7370d99e444a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/45112560a3ba2d715666a509a0bc9521d10b6c43",
-                "reference": "45112560a3ba2d715666a509a0bc9521d10b6c43",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/d25d82433a80eba6aa0e6c24b61d7370d99e444a",
+                "reference": "d25d82433a80eba6aa0e6c24b61d7370d99e444a",
                 "shasum": ""
             },
             "require": {
@@ -5986,7 +6118,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.6-dev"
+                    "dev-main": "3.7-dev"
                 }
             },
             "autoload": {
@@ -6022,7 +6154,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/service-contracts/tree/v3.6.1"
+                "source": "https://github.com/symfony/service-contracts/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -6042,7 +6174,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-07-15T11:30:57+00:00"
+            "time": "2026-03-28T09:44:51+00:00"
         },
         {
             "name": "symfony/string",
@@ -6136,16 +6268,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v8.0.8",
+            "version": "v8.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "27c03ae3940de24ba2f71cfdbac824f2aa1fdf2f"
+                "reference": "f63e9342e12646a57c91ef8a366a4f9d8e557b67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/27c03ae3940de24ba2f71cfdbac824f2aa1fdf2f",
-                "reference": "27c03ae3940de24ba2f71cfdbac824f2aa1fdf2f",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/f63e9342e12646a57c91ef8a366a4f9d8e557b67",
+                "reference": "f63e9342e12646a57c91ef8a366a4f9d8e557b67",
                 "shasum": ""
             },
             "require": {
@@ -6205,7 +6337,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/translation/tree/v8.0.8"
+                "source": "https://github.com/symfony/translation/tree/v8.0.10"
             },
             "funding": [
                 {
@@ -6225,20 +6357,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-30T15:14:47+00:00"
+            "time": "2026-05-06T11:30:54+00:00"
         },
         {
             "name": "symfony/translation-contracts",
-            "version": "v3.6.1",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation-contracts.git",
-                "reference": "65a8bc82080447fae78373aa10f8d13b38338977"
+                "reference": "0ab302977a952b42fd51475c4ebac81f8da0a95d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/65a8bc82080447fae78373aa10f8d13b38338977",
-                "reference": "65a8bc82080447fae78373aa10f8d13b38338977",
+                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/0ab302977a952b42fd51475c4ebac81f8da0a95d",
+                "reference": "0ab302977a952b42fd51475c4ebac81f8da0a95d",
                 "shasum": ""
             },
             "require": {
@@ -6251,7 +6383,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.6-dev"
+                    "dev-main": "3.7-dev"
                 }
             },
             "autoload": {
@@ -6287,7 +6419,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/translation-contracts/tree/v3.6.1"
+                "source": "https://github.com/symfony/translation-contracts/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -6307,7 +6439,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-07-15T13:41:35+00:00"
+            "time": "2026-01-05T13:30:16+00:00"
         },
         {
             "name": "symfony/uid",
