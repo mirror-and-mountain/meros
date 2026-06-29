@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb4bce43501088202cb952da6511514f",
+    "content-hash": "f19919ec9073e79e7e029d3caeeb0721",
     "packages": [
         {
             "name": "brick/math",
@@ -3068,16 +3068,16 @@
         },
         {
             "name": "mirror-and-mountain/meros-framework",
-            "version": "v0.0.8",
+            "version": "v0.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mirror-and-mountain/meros-framework.git",
-                "reference": "aa2c39949b21e48304a07bc49adb2327766154df"
+                "reference": "631cf0aa976cf9f8706d4ba8e32b057c3443bdb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mirror-and-mountain/meros-framework/zipball/aa2c39949b21e48304a07bc49adb2327766154df",
-                "reference": "aa2c39949b21e48304a07bc49adb2327766154df",
+                "url": "https://api.github.com/repos/mirror-and-mountain/meros-framework/zipball/631cf0aa976cf9f8706d4ba8e32b057c3443bdb4",
+                "reference": "631cf0aa976cf9f8706d4ba8e32b057c3443bdb4",
                 "shasum": ""
             },
             "require": {
@@ -3109,9 +3109,9 @@
             "description": "A developer-friendly package for creating advanced Wordpress themes.",
             "support": {
                 "issues": "https://github.com/mirror-and-mountain/meros-framework/issues",
-                "source": "https://github.com/mirror-and-mountain/meros-framework/tree/v0.0.8"
+                "source": "https://github.com/mirror-and-mountain/meros-framework/tree/v0.0.9"
             },
-            "time": "2026-06-29T14:54:52+00:00"
+            "time": "2026-06-29T15:08:04+00:00"
         },
         {
             "name": "monolog/monolog",

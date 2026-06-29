@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "mirror-and-mountain/meros-framework": "^0.0.8",
+        "mirror-and-mountain/meros-framework": "^0.0.9",
         "mirror-and-mountain/meros-blocks": "^0.0.2"
     },
     "autoload": {
