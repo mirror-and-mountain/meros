@@ -2,6 +2,7 @@
 !/.devcontainer/keys/.gitkeep
 /.devcontainer/_package/templates
 /config/environments.php
+/config/view.php
 /vendor/
 /node_modules/
 /plugins/
