@@ -2,10 +2,10 @@
 
 namespace App;
 
-use MM\Meros\App\Theme as MerosTheme;
+use MM\Meros\App\BaseTheme;
 
-class Theme extends MerosTheme {
-    
-    protected function configure(): void {
+class Theme extends BaseTheme {
+    public function configure(): void {
+        
     }
 }
