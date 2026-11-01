@@ -1,5 +1,5 @@
 {
-  "name": "MEROS WP",
+  "name": "MEDIA TRUST",
   "dockerComposeFile": "docker-compose.yml",
   "service": "wordpress",
   "workspaceFolder": "/var/www/html/wp-content/themes/${localWorkspaceFolderBasename}",
@@ -12,7 +12,7 @@
     "source=${localWorkspaceFolder}/.devcontainer/keys,target=/home/www-data/keys,type=bind,consistency=cached"
   ],
   "postCreateCommand": "set -x && cd /var/www/html/wp-content/themes/${localWorkspaceFolderBasename} && sleep 5 && composer install",
-  "forwardPorts": [9000, 8000],
+  "forwardPorts": [9000, 8000, 8026],
   "features": {},
   "customizations": {
     "vscode": {
