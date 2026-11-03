@@ -43,8 +43,11 @@ services:
     image: docker.io/axllent/mailpit:latest
     container_name: ${THEME_SLUG:-meros-wp}_dev_mailpit
     ports:
-      - ${MAILPIT_SMTP_PORT:-1025}:1025
-      - ${MAILPIT_UI_PORT:-8025}:8025
+      - ${MAILPIT_SMTP_PORT:-1025}:${MAILPIT_SMTP_PORT:-1025}
+      - ${MAILPIT_UI_PORT:-8025}:${MAILPIT_UI_PORT:-8025}
+    environment:
+      MP_SMTP_BIND_ADDR: 0.0.0.0:${MAILPIT_SMTP_PORT:-1025}
+      MP_UI_BIND_ADDR: 0.0.0.0:${MAILPIT_UI_PORT:-8025}
 
 volumes:
   db_data:

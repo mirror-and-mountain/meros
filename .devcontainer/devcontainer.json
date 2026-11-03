@@ -1,5 +1,5 @@
 {
-  "name": "MEDIA TRUST",
+  "name": "MEROS",
   "dockerComposeFile": "docker-compose.yml",
   "service": "wordpress",
   "workspaceFolder": "/var/www/html/wp-content/themes/${localWorkspaceFolderBasename}",
