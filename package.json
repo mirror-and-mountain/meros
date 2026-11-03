@@ -1,0 +1,25 @@
+{
+    "private": true,
+    "scripts": {
+        "dev:vite": "vite",
+        "build:vite": "vite build",
+        "build:assets": "wp-scripts build --config webpack.assets.config.js",
+        "build:blocks": "wp-scripts build --webpack-src-dir=resources/blocks/src/ --output-path=resources/blocks/build/",
+        "build": "npm run build:blocks && npm run build:assets && npm run build:vite"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.3.0",
+        "@types/wordpress__block-editor": "^11.5.16",
+        "@wordpress/block-editor": "^14.15.0",
+        "@wordpress/blocks": "^14.9.0",
+        "@wordpress/components": "^29.6.0",
+        "@wordpress/core-data": "^7.20.0",
+        "@wordpress/data": "^10.20.0",
+        "@wordpress/element": "^6.20.0",
+        "@wordpress/hooks": "^4.22.0",
+        "@wordpress/i18n": "^5.20.0",
+        "@wordpress/scripts": "^30.13.0",
+        "tailwindcss": "^4.3.0",
+        "vite": "^8.0.11"
+    }
+}

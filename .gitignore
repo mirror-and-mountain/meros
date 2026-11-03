@@ -1,12 +1,9 @@
+.DS_Store*
 /.devcontainer/keys/*
+/.devcontainer/cloudflared/*
 !/.devcontainer/keys/.gitkeep
-/.devcontainer/_package/templates
 /config/environments.php
 /config/view.php
 /vendor/
 /node_modules/
-/plugins/
-.DS_Store*
 /.env
-composer.dev.json
-composer.dev.lock
