@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "mirror-and-mountain/meros-framework": "^0.1.9",
+        "mirror-and-mountain/meros-framework": "^0.2.1",
         "mirror-and-mountain/meros-blocks": "^0.1.1",
         "mirror-and-mountain/meros-crm": "^0.1.2"
     },
@@ -28,6 +28,9 @@
         }
     },
     "scripts": {
+        "post-create-project-cmd": [
+            "MM\\Meros\\Scripts\\ComposerScripts::postCreateProjectCmd"
+        ],
         "post-autoload-dump": [
             "Roots\\Acorn\\ComposerScripts::postAutoloadDump",
             "MM\\Meros\\Scripts\\ComposerScripts::postAutoloadDump"
