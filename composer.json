@@ -18,9 +18,9 @@
         }
     ],
     "require": {
-        "mirror-and-mountain/meros-framework": "^0.2.3",
-        "mirror-and-mountain/meros-blocks": "^0.1.1",
-        "mirror-and-mountain/meros-crm": "^0.1.2"
+        "mirror-and-mountain/meros-framework": "^0.2.4",
+        "mirror-and-mountain/meros-crm": "^0.1.2",
+        "mirror-and-mountain/meros-blocks": "^0.1.1"
     },
     "autoload": {
         "psr-4": {
