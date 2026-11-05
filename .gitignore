@@ -1,7 +1,8 @@
 .DS_Store*
 /.devcontainer/keys/*
-/.devcontainer/cloudflared/*
+/.devcontainer/tunnel/*
 !/.devcontainer/keys/.gitkeep
+!/.devcontainer/tunnel/.gitkeep
 /config/environments.php
 /config/view.php
 /vendor/
