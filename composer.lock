@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bbe533f27c458e9daaa5ca626a1dd376",
+    "content-hash": "65d1643aa5fda18c87fd554cd155c550",
     "packages": [
         {
             "name": "brick/math",
@@ -3187,22 +3187,22 @@
         },
         {
             "name": "mirror-and-mountain/meros-framework",
-            "version": "v0.2.4",
+            "version": "v0.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mirror-and-mountain/meros-framework.git",
-                "reference": "e1b234b0204778b7a0ab49810b628f1938cc1bc9"
+                "reference": "9715a32fe6c8b5236d8ea6601522871aedf04a3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mirror-and-mountain/meros-framework/zipball/e1b234b0204778b7a0ab49810b628f1938cc1bc9",
-                "reference": "e1b234b0204778b7a0ab49810b628f1938cc1bc9",
+                "url": "https://api.github.com/repos/mirror-and-mountain/meros-framework/zipball/9715a32fe6c8b5236d8ea6601522871aedf04a3e",
+                "reference": "9715a32fe6c8b5236d8ea6601522871aedf04a3e",
                 "shasum": ""
             },
             "require": {
-                "livewire/livewire": "^4.3.3",
-                "roots/acorn": "^6.2",
-                "symfony/uid": "^8.1.0"
+                "livewire/livewire": "^4.4.8",
+                "roots/acorn": "^6.3",
+                "symfony/uid": "^8.1.9"
             },
             "type": "library",
             "autoload": {
@@ -3230,10 +3230,10 @@
             "description": "A developer-friendly package for creating advanced Wordpress themes.",
             "support": {
                 "issues": "https://github.com/mirror-and-mountain/meros-framework/issues",
-                "source": "https://github.com/mirror-and-mountain/meros-framework/tree/v0.2.4"
+                "source": "https://github.com/mirror-and-mountain/meros-framework/tree/v0.2.6"
             },
-            "time": "2026-11-04T16:44:55+00:00",
-            "published-time": "2026-11-04T16:45:29+00:00"
+            "time": "2026-11-05T15:37:29+00:00",
+            "published-time": "2026-11-05T15:37:53+00:00"
         },
         {
             "name": "monolog/monolog",
