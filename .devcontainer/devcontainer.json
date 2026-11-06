@@ -11,7 +11,7 @@
     "source=${localWorkspaceFolder},target=/var/www/html/wp-content/themes/${localWorkspaceFolderBasename},type=bind,consistency=cached",
     "source=${localWorkspaceFolder}/.devcontainer/keys,target=/home/www-data/keys,type=bind,consistency=cached"
   ],
-  "postCreateCommand": "set -x && cd /var/www/html/wp-content/themes/${localWorkspaceFolderBasename} && sleep 5 && composer dump-autoload && sleep 5 && wp meros:install framework --required-only",
+  "postCreateCommand": "set -x && cd /var/www/html/wp-content/themes/${localWorkspaceFolderBasename} && sleep 5 && composer dump-autoload && sleep 5 && wp meros:install framework --required-only --surpress-env-error",
   "forwardPorts": [
     8000,
     9000,
