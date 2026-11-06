@@ -110,6 +110,9 @@ RUN chmod -R 777 /var/www/html/wp-content/themes/ \
  && chmod -R 777 /var/www/html/wp-content/uploads/ \
  && chown -R www-data:www-data /var/www/html
 
+# Install Adminer
+RUN curl -L https://www.adminer.org/latest.php -o /var/www/html/db.php
+
 #Set the meros environment variable
 ENV MEROS_ENVIRONMENT=true
 
