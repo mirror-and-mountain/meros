@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d88ad3a2f8a5a9a42f9a0dd40dc39dc7",
+    "content-hash": "f592573dc4288caf50df1d9e5c011595",
     "packages": [
         {
             "name": "brick/math",
@@ -3187,16 +3187,16 @@
         },
         {
             "name": "mirror-and-mountain/meros-framework",
-            "version": "v0.2.16",
+            "version": "v0.2.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mirror-and-mountain/meros-framework.git",
-                "reference": "fb39180b659b5f962e4f6d985ebd5748c99ffbf2"
+                "reference": "1b602f2312bcbd2a8827bc9bbbe98551cac7f961"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mirror-and-mountain/meros-framework/zipball/fb39180b659b5f962e4f6d985ebd5748c99ffbf2",
-                "reference": "fb39180b659b5f962e4f6d985ebd5748c99ffbf2",
+                "url": "https://api.github.com/repos/mirror-and-mountain/meros-framework/zipball/1b602f2312bcbd2a8827bc9bbbe98551cac7f961",
+                "reference": "1b602f2312bcbd2a8827bc9bbbe98551cac7f961",
                 "shasum": ""
             },
             "require": {
@@ -3230,10 +3230,10 @@
             "description": "A developer-friendly package for creating advanced Wordpress themes.",
             "support": {
                 "issues": "https://github.com/mirror-and-mountain/meros-framework/issues",
-                "source": "https://github.com/mirror-and-mountain/meros-framework/tree/v0.2.16"
+                "source": "https://github.com/mirror-and-mountain/meros-framework/tree/v0.2.17"
             },
-            "time": "2026-11-07T11:33:47+00:00",
-            "published-time": "2026-11-07T11:34:42+00:00"
+            "time": "2026-11-08T12:04:56+00:00",
+            "published-time": "2026-11-08T12:05:47+00:00"
         },
         {
             "name": "monolog/monolog",
