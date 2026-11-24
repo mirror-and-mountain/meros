@@ -7,7 +7,6 @@
      "keywords": [
         "meros",
         "wordpress",
-        "acorn",
         "laravel",
         "livewire"
     ],
@@ -32,7 +31,6 @@
             "MM\\Meros\\Scripts\\ComposerScripts::postCreateProjectCmd"
         ],
         "post-autoload-dump": [
-            "Roots\\Acorn\\ComposerScripts::postAutoloadDump",
             "MM\\Meros\\Scripts\\ComposerScripts::postAutoloadDump"
         ]
     },

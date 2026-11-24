@@ -10,15 +10,8 @@ return [
     'theme_class' => 'App\\Theme',
 
     /**
-     * The following array stores service providers needed to bootstrap
-     * your theme's packages. 
-     * 
-     * It is updated automatically when either a new package is installed or 
-     * an existing one is removed.
+     * Meros packages are discovered automatically from composer metadata.
+     * List a provider here only to register one that isn't discoverable.
      */
-    'packages' => [
-        'MM\\Meros\\Crm\\ServiceProvider',
-        'MM\\Meros\\Blocks\\ServiceProvider',
-    ]
+    'packages' => [],
 ];
-
