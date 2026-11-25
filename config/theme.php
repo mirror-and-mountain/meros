@@ -19,6 +19,7 @@ return [
     'packages' => [
         'MM\\Meros\\Crm\\ServiceProvider',
         'MM\\Meros\\Blocks\\ServiceProvider',
+        'MM\\Meros\\EmailConnectors\\ServiceProvider',
     ]
 ];
 

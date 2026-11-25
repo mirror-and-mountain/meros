@@ -7,4 +7,4 @@ require_once( $autoloader );
 
 if ( class_exists( 'MM\\Meros\\Loader' ) ) {
     MM\Meros\Loader::boot();
-}; 
+};
