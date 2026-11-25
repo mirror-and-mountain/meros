@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "11168fa52baad64e33d2d4842a22eba2",
+    "content-hash": "7f965d1c5e54b6dad327be70129c194e",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2894,17 +2894,23 @@
         },
         {
             "name": "mirror-and-mountain/meros-blocks",
-            "version": "v0.1.1",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mirror-and-mountain/meros-blocks.git",
-                "reference": "097e452ba9606723bf2aeea8e3c68386b94d0673"
+                "reference": "502a1194fbea8654e6141dc5ab4065389bb0e5a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mirror-and-mountain/meros-blocks/zipball/097e452ba9606723bf2aeea8e3c68386b94d0673",
-                "reference": "097e452ba9606723bf2aeea8e3c68386b94d0673",
+                "url": "https://api.github.com/repos/mirror-and-mountain/meros-blocks/zipball/502a1194fbea8654e6141dc5ab4065389bb0e5a9",
+                "reference": "502a1194fbea8654e6141dc5ab4065389bb0e5a9",
                 "shasum": ""
+            },
+            "require-dev": {
+                "illuminate/testing": "^13.0",
+                "mirror-and-mountain/meros-framework": "^1.0",
+                "phpunit/phpunit": "^9.6",
+                "yoast/phpunit-polyfills": "^3.1"
             },
             "type": "library",
             "extra": {
@@ -2915,7 +2921,8 @@
             "autoload": {
                 "psr-4": {
                     "MM\\Meros\\Blocks\\": "src/",
-                    "MM\\Meros\\Blocks\\App\\": "src/app/"
+                    "MM\\Meros\\Blocks\\App\\": "src/app/",
+                    "MM\\Meros\\Blocks\\Support\\": "src/support/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2931,24 +2938,30 @@
             "description": "A collection of blocks and editor features for Meros powered WordPress themes.",
             "support": {
                 "issues": "https://github.com/mirror-and-mountain/meros-blocks/issues",
-                "source": "https://github.com/mirror-and-mountain/meros-blocks/tree/v0.1.1"
+                "source": "https://github.com/mirror-and-mountain/meros-blocks/tree/v1.0.0"
             },
-            "time": "2026-09-17T13:04:26+00:00",
-            "published-time": "2026-09-17T13:05:03+00:00"
+            "time": "2026-11-25T12:24:15+00:00",
+            "published-time": "2026-11-25T12:24:49+00:00"
         },
         {
             "name": "mirror-and-mountain/meros-crm",
-            "version": "v0.1.2",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mirror-and-mountain/meros-crm.git",
-                "reference": "399d00788e325f39e7efcc92c8dd18d379f87788"
+                "reference": "beb6fc229dbee965043ee6a2fa9f0584d55362cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mirror-and-mountain/meros-crm/zipball/399d00788e325f39e7efcc92c8dd18d379f87788",
-                "reference": "399d00788e325f39e7efcc92c8dd18d379f87788",
+                "url": "https://api.github.com/repos/mirror-and-mountain/meros-crm/zipball/beb6fc229dbee965043ee6a2fa9f0584d55362cb",
+                "reference": "beb6fc229dbee965043ee6a2fa9f0584d55362cb",
                 "shasum": ""
+            },
+            "require-dev": {
+                "illuminate/testing": "^13.0",
+                "mirror-and-mountain/meros-framework": "^1.0",
+                "phpunit/phpunit": "^9.6",
+                "yoast/phpunit-polyfills": "^3.1"
             },
             "type": "library",
             "extra": {
@@ -2977,23 +2990,23 @@
             "description": "CRM integrations package for Meros, currently Salesforce-focused.",
             "support": {
                 "issues": "https://github.com/mirror-and-mountain/meros-crm/issues",
-                "source": "https://github.com/mirror-and-mountain/meros-crm/tree/v0.1.2"
+                "source": "https://github.com/mirror-and-mountain/meros-crm/tree/v1.0.0"
             },
-            "time": "2026-10-07T10:04:17+00:00",
-            "published-time": "2026-10-07T10:05:39+00:00"
+            "time": "2026-11-25T12:22:51+00:00",
+            "published-time": "2026-11-25T12:23:42+00:00"
         },
         {
             "name": "mirror-and-mountain/meros-foundations",
-            "version": "dev-main",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mirror-and-mountain/meros-foundations.git",
-                "reference": "d6d2ee8e1886e5669df86c57109fe8b31b3a61aa"
+                "reference": "f300fee48a4ade6fba552504d4811ea3f4e46dcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mirror-and-mountain/meros-foundations/zipball/d6d2ee8e1886e5669df86c57109fe8b31b3a61aa",
-                "reference": "d6d2ee8e1886e5669df86c57109fe8b31b3a61aa",
+                "url": "https://api.github.com/repos/mirror-and-mountain/meros-foundations/zipball/f300fee48a4ade6fba552504d4811ea3f4e46dcf",
+                "reference": "f300fee48a4ade6fba552504d4811ea3f4e46dcf",
                 "shasum": ""
             },
             "require": {
@@ -3017,6 +3030,7 @@
                 "illuminate/routing": "^13.0",
                 "illuminate/session": "^13.0",
                 "illuminate/support": "^13.0",
+                "illuminate/translation": "^13.0",
                 "illuminate/validation": "^13.0",
                 "illuminate/view": "^13.0",
                 "livewire/livewire": "^4.4.8",
@@ -3024,63 +3038,70 @@
                 "symfony/uid": "^8.1.9",
                 "vlucas/phpdotenv": "^5.6"
             },
-            "default-branch": true,
+            "require-dev": {
+                "illuminate/testing": "^13.0",
+                "phpunit/phpunit": "^9.6",
+                "yoast/phpunit-polyfills": "^3.1"
+            },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "MM\\Meros\\Foundations\\": "src/"
-                },
                 "files": [
                     "src/helpers.php"
-                ]
-            },
-            "autoload-dev": {
+                ],
                 "psr-4": {
-                    "MM\\Meros\\Foundations\\Tests\\": "tests/"
+                    "MM\\Meros\\Foundations\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "A lean Laravel-in-WordPress integration layer for the Meros framework.",
             "support": {
-                "source": "https://github.com/mirror-and-mountain/meros-foundations/tree/main",
-                "issues": "https://github.com/mirror-and-mountain/meros-foundations/issues"
+                "issues": "https://github.com/mirror-and-mountain/meros-foundations/issues",
+                "source": "https://github.com/mirror-and-mountain/meros-foundations/tree/v1.0.0"
             },
-            "time": "2026-11-25T00:02:36+00:00"
+            "time": "2026-11-25T12:06:55+00:00",
+            "published-time": "2026-11-25T12:17:52+00:00"
         },
         {
             "name": "mirror-and-mountain/meros-framework",
-            "version": "dev-feat/meros-foundations-spike",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mirror-and-mountain/meros-framework.git",
-                "reference": "d145eb24b4114d0d4ba3dc5014702d812bff7b02"
+                "reference": "8d294a1db1adc40e0a41d2f955e366b3456ab1b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mirror-and-mountain/meros-framework/zipball/d145eb24b4114d0d4ba3dc5014702d812bff7b02",
-                "reference": "d145eb24b4114d0d4ba3dc5014702d812bff7b02",
+                "url": "https://api.github.com/repos/mirror-and-mountain/meros-framework/zipball/8d294a1db1adc40e0a41d2f955e366b3456ab1b5",
+                "reference": "8d294a1db1adc40e0a41d2f955e366b3456ab1b5",
                 "shasum": ""
             },
             "require": {
                 "bacon/bacon-qr-code": "^3.0",
-                "mirror-and-mountain/meros-foundations": "dev-main",
+                "mirror-and-mountain/meros-foundations": "^1.0",
                 "pragmarx/google2fa": "^9.0"
+            },
+            "require-dev": {
+                "illuminate/testing": "^13.0",
+                "phpunit/phpunit": "^9.6",
+                "yoast/phpunit-polyfills": "^3.1"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "MM\\Meros\\": "src/",
                     "MM\\Meros\\App\\": "src/app/",
-                    "MM\\Meros\\Contracts\\": "src/contracts/",
-                    "MM\\Meros\\Registers\\": "src/registers/",
                     "MM\\Meros\\Facades\\": "src/facades/",
-                    "MM\\Meros\\Services\\": "src/services/",
+                    "MM\\Meros\\Scripts\\": "src/scripts/",
                     "MM\\Meros\\Support\\": "src/support/",
-                    "MM\\Meros\\Scripts\\": "src/scripts/"
+                    "MM\\Meros\\Services\\": "src/services/",
+                    "MM\\Meros\\Contracts\\": "src/contracts/",
+                    "MM\\Meros\\Registers\\": "src/registers/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3092,10 +3113,11 @@
             ],
             "description": "A developer-friendly package for creating advanced Wordpress themes.",
             "support": {
-                "source": "https://github.com/mirror-and-mountain/meros-framework/tree/feat/meros-foundations-spike",
-                "issues": "https://github.com/mirror-and-mountain/meros-framework/issues"
+                "issues": "https://github.com/mirror-and-mountain/meros-framework/issues",
+                "source": "https://github.com/mirror-and-mountain/meros-framework/tree/v1.0.0"
             },
-            "time": "2026-11-24T23:58:20+00:00"
+            "time": "2026-11-25T12:18:21+00:00",
+            "published-time": "2026-11-25T12:20:23+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -6872,9 +6894,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "mirror-and-mountain/meros-framework": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {},

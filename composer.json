@@ -17,9 +17,9 @@
         }
     ],
     "require": {
-        "mirror-and-mountain/meros-framework": "dev-feat/meros-foundations-spike",
-        "mirror-and-mountain/meros-crm": "^0.1.2",
-        "mirror-and-mountain/meros-blocks": "^0.1.1"
+        "mirror-and-mountain/meros-framework": "^1.0",
+        "mirror-and-mountain/meros-crm": "^1.0",
+        "mirror-and-mountain/meros-blocks": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -34,16 +34,6 @@
             "MM\\Meros\\Scripts\\ComposerScripts::postAutoloadDump"
         ]
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/mirror-and-mountain/meros-framework"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/mirror-and-mountain/meros-foundations"
-        }
-    ],
     "minimum-stability": "dev",
     "prefer-stable": true
 }
