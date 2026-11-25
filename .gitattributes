@@ -1,3 +1,9 @@
 # Exclude package managers' config
-composer.lock export-ignore
+/composer.lock export-ignore
 package-lock.json export-ignore
+
+# Exclude repository-only tests and CI
+/tests/ export-ignore
+/phpunit.xml export-ignore
+/phpunit.integration.xml export-ignore
+/.github/ export-ignore

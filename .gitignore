@@ -8,3 +8,7 @@
 /vendor/
 /node_modules/
 /.env
+/.env.*
+!/.env.example
+/.phpunit.cache/
+/.phpunit.result.cache
