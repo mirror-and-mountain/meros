@@ -1,4 +1,18 @@
 services:
+  test-db:
+    image: docker.io/mariadb:10.11
+    profiles: ["testing"]
+    environment:
+      MARIADB_DATABASE: meros_tests
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "1"
+    tmpfs:
+      - /var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
   db:
     image: docker.io/mariadb:10.11
     container_name: ${THEME_SLUG:-meros-wp}_dev_db

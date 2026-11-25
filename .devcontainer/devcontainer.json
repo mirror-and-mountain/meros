@@ -5,7 +5,13 @@
   "workspaceFolder": "/var/www/html/wp-content/themes/${localWorkspaceFolderBasename}",
   "remoteUser": "www-data",
   "remoteEnv": {
-    "VSCODE_SERVER_HOME": "/home/www-data/.vscode-server"
+    "VSCODE_SERVER_HOME": "/home/www-data/.vscode-server",
+    "WP_TESTS_DIR": "/home/www-data/meros-testing/wordpress-develop/tests/phpunit",
+    "WP_TESTS_ROOT": "/home/www-data/meros-testing/wordpress-develop/src",
+    "MEROS_TEST_DB_NAME": "meros_tests",
+    "MEROS_TEST_DB_HOST": "test-db",
+    "MEROS_TEST_DB_USER": "root",
+    "MEROS_TEST_DB_PASSWORD": ""
   },
   "mounts": [
     "source=${localWorkspaceFolder},target=/var/www/html/wp-content/themes/${localWorkspaceFolderBasename},type=bind,consistency=cached",

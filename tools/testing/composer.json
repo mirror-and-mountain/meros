@@ -1,0 +1,34 @@
+{
+    "name": "mirror-and-mountain/meros-workspace-tests",
+    "type": "project",
+    "description": "Shared development-only test runner for the local Meros packages.",
+    "require-dev": {
+        "illuminate/testing": "^13.0",
+        "mirror-and-mountain/meros-foundations": "*@dev",
+        "mirror-and-mountain/meros-framework": "*@dev",
+        "mirror-and-mountain/meros-crm": "*@dev",
+        "mirror-and-mountain/meros-blocks": "*@dev",
+        "mirror-and-mountain/meros-email-connectors": "*@dev",
+        "phpunit/phpunit": "^9.6",
+        "yoast/phpunit-polyfills": "^3.1"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../vendor/mirror-and-mountain/*",
+            "options": {
+                "symlink": true,
+                "versions": {
+                    "mirror-and-mountain/meros-foundations": "dev-main",
+                    "mirror-and-mountain/meros-framework": "dev-main"
+                }
+            }
+        }
+    ],
+    "scripts": {
+        "test": "phpunit -c phpunit.xml",
+        "test:integration": "phpunit -c phpunit.integration.xml"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

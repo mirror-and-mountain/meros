@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="bootstrap.php" cacheResultFile=".phpunit.result.cache" failOnWarning="true" failOnRisky="true">
+    <testsuites>
+        <testsuite name="Foundations"><directory>../../vendor/mirror-and-mountain/meros-foundations/tests/Unit</directory></testsuite>
+        <testsuite name="Framework"><directory>../../vendor/mirror-and-mountain/meros-framework/tests/Unit</directory></testsuite>
+        <testsuite name="CRM"><directory>../../vendor/mirror-and-mountain/meros-crm/tests/Unit</directory></testsuite>
+        <testsuite name="Blocks"><directory>../../vendor/mirror-and-mountain/meros-blocks/tests/Unit</directory></testsuite>
+        <testsuite name="EmailConnectors"><directory>../../vendor/mirror-and-mountain/meros-email-connectors/tests/Unit</directory></testsuite>
+    </testsuites>
+</phpunit>

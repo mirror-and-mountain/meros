@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
+    libsqlite3-dev \
     zip \
     libzip-dev \
     jq \
@@ -23,7 +24,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install mysqli pdo pdo_mysql zip
+RUN docker-php-ext-install mysqli pdo pdo_mysql pdo_sqlite mbstring zip
 
 # Change Apache to listen on port 8080 (Crucial for non-root)
 RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf \

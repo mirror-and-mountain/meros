@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="bootstrap-integration.php" cacheResultFile=".phpunit.result.cache" failOnWarning="true" failOnRisky="true">
+    <php>
+        <env name="MEROS_ENVIRONMENT" value="false" force="true"/>
+    </php>
+    <testsuites>
+        <testsuite name="Foundations"><directory>../../vendor/mirror-and-mountain/meros-foundations/tests/Integration</directory></testsuite>
+        <testsuite name="Framework"><directory>../../vendor/mirror-and-mountain/meros-framework/tests/Integration</directory></testsuite>
+        <testsuite name="CRM"><directory>../../vendor/mirror-and-mountain/meros-crm/tests/Integration</directory></testsuite>
+        <testsuite name="Blocks"><directory>../../vendor/mirror-and-mountain/meros-blocks/tests/Integration</directory></testsuite>
+        <testsuite name="EmailConnectors"><directory>../../vendor/mirror-and-mountain/meros-email-connectors/tests/Integration</directory></testsuite>
+    </testsuites>
+</phpunit>
