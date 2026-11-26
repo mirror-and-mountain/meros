@@ -1,185 +1,197 @@
 {
-    "version": 3,
-    "$schema": "https://schemas.wp.org/wp/6.8/theme.json",
-    "settings": {
-        "appearanceTools": true,
-        "useRootPaddingAwareAlignments": true,
-        "layout": {
-            "contentSize": "var(--wp--preset--layout--content-size)",
-            "wideSize": "var(--wp--preset--layout--wide-size)"
-        },
-        "typography": {
-            "fontFamilies": [
-                {
-                    "name": "Inter",
-                    "slug": "inter",
-                    "fontFamily": "Inter, sans-serif",
-                    "fontFace": [
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-100-normal.woff2"
-                            ],
-                            "fontWeight": "100",
-                            "fontStyle": "normal",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-200-normal.woff2"
-                            ],
-                            "fontWeight": "200",
-                            "fontStyle": "normal",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-300-normal.woff2"
-                            ],
-                            "fontWeight": "300",
-                            "fontStyle": "normal",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-400-normal.woff2"
-                            ],
-                            "fontWeight": "400",
-                            "fontStyle": "normal",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-500-normal.woff2"
-                            ],
-                            "fontWeight": "500",
-                            "fontStyle": "normal",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-600-normal.woff2"
-                            ],
-                            "fontWeight": "600",
-                            "fontStyle": "normal",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-700-normal.woff2"
-                            ],
-                            "fontWeight": "700",
-                            "fontStyle": "normal",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-800-normal.woff2"
-                            ],
-                            "fontWeight": "800",
-                            "fontStyle": "normal",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-900-normal.woff2"
-                            ],
-                            "fontWeight": "900",
-                            "fontStyle": "normal",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-100-italic.woff2"
-                            ],
-                            "fontWeight": "100",
-                            "fontStyle": "italic",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-200-italic.woff2"
-                            ],
-                            "fontWeight": "200",
-                            "fontStyle": "italic",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-300-italic.woff2"
-                            ],
-                            "fontWeight": "300",
-                            "fontStyle": "italic",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-400-italic.woff2"
-                            ],
-                            "fontWeight": "400",
-                            "fontStyle": "italic",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-500-italic.woff2"
-                            ],
-                            "fontWeight": "500",
-                            "fontStyle": "italic",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-600-italic.woff2"
-                            ],
-                            "fontWeight": "600",
-                            "fontStyle": "italic",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-700-italic.woff2"
-                            ],
-                            "fontWeight": "700",
-                            "fontStyle": "italic",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-800-italic.woff2"
-                            ],
-                            "fontWeight": "800",
-                            "fontStyle": "italic",
-                            "fontFamily": "Inter"
-                        },
-                        {
-                            "src": [
-                                "file:./assets/fonts/inter/inter-900-italic.woff2"
-                            ],
-                            "fontWeight": "900",
-                            "fontStyle": "italic",
-                            "fontFamily": "Inter"
-                        }
-                    ]
-                }
-            ]
-        }
-    },
-    "templateParts": [
-        {
-            "area": "footer",
-            "name": "footer"
-        }
-    ],
-    "styles": {
-        "typography": {
-            "fontFamily": "var:preset|font-family|inter"
-        },
-        "elements": {
-            "heading": {
-                "typography": {
-                    "fontFamily": "var:preset|font-family|inter"
-                }
-            }
-        }
-    }
+	"$schema": "https://schemas.wp.org/wp/7.1/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": true,
+		"layout": {
+			"contentSize": "800px",
+			"wideSize": "1200px"
+		},
+		"typography": {
+			"fontFamilies": [
+				{
+					"fontFace": [
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "100",
+							"src": [
+								"file:./assets/fonts/inter/inter-100-normal.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "200",
+							"src": [
+								"file:./assets/fonts/inter/inter-200-normal.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "300",
+							"src": [
+								"file:./assets/fonts/inter/inter-300-normal.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "400",
+							"src": [
+								"file:./assets/fonts/inter/inter-400-normal.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "500",
+							"src": [
+								"file:./assets/fonts/inter/inter-500-normal.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "600",
+							"src": [
+								"file:./assets/fonts/inter/inter-600-normal.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "700",
+							"src": [
+								"file:./assets/fonts/inter/inter-700-normal.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "800",
+							"src": [
+								"file:./assets/fonts/inter/inter-800-normal.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "900",
+							"src": [
+								"file:./assets/fonts/inter/inter-900-normal.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "italic",
+							"fontWeight": "100",
+							"src": [
+								"file:./assets/fonts/inter/inter-100-italic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "italic",
+							"fontWeight": "200",
+							"src": [
+								"file:./assets/fonts/inter/inter-200-italic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "italic",
+							"fontWeight": "300",
+							"src": [
+								"file:./assets/fonts/inter/inter-300-italic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "italic",
+							"fontWeight": "400",
+							"src": [
+								"file:./assets/fonts/inter/inter-400-italic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "italic",
+							"fontWeight": "500",
+							"src": [
+								"file:./assets/fonts/inter/inter-500-italic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "italic",
+							"fontWeight": "600",
+							"src": [
+								"file:./assets/fonts/inter/inter-600-italic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "italic",
+							"fontWeight": "700",
+							"src": [
+								"file:./assets/fonts/inter/inter-700-italic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "italic",
+							"fontWeight": "800",
+							"src": [
+								"file:./assets/fonts/inter/inter-800-italic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "italic",
+							"fontWeight": "900",
+							"src": [
+								"file:./assets/fonts/inter/inter-900-italic.woff2"
+							]
+						}
+					],
+					"fontFamily": "Inter, sans-serif",
+					"name": "Inter",
+					"slug": "inter"
+				}
+			]
+		},
+		"useRootPaddingAwareAlignments": true
+	},
+	"styles": {
+		"elements": {
+			"heading": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--inter)"
+				}
+			}
+		},
+		"spacing": {
+			"padding": {
+				"bottom": "0px",
+				"left": "1rem",
+				"right": "1rem",
+				"top": "0px"
+			}
+		},
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--inter)"
+		}
+	},
+	"templateParts": [
+		{
+			"area": "footer",
+			"name": "footer"
+		},
+		{
+			"area": "header",
+			"name": "header"
+		}
+	]
 }
