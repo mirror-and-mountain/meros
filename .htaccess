@@ -1,0 +1,10 @@
+Options -Indexes
+
+<FilesMatch "(?i)(^\.|^(composer\.(json|lock)|package(-lock)?\.json|vite\.config\.js|webpack\.assets\.config\.js)$|\.(blade\.php|bak|backup|old|orig|save|swp|sql|sqlite|sqlite3|log)$|~$)">
+    Require all denied
+</FilesMatch>
+
+RewriteEngine On
+RewriteRule ^(?:app|config|database|node_modules|routes|storage|tools|tests)(?:/|$) - [F,NC]
+RewriteRule ^resources/views(?:/|$) - [F,NC]
+RewriteRule (^|/)\. - [F]
