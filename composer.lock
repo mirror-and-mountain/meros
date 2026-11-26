@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a41ad2d090559c7e929444ec8b071d0a",
+    "content-hash": "adf630f105ff68a5bd63e189184f3b6c",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3282,6 +3282,56 @@
             },
             "time": "2026-11-25T12:18:21+00:00",
             "published-time": "2026-11-25T12:20:23+00:00"
+        },
+        {
+            "name": "mirror-and-mountain/meros-portal",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mirror-and-mountain/meros-portal.git",
+                "reference": "10543c4f79367bba0ff7cc4fff923acf7a17a592"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mirror-and-mountain/meros-portal/zipball/10543c4f79367bba0ff7cc4fff923acf7a17a592",
+                "reference": "10543c4f79367bba0ff7cc4fff923acf7a17a592",
+                "shasum": ""
+            },
+            "require-dev": {
+                "illuminate/testing": "^13.0",
+                "mirror-and-mountain/meros-framework": "^1.0",
+                "phpunit/phpunit": "^9.6",
+                "yoast/phpunit-polyfills": "^3.1"
+            },
+            "type": "library",
+            "extra": {
+                "meros": {
+                    "provider": "MM\\Meros\\Portal\\ServiceProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MM\\Meros\\Portal\\": "src/",
+                    "MM\\Meros\\Portal\\App\\": "src/app/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "tmw-mm",
+                    "email": "toby@mirrorandmountain.com"
+                }
+            ],
+            "description": "Customer Portals for Meros-powered WordPress sites.",
+            "support": {
+                "issues": "https://github.com/mirror-and-mountain/meros-portal/issues",
+                "source": "https://github.com/mirror-and-mountain/meros-portal/tree/v1.0.0"
+            },
+            "time": "2026-11-26T14:51:58+00:00",
+            "published-time": "2026-11-26T14:52:47+00:00"
         },
         {
             "name": "monolog/monolog",
